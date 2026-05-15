@@ -1,0 +1,153 @@
+﻿﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=430, user-scalable=no" />
+    <meta name="theme-color" content="#F8F4EC" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>POOKSHIN - Taste Data</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="home.css" />
+  <style>
+    #app { background-color: #F8F4EC; height: auto; min-height: 932px; overflow-y: auto; }
+    
+    .taste-header {
+      padding: 60px 24px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: #F8F4EC;
+      z-index: 100;
+    }
+    .taste-header h1 { font-size: 20px; font-weight: 800; }
+    
+    .section-title { padding: 0 24px; font-size: 24px; font-weight: 800; color: #333; margin: 30px 0 16px; }
+    .section-title .highlight { color: #FF9F46; }
+    
+    .chart-card {
+      margin: 0 16px;
+      background: white;
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .donut-chart {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: conic-gradient(#FF9F46 0% 82%, #F2F2F2 82% 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .donut-chart::after {
+      content: '82%';
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+      font-weight: 900;
+      color: #FB7459;
+    }
+    
+    .preference-text { font-size: 16px; font-weight: 700; color: #333; text-align: center; line-height: 1.6; }
+    
+    .graph-area {
+      width: 100%;
+      height: 150px;
+      margin-top: 30px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0 10px;
+    }
+    .graph-bar { width: 40px; background: #FF9F46; border-radius: 8px 8px 0 0; transition: height 0.5s ease; position: relative; }
+    .graph-bar.dim { background: #EFEFEF; }
+    .graph-label { position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: 12px; color: #9B9B9B; white-space: nowrap; }
+    
+    .best-menu-area {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .menu-thumb {
+      aspect-ratio: 1;
+      background: #EFEFEF;
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .menu-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .menu-name { font-size: 13px; font-weight: 700; text-align: center; }
+  </style>
+</head>
+<body>
+  <div id="app">
+
+    <div class="taste-header">
+       <a href="my.html" style="text-decoration:none;"><span class="min-icon" style="font-size:24px; color:#333;">&#xE150;</span></a>
+       <h1>나의 취향 분석</h1>
+       <span class="min-icon" style="font-size:24px; color:#333;">&#xEF40;</span>
+    </div>
+
+    <h2 class="section-title">와앙이의 <span class="highlight">식감 취향</span></h2>
+    
+    <div class="chart-card">
+       <div class="donut-chart"></div>
+       <p class="preference-text">
+          겉바속촉을 좋아하는 당신!<br>
+          쫄깃담백한 건 조금 아쉬워하네요.
+       </p>
+       
+       <div class="graph-area">
+          <div class="graph-bar dim" style="height: 40%;"><span class="graph-label">4주전</span></div>
+          <div class="graph-bar dim" style="height: 55%;"><span class="graph-label">3주전</span></div>
+          <div class="graph-bar dim" style="height: 45%;"><span class="graph-label">2주전</span></div>
+          <div class="graph-bar" style="height: 82%;"><span class="graph-label">이번주</span></div>
+       </div>
+    </div>
+
+    <h2 class="section-title">취향 저격 <span class="highlight">추천 메뉴</span></h2>
+    
+    <div class="best-menu-area">
+       <div class="menu-item">
+          <div class="menu-thumb"><img src="images/main-croissant.png" alt="" /></div>
+          <div class="menu-name">크루아상</div>
+       </div>
+       <div class="menu-item">
+          <div class="menu-thumb"><img src="images/bread-icon.svg" alt="" /></div>
+          <div class="menu-name">소금빵</div>
+       </div>
+       <div class="menu-item">
+          <div class="menu-thumb"><img src="images/bread-icon.svg" alt="" /></div>
+          <div class="menu-name">마들렌</div>
+       </div>
+    </div>
+
+    <div style="height: 100px;"></div>
+    <div class="mascot-decoration" style="position: fixed; bottom: 40px; right: -20px; opacity: 0.1; z-index: 0; pointer-events: none;">
+       <img src="images/decoration-1.svg" width="200" alt="" />
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=430, user-scalable=no" />
+    <meta name="theme-color" content="#F8F4EC" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
+  <link rel="apple-touch-icon" href="/icon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <title>POOKSHIN - 리뷰보기</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="https://poposnail61.github.io/web/css/minIcon-round.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #F8F4EC;
+      font-family: 'Pretendard Variable', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      width: 430px; margin: 0 auto;
+    }
+
+    #app { width: 430px; background: #F8F4EC; }
+
+    .mi {
+      font-family: 'Min Icon VF', 'Round Bold', sans-serif;
+      font-feature-settings: 'ss09' 1;
+      font-style: normal; line-height: normal;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+
+
+    .top-nav {
+      position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+      width: 430px; height: 54px;
+      background: #F8F4EC;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 16px;
+      z-index: 99;
+    }
+    .back-btn {
+      position: absolute; left: 16px;
+      display: flex; align-items: center; justify-content: center;
+      width: 24px; height: 24px;
+      text-decoration: none;
+    }
+    .back-icon {
+      width: 24px; height: 24px;
+    }
+    .nav-title {
+      font-weight: 700; font-size: 16px; color: #000;
+      letter-spacing: -0.32px; line-height: 22px;
+    }
+
+    .scroll-content {
+      padding-top: 54px; /* top-nav(54) only */
+      padding-bottom: 40px;
+    }
+
+    /* 평점 요약 카드 */
+    .rating-card {
+      margin: 0 16px 12px;
+      background: white;
+      border-radius: 20px;
+      padding: 20px 24px 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .big-score {
+      display: flex; flex-direction: column; align-items: center;
+      flex-shrink: 0;
+    }
+    .big-score-num {
+      font-weight: 700; font-size: 24px; color: #FB7459; letter-spacing: -0.48px; line-height: 1.8;
+    }
+    .big-score-denom { font-weight: 600; font-size: 16px; color: #9B9B9B; letter-spacing: -0.32px; }
+    .big-score-stars { display: flex; gap: 2px; margin-top: 4px; }
+    .star-gold { font-size: 18.72px; color: #FFCB30; }
+    .star-dim  { font-size: 18.72px; color: #F2F2F2; }
+
+    /* bar chart */
+    .rating-bars { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+    .rating-bar-row { display: flex; align-items: center; gap: 8px; }
+    .bar-label { font-weight: 600; font-size: 13px; color: #000; width: 10px; text-align: right; letter-spacing: -0.26px; }
+    .bar-track { flex: 1; height: 6px; background: #F2F2F2; border-radius: 2px; overflow: hidden; }
+    .bar-fill  { height: 100%; background: #FB7459; border-radius: 2px; }
+
+    /* 정렬 행 */
+    .sort-row {
+      display: flex; align-items: center; justify-content: flex-end;
+      gap: 8px; padding: 0 16px 12px;
+    }
+    .sort-btn {
+      font-size: 14px; letter-spacing: -0.28px; line-height: 1.5; color: #9B9B9B; background: none; border: none; cursor: pointer;
+    }
+    .sort-btn.active { font-weight: 700; color: #9B9B9B; }
+    .sort-dot { width: 4px; height: 4px; border-radius: 50%; background: #9B9B9B; }
+
+    /* 리뷰 목록 */
+    .review-list {
+      display: flex; flex-direction: column; gap: 1px;
+      background: #F8F4EC;
+    }
+
+    /* 리뷰 항목 */
+    .review-item {
+      background: white;
+      padding: 24px 16px 20px;
+      position: relative;
+    }
+
+    /* divider */
+    .review-item + .review-item::before {
+      content: '';
+      display: block;
+      height: 1px; background: #F2F2F2;
+      margin: 0 16px 24px;
+      position: absolute; top: 0; left: 16px; right: 16px;
+    }
+
+    /* user row */
+    .user-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 4px;
+    }
+    .user-name {
+      font-weight: 600; font-size: 16px; color: #000;
+      letter-spacing: -0.32px; line-height: 1.5;
+    }
+    .user-stars { display: flex; gap: 2px; }
+    .user-date { font-size: 13px; color: #9B9B9B; letter-spacing: -0.26px; line-height: 1.8; }
+
+    /* content row: photo + text */
+    .content-row {
+      display: flex; gap: 16px; margin-top: 8px;
+    }
+    .review-photo {
+      width: 94px; height: 94px;
+      border-radius: 10px; overflow: hidden; flex-shrink: 0;
+      background: #D9D9D9;
+    }
+    .review-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .review-text-wrap { flex: 1; }
+    .review-text {
+      font-size: 13px; color: #000; letter-spacing: -0.26px; line-height: 1.5;
+    }
+
+    /* no-photo layout */
+    .content-full { margin-top: 8px; }
+    .review-text-full {
+      font-size: 13px; color: #000; letter-spacing: -0.26px; line-height: 1.5;
+    }
+
+    /* taste bars */
+    .taste-grid {
+      margin-top: 12px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px 0;
+    }
+    .taste-row {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .taste-label { font-size: 13px; color: #000; letter-spacing: -0.26px; line-height: 1.8; width: 22px; text-align: right; flex-shrink: 0; }
+    .taste-dots { display: flex; gap: 4.5px; }
+    .td { width: 27px; height: 5.25px; background: #F2F2F2; border-radius: 6px; }
+    .td.on { background: #FA534C; }
+    .taste-label-right { font-size: 13px; color: #000; letter-spacing: -0.26px; line-height: 1.8; width: 22px; flex-shrink: 0; }
+
+    /* full taste row (label + dots + label) */
+    .taste-full-row {
+      display: flex; align-items: center; gap: 6px; margin-top: 8px;
+    }
+
+    /* 더보기 버튼 */
+    .more-btn-wrap {
+      display: flex; justify-content: flex-end;
+      padding: 20px 16px 0;
+    }
+    .more-btn {
+      display: flex; align-items: center; gap: 2px;
+      padding: 2px 5px 2px 8px;
+      border-radius: 8px;
+      font-size: 16px; color: #9B9B9B; letter-spacing: -0.32px;
+      text-decoration: none; background: none; border: none; cursor: pointer;
+    }
+
+    /* 리뷰 섹션 흰색 카드 */
+    .reviews-card {
+      margin: 0 15px;
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Top Nav -->
+  <div class="top-nav">
+    <a href="home.html" class="back-btn">
+      <!-- 왼쪽 뒤로가기 아이콘 -->
+      <svg class="back-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 18L9 12L15 6" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <span class="nav-title">리뷰보기</span>
+  </div>
+
+  <div class="scroll-content">
+
+    <!-- Rating Summary Card -->
+    <div class="rating-card">
+      <!-- 왼쪽: 총점 -->
+      <div class="big-score">
+        <span class="big-score-num">4.3</span>
+        <span class="big-score-denom">/ 5</span>
+        <div class="big-score-stars">
+          <span class="mi star-gold">&#xE0A0;</span>
+          <span class="mi star-gold">&#xE0A0;</span>
+          <span class="mi star-gold">&#xE0A0;</span>
+          <span class="mi star-gold">&#xE0A0;</span>
+          <span class="mi star-dim">&#xE0A0;</span>
+        </div>
+      </div>
+
+      <!-- 오른쪽: 별점 분포 바 -->
+      <div class="rating-bars">
+        <div class="rating-bar-row">
+          <span class="bar-label">5</span>
+          <div class="bar-track"><div class="bar-fill" style="width:54%;"></div></div>
+        </div>
+        <div class="rating-bar-row">
+          <span class="bar-label">4</span>
+          <div class="bar-track"><div class="bar-fill" style="width:45%;"></div></div>
+        </div>
+        <div class="rating-bar-row">
+          <span class="bar-label">3</span>
+          <div class="bar-track"><div class="bar-fill" style="width:30%;"></div></div>
+        </div>
+        <div class="rating-bar-row">
+          <span class="bar-label">2</span>
+          <div class="bar-track"><div class="bar-fill" style="width:7%;"></div></div>
+        </div>
+        <div class="rating-bar-row">
+          <span class="bar-label">1</span>
+          <div class="bar-track"><div class="bar-fill" style="width:0%;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sort Row -->
+    <div class="sort-row">
+      <button class="sort-btn">최신순</button>
+      <span style="color:#9B9B9B; font-size: 14px;">&middot;</span>
+      <button class="sort-btn active">인기순</button>
+    </div>
+
+    <!-- Reviews White Card -->
+    <div class="reviews-card">
+
+      <!-- Review 1: 와앙, 사진 있음 -->
+      <div class="review-item">
+        <div class="user-row">
+          <div>
+              <span class="user-name">와앙</span>
+            <span class="user-name">*****</span>
+          </div>
+          <span class="user-date">2주전</span>
+        </div>
+        <!-- 별점 -->
+        <div class="user-stars">
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+        </div>
+        <div class="content-row">
+          <div class="review-photo">
+            <img src="images/hero-croissant.png" alt="리뷰 사진" />
+          </div>
+          <p class="review-text">
+            겹겹이 살아있는 결이 인상적이었어요.<br>
+            버터 향이 진하고 겉은 바삭,<br>
+            속은 촉촉해서 자꾸 생각나요!
+          </p>
+        </div>
+        <!-- 식감 바 -->
+        <div style="margin-top:14px;">
+          <div class="taste-full-row">
+              <span class="taste-label">바삭</span>
+            <div class="taste-dots">
+              <div class="td"></div><div class="td"></div><div class="td"></div><div class="td on"></div><div class="td"></div>
+            </div>
+            <span class="taste-label-right">쫄깃</span>
+          </div>
+          <div class="taste-full-row">
+            <span class="taste-label">촉촉</span>
+            <div class="taste-dots">
+              <div class="td"></div><div class="td on"></div><div class="td"></div><div class="td"></div><div class="td"></div>
+            </div>
+            <span class="taste-label-right">꾸덕</span>
+          </div>
+          <div class="taste-full-row">
+            <span class="taste-label">버터</span>
+            <div class="taste-dots">
+              <div class="td"></div><div class="td"></div><div class="td"></div><div class="td on"></div><div class="td"></div>
+            </div>
+              <span class="taste-label-right">담백</span>
+          </div>
+          <div class="taste-full-row">
+              <span class="taste-label">당도</span>
+            <div class="taste-dots">
+              <div class="td"></div><div class="td"></div><div class="td on"></div><div class="td"></div><div class="td"></div>
+            </div>
+            <span class="taste-label-right" style="color:transparent;">_</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 구분선 -->
+      <div style="height:1px;background:#F2F2F2;margin:0 16px;"></div>
+
+      <!-- Review 2: 빵순, 사진 없음 -->
+      <div class="review-item">
+        <div class="user-row">
+          <div>
+              <span class="user-name">빵순</span>
+            <span class="user-name">*****</span>
+          </div>
+              <span class="user-date">1일전</span>
+        </div>
+        <div class="user-stars">
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+        </div>
+        <div class="content-full">
+          <p class="review-text-full">
+            아메리카노랑 먹으면 최고예요!<br>
+            속이 생각보다 촉촉해서 좋았어요.<br>
+            오후 늦게 가면 품절될 수 있으니 참고하세요.
+          </p>
+        </div>
+        <div style="margin-top:14px;">
+          <div class="taste-full-row">
+              <span class="taste-label">바삭</span>
+            <div class="taste-dots">
+              <div class="td"></div><div class="td"></div><div class="td on"></div><div class="td"></div><div class="td"></div>
+            </div>
+            <span class="taste-label-right">쫄깃</span>
+          </div>
+          <div class="taste-full-row">
+            <span class="taste-label">촉촉</span>
+            <div class="taste-dots">
+              <div class="td on"></div><div class="td"></div><div class="td"></div><div class="td"></div><div class="td"></div>
+            </div>
+            <span class="taste-label-right">꾸덕</span>
+          </div>
+          <div class="taste-full-row">
+            <span class="taste-label">버터</span>
+            <div class="taste-dots">
+              <div class="td"></div><div class="td"></div><div class="td"></div><div class="td"></div><div class="td on"></div>
+            </div>
+              <span class="taste-label-right">담백</span>
+          </div>
+          <div class="taste-full-row">
+              <span class="taste-label">당도</span>
+            <div class="taste-dots">
+              <div class="td"></div><div class="td"></div><div class="td"></div><div class="td on"></div><div class="td"></div>
+            </div>
+            <span class="taste-label-right" style="color:transparent;">_</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 구분선 -->
+      <div style="height:1px;background:#F2F2F2;margin:0 16px;"></div>
+
+      <!-- Review 3: 소금, 사진 있음 -->
+      <div class="review-item">
+        <div class="user-row">
+          <div>
+              <span class="user-name">소금</span>
+            <span class="user-name">*****</span>
+          </div>
+          <span class="user-date">3주전</span>
+        </div>
+        <div class="user-stars">
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+          <span class="mi star-gold" style="font-size:23.4px;">&#xE0A0;</span>
+          <span class="mi star-dim"  style="font-size:23.4px;">&#xE0A0;</span>
+        </div>
+        <div class="content-row">
+          <div class="review-photo">
+            <img src="images/bakery-photo.png" alt="리뷰 사진" />
+          </div>
+          <p class="review-text">
+            식사 대용으로 먹었는데 생각보다<br>
+            든든했어요.<br>
+            따뜻할 때 먹으면 버터가 살아나서 맛나요.
+          </p>
+        </div>
+        <div style="margin-top:14px;">
+          <div class="taste-full-row">
+              <span class="taste-label">바삭</span>
+            <div class="taste-dots">
+              <div class="td"></div><div class="td"></div><div class="td"></div><div class="td"></div><div class="td on"></div>
+            </div>
+            <span class="taste-label-right">쫄깃</span>
+          </div>
+          <div class="taste-full-row">
+            <span class="taste-label">촉촉</span>
+            <div class="taste-dots">
+              <div class="td on"></div><div class="td"></div><div class="td"></div><div class="td"></div><div class="td"></div>
+            </div>
+            <span class="taste-label-right">꾸덕</span>
+          </div>
+          <div class="taste-full-row">
+            <span class="taste-label">버터</span>
+            <div class="taste-dots">
+              <div class="td on"></div><div class="td"></div><div class="td"></div><div class="td"></div><div class="td on"></div>
+            </div>
+              <span class="taste-label-right">담백</span>
+          </div>
+          <div class="taste-full-row">
+              <span class="taste-label">당도</span>
+            <div class="taste-dots">
+              <div class="td"></div><div class="td on"></div><div class="td"></div><div class="td"></div><div class="td"></div>
+            </div>
+            <span class="taste-label-right" style="color:transparent;">_</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.reviews-card -->
+
+    <!-- 리뷰 더보기 -->
+    <div class="more-btn-wrap">
+      <button class="more-btn">
+        리뷰 더보기
+        <span class="mi" style="font-size:19.2px;color:#9B9B9B;">&#xE8C3;</span>
+      </button>
+    </div>
+  </div><!-- /.scroll-content -->
+
+</div><!-- /#app -->
+</body>
+</html>

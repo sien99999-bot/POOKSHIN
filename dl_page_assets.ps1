@@ -1,0 +1,20 @@
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/e166f169fc84d4eebbabfccc99fbf5440153afb5.png' -OutFile 'images\hero-croissant.png' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/4546dbdce13992845613b308c73a182b58a1e558.svg' -OutFile 'images\bottom-bg-card.svg' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/e61500a74c94c5fe40faef215d272b43dcc40fd9.svg' -OutFile 'images\bread-toast-icon.svg' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/6aafd891a5ae33626fc51464a26c308059b41c74.svg' -OutFile 'images\icon-location-pin.svg' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/d1095841d7a6372517471d5851721c8551852555.png' -OutFile 'images\bakery-photo.png' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/cf0aa2f909794ea0718ccb4aa237f3c6ef27c5b7.png' -OutFile 'images\bakery-photo2.png' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/17ef15ac6bb9dbeeb4599fef8925e9c8e393ab55.png' -OutFile 'images\bakery-photo3.png' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/61c5505b5149629da2a72975418d489dee0565e9.png' -OutFile 'images\emoji-coffee.png' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/9d43981892e79e143b1c82339fa375e16714d530.png' -OutFile 'images\emoji-strawberry.png' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/040fa574cb773e4d5880ea5ba1e0da74f5028700.png' -OutFile 'images\emoji-egg.png' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/8022222e7754e52a5cc4cc040cb4cdfc5a5fea13.png' -OutFile 'images\mascot-happy.png' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/6e657d64582c9b287316f26d2d9f91671c6a4dcf.svg' -OutFile 'images\detail-hill-right.svg' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/9b17066104bdc491bad2e41eb5aec462e043a3ca.svg' -OutFile 'images\detail-hill-left.svg' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/e5a4f617f0afc66aa7a4307773ca689956b66009.svg' -OutFile 'images\donut-shop-outer.svg' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/148c9b34aeaa1bec08d3669cc43077f4e31e3b4f.svg' -OutFile 'images\donut-shop-inner.svg' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/bff0ab56c5e8b4796fec8eeace870a3ceec34ba6.svg' -OutFile 'images\donut-bread-outer.svg' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/a39462e7355546c02acc9f1150ccaae2fd5a2039.svg' -OutFile 'images\donut-bread-inner.svg' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/8c06b92176c3645809adcefc5765151f17574ff1.svg' -OutFile 'images\detail-bakery-circle.svg' -UseBasicParsing
+Invoke-WebRequest -Uri 'http://localhost:3845/assets/60bd15908c07398a029bebb37cdbf52fb49bda46.svg' -OutFile 'images\ingredient-circle.svg' -UseBasicParsing
+Write-Host 'Done'

@@ -1,0 +1,406 @@
+/* home.css - Fixed Pixel Layout (430x932) */
+@import url('https://poposnail61.github.io/web/css/minIcon-round.css');
+
+.min-icon {
+  font-family: 'Min Icon VF', sans-serif;
+  font-weight: 700; /* Bold */
+  font-style: normal;
+  font-feature-settings: "ss09" 1;
+  font-variation-settings: "rond" 3, "edpt" 1;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+}
+
+
+:root {
+  --primary: #FF9F46;
+  --accent-coral: #FB7459;
+  --accent-yellow: #FFDA46;
+  --bg-warm: #F8F4EC;
+  --white: #FFFFFF;
+  --black: #000000;
+  --gray-dark: #3A3A3A;
+  --gray-sub: #9B9B9B;
+  --gray-label: #C3C3C3;
+  --gray-fill: #F2F2F2;
+  --status-bar-bg: #F5F7F8;
+  --font-main: 'Interop', 'Pretendard Variable', sans-serif;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #EFEFEF;
+}
+
+#app {
+  width: 430px;
+  height: 932px; /* Fixed Height as requested */
+  background-color: var(--bg-warm);
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  font-family: var(--font-main);
+  -webkit-font-smoothing: antialiased;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+
+/* 6.2 Header (y:0, h:105) */
+.header-section {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 105px;
+  background-color: var(--primary);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 64px 16px 0;
+  box-sizing: border-box;
+  z-index: 900;
+}
+
+.location-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 6px 12px;
+  border-radius: 9px;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.32px;
+}
+
+/* 6.3 Headline (y:125, h:105) */
+.headline-section {
+  position: absolute;
+  top: 125px;
+  width: 100%;
+  padding: 0 17px;
+  box-sizing: border-box;
+  z-index: 800;
+}
+
+.headline-title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.48px;
+  color: var(--black);
+  margin: 0;
+}
+
+.highlight-text {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+.highlight-text::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+  width: 100%;
+  height: 9px;
+  background-color: var(--accent-yellow);
+  z-index: -1;
+}
+
+.bread-mascot-icon {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+/* 6.4 Hero Area (y:210, h:255) */
+.hero-area {
+  position: absolute;
+  top: 210px;
+  width: 100%;
+  height: 400px;
+  background-color: transparent;
+  z-index: 700;
+}
+
+.hills-background {
+  z-index: 710;
+  background-image: url("images/background-image.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 100%;
+  height: 400px;
+  position: absolute;
+  top: 25px;
+  left: 0;
+}
+
+.main-hero-card {
+  position: absolute;
+  top: 1px; /* y:211 */
+  left: 65px;
+  width: 301px;
+  height: 340px; /* Precise Figma height */
+  overflow: hidden;
+  mask-image: url('images/hero-mask.svg');
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  z-index: 750;
+}
+
+.main-hero-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 6.1 Content Card (y:465) */
+.content-card-overlay {
+  position: absolute;
+  top: 465px;
+  width: 100%;
+  height: 467px;
+  background-image: url('images/bottom-background.svg');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  z-index: 850;
+  pointer-events: none;
+}
+
+/* 6.5 Menu Info (y:512) */
+.menu-info-layer {
+  position: absolute;
+  top: 520px;
+  left: 35px;
+  right: 35px;
+  z-index: 900;
+}
+
+.title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.title-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.product-name {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.64px;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.badges-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-yellow-outline {
+  border: 1px solid var(--accent-yellow);
+  color: var(--accent-yellow);
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: -0.26px;
+}
+
+.badge-coral-text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--accent-coral);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.28px;
+}
+
+.time-bar {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.link-details-box {
+  display: flex;
+  align-items: center;
+  color: var(--gray-sub);
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.tag-list {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px; /* Figma: 54 - 48 = 6px */
+}
+
+.tag-item {
+  background-color: var(--gray-fill);
+  color: var(--gray-sub);
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* 6.6 Pricing (y:609 originally, adjusted for visual gap) */
+.pricing-layer {
+  position: absolute;
+  top: 590px; /* Reduced from 609px to match screenshot gap between tags and description */
+  left: 35px;
+  right: 35px;
+  z-index: 900;
+}
+
+.description-text {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--black);
+  margin-bottom: 18px; /* Figma gap: 115 - 97 = 18px */
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-value {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.4px;
+}
+
+.rating-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rating-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--black);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.rating-item svg {
+  fill: var(--accent-yellow); /* #FFDA46 */
+}
+
+.btn-review-outline {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid var(--gray-sub);
+  color: var(--gray-sub);
+  padding: 2px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 400;
+  text-decoration: none;
+  letter-spacing: -0.26px;
+  transition: all 0.2s ease;
+}
+
+.btn-review-outline:hover {
+  background-color: var(--gray-fill);
+}
+
+.btn-review-outline svg {
+  color: var(--gray-sub);
+}
+
+/* 6.7 Buttons (y:739) */
+.footer-buttons-row {
+  position: absolute;
+  top: 739px;
+  left: 35px;
+  right: 35px;
+  display: flex;
+  gap: 27px; /* Figma: 196 - 169 = 27px */
+  z-index: 910;
+}
+
+.btn-base {
+  flex: 1;
+  height: 54px;
+  border: none;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: -0.36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-next { background-color: var(--gray-fill); color: var(--gray-sub); }
+.btn-poki { background-color: var(--primary); color: white; }
+
+/* 5.3 Tab Bar (y:822) */
+.menu-bar {
+  position: absolute;
+  top: 822px;
+  left: 16px;
+  width: 398px;
+  height: 81px;
+  background: white;
+  border-radius: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 38px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.menu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: var(--gray-label);
+  transition: all 0.2s ease;
+}
+
+.menu-item.active {
+  color: var(--black);
+}
+
+.menu-item span:not(.min-icon) {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.28px;
+  margin-top: 4px;
+}
+

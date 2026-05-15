@@ -1,0 +1,249 @@
+/* detail.css - Final Pixel-Perfect Detail Page Implementation */
+
+:root {
+  --primary: #ff9f46;
+  --accent-coral: #fb7459;
+  --accent-yellow: #ffda46;
+  --accent-green: #bbd884;
+  --white: #ffffff;
+  --gray-sub: #9b9b9b;
+  --gray-label: #c3c3c3;
+  --gray-fill: #f2f2f2;
+  --bg-yellow-soft: #fff7df;
+  --bg-warm: #f8f4ec;
+}
+
+#app.detail-page {
+  width: 430px;
+  height: 3268px; /* Total height from design.md */
+  background-color: var(--white);
+  position: relative;
+  margin: 0 auto;
+  overflow-x: hidden;
+  font-family: "Interop", "Pretendard Variable", sans-serif;
+}
+
+/* 7.2 Hero Section */
+.hero-section {
+  position: relative;
+  height: 600px;
+  background-color: var(--white);
+}
+
+.hero-title-text {
+  position: absolute;
+  top: 101px;
+  left: 36px; /* Adjusted to center-ish as per metadata x: 51 but looks offset */
+  width: 100%;
+  font-size: 60px;
+  font-weight: 800;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: -1.2px;
+  z-index: 10;
+}
+
+.green-band-bg {
+  position: absolute;
+  top: 458px;
+  width: 430px;
+  height: 256px;
+  background-color: var(--accent-green);
+  z-index: 1;
+}
+
+.main-croissant-container {
+  position: absolute;
+  top: 168px;
+  left: 65px;
+  width: 301px;
+  height: 340px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  z-index: 5;
+  background-color: #d9d9d9;
+}
+
+.main-croissant-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swipe-hint-text {
+  position: absolute;
+  top: 571px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 13px;
+  font-weight: 300;
+  z-index: 10;
+}
+
+/* 7.3 Baker's Note */
+.note-section {
+  position: absolute;
+  top: 714px;
+  width: 100%;
+  text-align: center;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.note-title {
+  font-family: "Pretendard", sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.64px;
+  margin-bottom: 30px;
+}
+
+.note-body {
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.38px;
+  color: #000;
+}
+
+/* 7.4 Donut Charts */
+.charts-area {
+  position: absolute;
+  top: 1044px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.donut-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.donut-circle {
+  position: relative;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.donut-circle::after {
+  content: "";
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.donut-shop-val {
+  width: 164px;
+  height: 164px;
+  background: conic-gradient(var(--accent-yellow) 78%, var(--gray-fill) 0);
+}
+.donut-shop-val::after {
+  width: 119px;
+  height: 119px;
+}
+
+.donut-bread-val {
+  width: 208px;
+  height: 208px;
+  background: conic-gradient(var(--accent-coral) 82%, var(--gray-fill) 0);
+}
+.donut-bread-val::after {
+  width: 151px;
+  height: 151px;
+}
+
+.donut-circle .percent {
+  position: relative;
+  z-index: 10;
+  font-weight: 700;
+}
+
+/* 7.5 Fresh Banner */
+.fresh-banner-row {
+  position: absolute;
+  top: 1293px;
+  width: 381px;
+  height: 174px;
+  background-color: var(--bg-yellow-soft);
+  border-radius: 0 20px 20px 0;
+  padding: 26px 38px;
+  box-sizing: border-box;
+}
+
+/* 7.6 Store Info */
+.store-info-section {
+  position: absolute;
+  top: 1548px;
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+/* 7.9 Texture Data */
+.texture-section {
+  position: absolute;
+  top: 2470px;
+  width: 100%;
+  padding: 0 39px;
+  box-sizing: border-box;
+}
+
+/* 7.10 Comment */
+.comment-area {
+  position: absolute;
+  top: 2736px;
+  width: 100%;
+  height: 213px;
+  display: flex;
+  align-items: center;
+}
+
+.comment-bubble {
+  flex: 1;
+  background: white;
+  height: 182px;
+  border-radius: 20px 0 0 20px;
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.03);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+/* 7.11 Ingredients */
+.ingredients-section {
+  position: absolute;
+  top: 3044px;
+  width: 100%;
+  padding: 0 45px;
+  box-sizing: border-box;
+}
+
+/* Floating Bottom Button */
+.bottom-action-fixed {
+  position: fixed;
+  bottom: 34px;
+  left: 36px;
+  right: 36px;
+  height: 60px;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 800;
+  text-decoration: none;
+  z-index: 1000;
+  box-shadow: 0 4px 14px rgba(255, 159, 70, 0.4);
+}

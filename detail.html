@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=430, user-scalable=no" />
+    <meta name="theme-color" content="#F8F4EC" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
+  <link rel="apple-touch-icon" href="/icon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <title>POOKSHIN - 상세페이지</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="https://poposnail61.github.io/web/css/minIcon-round.css" />
+  <style>
+    /* 기본 리셋 */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #F8F4EC; font-family: 'Pretendard Variable', sans-serif; width: 430px; margin: 0 auto; -webkit-font-smoothing: antialiased; overflow: hidden; height: 100vh; }
+    #app { width: 430px; height: 100vh; background: #F8F4EC; overflow: hidden; position: relative; }
+    .mi { font-family: 'Min Icon VF', 'Round Bold', sans-serif; font-feature-settings: 'ss09' 1; font-style: normal; line-height: normal; }
+
+
+    /* ── 히어로 섹션 ── */
+    .hero-section {
+      position: relative; width: 430px; height: 587px; /* Figma bottom-card 기준 시작 높이 */
+      /* overflow: hidden 제거하여 초록색 배경이 밖으로 넘칠 수 있도록 허용 */
+    }
+    /* z-index 레이어 맵:
+       1: green-band
+       2: hill-left / hill-right
+       5: hero-slider (이미지 트랙)
+       10: hero-title
+       15: walk-badge / swipe-hint / slide-dots
+       20: btn-close
+    */
+    .btn-close {
+      position: absolute; top: 18px; right: 20px; z-index: 20;
+      text-decoration: none;
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+    }
+    /* CROISSANT 타이틀 — 피그마: top=101px, 중앙 정렬 */
+    .hero-title {
+      position: absolute; top: 101px; left: 50%; transform: translateX(-50%);
+      font-weight: 800; font-size: 60px; color: #FF9F46;
+      letter-spacing: -1.2px; text-transform: uppercase;
+      z-index: 10; white-space: nowrap; pointer-events: none;
+    }
+    /* 통합된 상단 배경 (녹색 곡선 + 언덕) */
+    .hero-bg-shape {
+      position: absolute; top: 421px; left: -42.5px;
+      width: 515px; height: 293px; /* 5px 더 좁힘, 피그마 원래 높이 적용 */
+      z-index: 1;
+      pointer-events: none;
+      object-fit: cover;
+      object-position: top;
+    }
+    /* ── 이미지 슬라이더 (새로운 State Machine 방식) ── */
+    .hero-slider {
+      position: absolute; top: 0; left: 0; width: 430px; height: 100%;
+      z-index: 5;
+      overflow: hidden;
+    }
+    
+    /* 각 이미지의 공통 속성 */
+    .hero-img-item {
+      position: absolute;
+      /* overflow: hidden 제거 - 그림자가 잘리지 않도록 함 */
+      transition: all 0.4s cubic-bezier(0.34, 1.26, 0.64, 1);
+      border-radius: 0 0 68px 68px;
+      -webkit-mask-image: url('images/hero-mask.svg');
+      mask-image: url('images/hero-mask.svg');
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+    }
+    .hero-img-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      transform: scale(1.1); /* 이미지를 살짝 확대 */
+    }
+
+    /* State 0: Center (활성 메인 이미지) */
+    .pos-0 {
+      left: 54px; top: 198px;
+      width: 323px; height: 361px;
+      z-index: 3;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,0.12));
+    }
+    /* State 1: Right (오른쪽 사이드 이미지) */
+    .pos-1 {
+      left: 402px; top: 245px; 
+      width: 200px; height: 223px;
+      z-index: 1;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));
+    }
+    /* State 2: Left (왼쪽 사이드 이미지) */
+    .pos-2 {
+      left: -171px; top: 245px; 
+      width: 200px; height: 223px;
+      z-index: 1;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));
+    }
+    /* 슬라이드 인디케이터 도트 */
+    .slide-dots {
+      position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 6px; z-index: 15;
+    }
+    .slide-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.45);
+      transition: background 0.25s, width 0.25s;
+      cursor: pointer;
+    }
+    .slide-dot.active { background: white; width: 18px; border-radius: 3px; }
+    /* 닫기 버튼 연도 */
+    .btn-close {
+      position: absolute; top: 18px; right: 20px;
+      z-index: 20;
+      text-decoration: none;
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+    }
+    /* 히어로 타이틀 */
+    .hero-title {
+      position: absolute; top: 101px; left: 50%; transform: translateX(-50%);
+      font-weight: 800; font-size: 60px; color: #FF9F46;
+      letter-spacing: -1.2px; text-transform: uppercase;
+      z-index: 10; white-space: nowrap;
+    }
+    /* 녹색 바닥 면 */
+    .green-band {
+      position: absolute; bottom: 0; left: 0;
+      width: 430px; height: 256px;
+      background: #BBD884; z-index: 1;
+    }
+    /* 힉 조형 (greeen-band 위) */
+    .hill-right {
+      position: absolute; right: -16px; bottom: 152px;
+      width: 98px; height: 64px; z-index: 2;
+    }
+    .hill-left {
+      position: absolute; left: -16px; bottom: 152px;
+      width: 111px; height: 69px; z-index: 2;
+    }
+    /* 이미지 슬라이더 컨테이너 */
+    .hero-slider {
+      position: absolute; inset: 0;
+      z-index: 5;
+      overflow: hidden;
+    }
+    .hero-slides-track {
+      display: flex;
+      width: 100%; height: 100%;
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .hero-slide {
+      flex-shrink: 0;
+      width: 100%; height: 100%;
+      position: relative;
+      display: flex; align-items: flex-start; justify-content: center;
+    }
+
+    /* top-image-icon (빵/아몬드 장식 아이콘) */
+    .top-image-icon {
+      position: absolute;
+      right: -2px;
+      bottom: 20px;
+      width: 90px;
+      height: 90px;
+      z-index: 7;
+      pointer-events: none;
+    }
+    .top-image-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .swipe-hint {
+      position: absolute; bottom: 38px; left: 50%; transform: translateX(-50%);
+      white-space: nowrap; z-index: 12;
+      font-size: 13px; color: white; font-weight: 300;
+      display: flex; align-items: center; gap: 4px; letter-spacing: -0.26px;
+    }
+    /* 도보 배지 */
+    .walk-badge-detail {
+      position: absolute; left: 50%; transform: translateX(-50%); bottom: 210px;
+      border: 1px solid #FFDA46; border-radius: 8px; padding: 1px 8px;
+      font-size: 13px; color: #FFDA46; z-index: 12; font-weight: 500; white-space: nowrap;
+    }
+    /* 슬라이드 인디케이터 도트 */
+    .slide-dots {
+      position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 6px; z-index: 12;
+    }
+    .slide-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      transition: background 0.25s, width 0.25s;
+      cursor: pointer;
+    }
+    .slide-dot.active {
+      background: white;
+      width: 18px;
+      border-radius: 3px;
+    }
+
+    /* 섹션 제목 */
+    .sec-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.8; margin-bottom: 16px; }
+
+    /* 하단 바텀시트 래퍼 (손으로 끌어올리는 형태) */
+    .bottom-card-wrapper {
+      position: absolute;
+      top: 587px;
+      left: 0;
+      width: 430px;
+      height: 100vh;
+      z-index: 20;
+      transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      touch-action: none; /* 드래그 중 기본 스크롤/새로고침 방지 */
+      /* 마스크를 래퍼에 직접 적용하여 내부 콘텐츠가 상단 곡선 밖으로 튀어나가지 않게 함 */
+      -webkit-mask-image: url('images/bottom-bg-card.svg'), linear-gradient(#000, #000);
+      -webkit-mask-position: top left, left 200px;
+      -webkit-mask-size: 100% 466px, 100% calc(100% - 200px);
+      -webkit-mask-repeat: no-repeat;
+    }
+    .bottom-card-wrapper.expanded {
+      touch-action: pan-y; /* 열렸을 때는 내부 스크롤을 위해 터치 허용 */
+    }
+    /* 카드 배경 (#FAF7F2 배경색 적용) */
+    .bottom-card-bg {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: #FAF7F2;
+      pointer-events: none;
+    }
+    /* 스크롤 콘텐츠 (내부 스크롤) */
+    .scroll-content { 
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      overflow-y: hidden; /* 위로 다 올라가기 전까지 내부 스크롤 방지 */
+      -ms-overflow-style: none; /* IE, Edge 스크롤바 숨김 */
+      scrollbar-width: none; /* Firefox 스크롤바 숨김 */
+    }
+    .scroll-content::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera 스크롤바 숨김 */
+    }
+    .bottom-card-wrapper.expanded .scroll-content {
+      overflow-y: auto; /* 상단 도달 시 내부 스크롤 허용 */
+    }
+    .scroll-inner { position: relative; z-index: 1; }
+    
+    /* 딤 오버레이 (상단 배경 어둡게 처리) */
+    .dim-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 15;
+      opacity: 0;
+      pointer-events: none;
+      will-change: opacity;
+      cursor: pointer;
+    }
+    .dim-overlay.active { pointer-events: auto; }
+    /* 카드 상단 닫기 핸들 영역 */
+    .card-top-handle {
+      position: absolute; top: 0; left: 0; width: 100%; height: 56px;
+      z-index: 10; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-handle-bar {
+      width: 36px; height: 4px; border-radius: 2px;
+      background: rgba(0,0,0,0.15); margin-top: 12px;
+    }
+
+    /* 베이커 노트 */
+    .bakers-note { text-align: center; padding: 64px 16px 48px; }
+    .bakers-note-title {
+      font-weight: 800; font-size: 32px; color: #000;
+      letter-spacing: -0.64px; line-height: 1.71; margin-bottom: 24px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .bakers-note-title img { width: 22px; height: 42px; object-fit: contain; }
+    .note-body { font-weight: 500; font-size: 19px; color: #000; letter-spacing: -0.38px; line-height: 1.5; }
+
+    /* 도넛 차트 (section02) */
+    .charts-section { position: relative; width: 100%; height: 204px; margin-top: 64px; }
+    .charts-bg { position: absolute; right: 0; top: 0; width: 386px; height: 204px; z-index: 0; }
+    .charts-bg img { width: 100%; height: 100%; object-fit: contain; }
+    .charts-row { position: relative; z-index: 1; display: flex; align-items: center; justify-content: flex-end; gap: 40px; padding: 25px 45px 25px 0; height: 100%; }
+    
+    .donut-wrap { position: relative; display: flex; align-items: center; justify-content: center; width: 125px; height: 125px; flex-shrink: 0; }
+    .donut-wrap.bread { width: 160px; height: 160px; }
+    .donut-wrap svg { position: absolute; top: 0; left: 0; transform: rotate(-90deg); width: 100%; height: 100%; z-index: 0; }
+    .donut-bg-circle { fill: none; stroke: rgba(0,0,0,0.03); stroke-width: 10; }
+    .donut-fill-circle {
+      fill: none;
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: 314; /* 2 * PI * 50 */
+      stroke-dashoffset: 314;
+      transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .shop .donut-fill-circle { stroke: #FFDA46; }
+    .bread .donut-fill-circle { stroke: #FB7459; stroke-width: 12; stroke-dasharray: 408; stroke-dashoffset: 408; }
+    .bread .donut-bg-circle { stroke-width: 12; }
+
+    .donut-text-col { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+    .shop.animate .donut-fill-circle { stroke-dashoffset: calc(314 * (1 - 0.78)); }
+    .bread.animate .donut-fill-circle { stroke-dashoffset: calc(408 * (1 - 0.82)); }
+
+    .donut-label-shop { font-weight: 600; font-size: 13px; color: #C3C3C3; letter-spacing: -0.26px; line-height: 1.2; margin-bottom: 8px; }
+    .donut-pct-shop { font-weight: 700; font-size: 34px; color: #FFDA46; letter-spacing: -0.68px; line-height: 1.2; }
+    .donut-label-bread { font-weight: 600; font-size: 17px; color: #C3C3C3; letter-spacing: -0.34px; line-height: 1.2; margin-bottom: 10px; }
+    .donut-pct-bread { font-weight: 700; font-size: 42px; color: #FB7459; letter-spacing: -0.84px; line-height: 1.2; }
+    
+    .donut-pct-shop, .donut-pct-bread {
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+    .animate .donut-pct-shop, .animate .donut-pct-bread {
+      opacity: 1;
+    }
+
+    /* 갓 구운 시간 배너 (section03) */
+    .fresh-banner-wrap { padding: 64px 0 0; }
+    .fresh-banner { width: 381px; background: #FFF7DF; border-radius: 0 20px 20px 0; display: flex; flex-direction: column; padding: 24px 22px 23px 38px; }
+    .fresh-top { display: flex; align-items: center; gap: 3px; margin-bottom: 12px; }
+    .fresh-alarm-icon { font-size: 31.2px; color: #000; }
+    .fresh-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.8; }
+    .fresh-bottom { display: flex; align-items: center; gap: 23px; }
+    .fresh-time { font-weight: 700; font-size: 32px; color: #FB7459; letter-spacing: -0.64px; }
+    .fresh-desc { font-weight: 500; font-size: 16px; color: #000; letter-spacing: -0.32px; line-height: 1.5; }
+
+    /* 베이커리 정보 (section05) */
+    .bakery-section { position: relative; width: 100%; height: 348px; margin-top: 64px; }
+    .bakery-bg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 0; }
+    .bakery-bg img { width: 100%; height: 100%; object-fit: contain; }
+    .bakery-contents { position: relative; z-index: 1; padding: 16px; width: 100%; box-sizing: border-box; }
+    .bakery-header-row { display: flex; align-items: center; margin-bottom: 18px; }
+    .bakery-name { font-weight: 700; font-size: 28px; color: #000; letter-spacing: -0.56px; line-height: 1.5; width: 164px; }
+    .bakery-badge-wrap { display: flex; align-items: center; gap: 15px; }
+    .bakery-badge { border: 1px solid #FFDA46; border-radius: 8px; padding: 1px 8px; font-size: 13px; color: #FFDA46; font-weight: 400; }
+    .bakery-dist { font-size: 13px; color: #9B9B9B; font-weight: 400; }
+    .bakery-tags { display: flex; gap: 8px; margin-bottom: 22px; flex-wrap: nowrap; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
+    .bakery-tags::-webkit-scrollbar { display: none; }
+    .bakery-tag { background: #F2F2F2; border-radius: 8px; padding: 2px 10px; font-weight: 600; font-size: 14px; color: #9B9B9B; text-align: center; white-space: nowrap; flex-shrink: 0; }
+    .bakery-desc { font-weight: 500; font-size: 16px; color: #000; letter-spacing: -0.32px; line-height: 1.5; margin-bottom: 24px; }
+    .bakery-photo-circle { position: absolute; left: 246px; top: 177px; width: 152px; height: 152px; border-radius: 50%; overflow: hidden; z-index: 2; }
+    .bakery-photo-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .other-menu-btn { display: inline-flex; align-items: center; gap: 2px; border: 1px solid #8B8B8B; border-radius: 8px; padding: 1px 8px; font-size: 15px; color: #8B8B8B; text-decoration: none; width: max-content; }
+
+    /* 정보 카드 */
+    .info-cards-row { display: flex; gap: 8px; padding: 64px 16px 0; }
+    .info-card { flex: 1; height: 127px; background: white; border-radius: 20px; padding: 20px 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+    .info-card-title { font-weight: 600; font-size: 16px; color: #000; letter-spacing: -0.32px; margin-bottom: 12px; }
+    .info-card-row { display: flex; gap: 12px; font-size: 16px; color: #9B9B9B; letter-spacing: -0.32px; margin-bottom: 6px; }
+    .info-card-row span:first-child { font-weight: 500; }
+    .info-card-addr { font-weight: 500; font-size: 16px; color: #9B9B9B; letter-spacing: -0.32px; line-height: 1.5; }
+
+    /* 추천 조합 (section07) */
+    .combo-section { padding: 64px 16px 0; }
+    .combo-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.8; text-align: left; margin-bottom: 12px; margin-left: 21px; }
+    .combo-box { background: #FFF7DF; border-radius: 20px; padding: 28px 24px 34px 44px; display: flex; flex-direction: column; gap: 40px; }
+    .combo-item { display: flex; align-items: center; gap: 35px; }
+    .combo-emoji { width: 36px; height: 36px; flex-shrink: 0; }
+    .combo-text { flex: 1; text-align: left; }
+    .combo-name { font-weight: 700; font-size: 16px; color: #000; letter-spacing: -0.32px; line-height: 1.8; }
+    .combo-desc { font-size: 13px; color: #9B9B9B; letter-spacing: -0.26px; line-height: 1.8; }
+
+    /* 식감 데이터 (section08) */
+    .taste-section { padding: 64px 0 0; }
+    .taste-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.8; text-align: left; margin-bottom: 12px; margin-left: 35px; }
+    .taste-box { background: #FFF; border-radius: 0 20px 20px 0; padding: 15px 19px 19px 47px; width: 350px; display: flex; flex-direction: column; gap: 12px; }
+    .taste-row { display: flex; align-items: center; gap: 12px; height: 29px; }
+    .taste-label { font-weight: 700; font-size: 16px; color: #000; letter-spacing: -0.32px; flex-shrink: 0; width: 28px; }
+    .taste-dots { display: flex; gap: 6px; flex: 1; justify-content: center; }
+    .dot { width: 36px; height: 7px; background: #F2F2F2; border-radius: 8px; transition: background 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .dot.on { background: #F2F2F2; } /* 초기에는 회색 */
+    .taste-section.animate .dot.on { background: #FB7459; transform: scale(1.1); }
+    /* 각 줄마다 순차적으로 나타나도록 지연 시간 추가 */
+    .taste-section.animate .taste-row:nth-child(1) .dot.on { transition-delay: 0.1s; }
+    .taste-section.animate .taste-row:nth-child(2) .dot.on { transition-delay: 0.3s; }
+    .taste-section.animate .taste-row:nth-child(3) .dot.on { transition-delay: 0.5s; }
+    .taste-label-right { text-align: right; }
+
+    /* 와앙이의 한마디 (section09) */
+    .mascot-banner { margin-top: 20px; position: relative; height: 340px; display: flex; align-items: flex-start; overflow: visible; }
+    .mascot-img-wrap { width: 300px; height: 340px; z-index: 1; position: absolute; left: -47px; top: 0; }
+    .mascot-img-wrap img { width: 100%; height: 100%; object-fit: contain; }
+    .mascot-text-box { background: white; border-radius: 20px 0 0 20px; padding: 33px 21px 40px; width: 224px; height: 182px; position: absolute; right: 0; top: 70px; z-index: 0; display: flex; flex-direction: column; gap: 10px; text-align: center; justify-content: center; box-sizing: border-box; }
+    .mascot-speech-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.5; margin-bottom: 0; }
+    .mascot-speech-text { font-weight: 400; font-size: 15px; color: #000; letter-spacing: -0.3px; line-height: 1.5; margin-bottom: 0; }
+
+    /* 성분 구성 (section10) */
+    .ingredient-section { padding: 20px 16px 120px; }
+    .ingredient-row { display: flex; gap: 27px; justify-content: center; margin-top: 16px; }
+    .ingredient-circle { width: 96px; height: 96px; border-radius: 50%; border: 2px solid #FB7459; background: white; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
+    .ingredient-name { font-weight: 500; font-size: 20px; color: #FB7459; opacity: 0.8; letter-spacing: -0.4px; }
+
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Hero -->
+  <div class="hero-section">
+    <!-- 닫기 -->
+    <a href="home.html" class="btn-close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6L18 18" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <!-- 타이틀 -->
+    <h1 class="hero-title">CROISSANT</h1>
+
+    <!-- 통합 상단 배경 조형 (제일 아래 레이어) -->
+    <img src="images/top-background-image.svg" class="hero-bg-shape" alt="" aria-hidden="true" />
+
+    <!-- 이미지 슬라이더 -->
+    <div class="hero-slider" id="heroSlider">
+      <!-- 3개의 이미지가 클래스(pos-0, pos-1, pos-2) 스와핑으로 이동 -->
+      <div class="hero-img-item pos-0" id="slide-0"><img src="images/hero-croissant.png" alt="크루아상" /></div>
+      <div class="hero-img-item pos-1" id="slide-1"><img src="images/bakery-photo2.png" alt="베이커리" /></div>
+      <div class="hero-img-item pos-2" id="slide-2"><img src="images/bakery-photo3.png" alt="베이커리" /></div>
+    </div>
+
+    <!-- top-image-icon: 메인 이미지 위 장식 아이콘 -->
+    <div class="top-image-icon" aria-hidden="true">
+      <img src="images/top-icon-bread1.svg" alt="" style="position:absolute;left:0;top:0;width:53px;height:78px;" />
+      <img src="images/top-icon-bread2.svg" alt="" style="position:absolute;left:4px;top:4px;width:29px;height:71px;" />
+      <img src="images/top-icon-bread3.svg" alt="" style="position:absolute;left:7px;top:12px;width:22px;height:55px;" />
+      <img src="images/top-icon-almond1.svg" alt="" style="position:absolute;left:18px;top:12px;width:39px;height:66px;" />
+      <img src="images/top-icon-almond2.svg" alt="" style="position:absolute;left:22px;top:21px;width:30px;height:49px;" />
+    </div>
+    <div class="slide-dots" id="slideDots">
+      <div class="slide-dot active" onclick="goSlide(0)"></div>
+      <div class="slide-dot" onclick="goSlide(1)"></div>
+      <div class="slide-dot" onclick="goSlide(2)"></div>
+    </div>
+  <!-- 딤 오버레이 -->
+  <div class="dim-overlay" id="dimOverlay"></div>
+
+  <!-- Bottom Card Wrapper -->
+  <div class="bottom-card-wrapper" id="bottomCard">
+    <div class="bottom-card-bg"></div>
+    <div class="scroll-content">
+    <div class="scroll-inner">
+
+    <!-- Baker's Note -->
+    <div class="bakers-note">
+      <h2 class="bakers-note-title">
+        <img src="images/wheat-bg.svg" alt="" aria-hidden="true" />
+        Baker's Note
+        <img src="images/wheat-bg.svg" alt="" aria-hidden="true" style="transform: scaleX(-1);" />
+      </h2>
+      <p class="note-body">
+        오븐에서 꺼낸 시간,<br>
+        가장 먼저 전해지는 건 '바삭함'입니다.<br><br>
+        겹겹이 살아있는 결을 따라<br>
+        가볍게 부서지는 식감과<br>
+        버터의 풍미가 함께 느껴지도록 완성했습니다.<br><br>
+        처음 한 입의 바삭함을 즐겨보세요.
+      </p>
+    </div>
+
+    <!-- Donut Charts (section02) -->
+    <div class="charts-section">
+      <div class="charts-bg">
+        <img src="images/section02-background-new.svg" alt="" aria-hidden="true" />
+      </div>
+      <div class="charts-row">
+        <!-- 가게 78% -->
+        <div class="donut-wrap shop">
+          <svg viewBox="0 0 125 125">
+            <circle class="donut-bg-circle" cx="62.5" cy="62.5" r="50"></circle>
+            <circle class="donut-fill-circle" cx="62.5" cy="62.5" r="50"></circle>
+          </svg>
+          <div class="donut-text-col">
+            <span class="donut-label-shop">가게</span>
+            <span class="donut-pct-shop">78%</span>
+          </div>
+        </div>
+        <!-- 빵 82% -->
+        <div class="donut-wrap bread">
+          <svg viewBox="0 0 160 160">
+            <circle class="donut-bg-circle" cx="80" cy="80" r="65"></circle>
+            <circle class="donut-fill-circle" cx="80" cy="80" r="65"></circle>
+          </svg>
+          <div class="donut-text-col">
+            <span class="donut-label-bread">빵</span>
+            <span class="donut-pct-bread">82%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fresh Banner -->
+    <div class="fresh-banner-wrap">
+      <div class="fresh-banner">
+        <div class="fresh-top">
+          <span class="mi fresh-alarm-icon" style="font-weight: 500; font-feature-settings: 'ss09' 0; font-variation-settings: 'rond' 3, 'edpt' 1;">&#xEF60;</span>
+          <span class="fresh-title">갓 구운 시간</span>
+        </div>
+        <div class="fresh-bottom">
+          <span class="fresh-time">30분 전</span>
+          <p class="fresh-desc">아직 따뜻함이 남아있어요!<br>지금 '포키' 하면 가장 맛있어요!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bakery Info (section05) -->
+    <div class="bakery-section">
+      <div class="bakery-bg">
+        <img src="images/section05-background.svg" alt="" aria-hidden="true" />
+      </div>
+      <div class="bakery-contents">
+        <div class="bakery-header-row">
+          <h2 class="bakery-name">푹신 베이커리</h2>
+          <div class="bakery-badge-wrap">
+            <span class="bakery-badge">도보 4분</span>
+            <span class="bakery-dist">(300M)</span>
+          </div>
+        </div>
+        <div class="bakery-tags">
+          <span class="bakery-tag">#요즘핫플</span>
+          <span class="bakery-tag">#정성가득</span>
+          <span class="bakery-tag">#크루아상맛집</span>
+          <span class="bakery-tag">#겉바속촉</span>
+        </div>
+        <p class="bakery-desc">
+          푹신 베이커리는 바삭하고 결이 살아있는<br>
+          크로아상을 대표 메뉴로, <br>
+          부드럽고 달콤한 빵을 즐길 수 있는<br>
+          따뜻한 베이커리입니다.
+        </p>
+        <a href="#" class="other-menu-btn">
+          같은 가게 다른 메뉴 추천보기
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="#8B8B8B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="bakery-photo-circle">
+        <img src="images/bakery-photo.png" alt="푹신 베이커리" />
+      </div>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="info-cards-row">
+      <div class="info-card">
+        <div class="info-card-title">영업시간</div>
+        <div class="info-card-row"><span>평일</span><span>08:00 - 22:00</span></div>
+        <div class="info-card-row"><span>주말</span><span>10:00 - 20:00</span></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">위치</div>
+        <p class="info-card-addr">서울특별시 성동구<br>연무장길 27-3, 1층</p>
+      </div>
+    </div>
+
+    <!-- Recommended Pairings (section07) -->
+    <div class="combo-section">
+      <h2 class="combo-title">추천 조합</h2>
+      <div class="combo-box">
+        <div class="combo-item">
+          <img src="images/emoji-coffee.png" class="combo-emoji" alt="커피" />
+          <div class="combo-text">
+            <p class="combo-name">아메리카노와 함께</p>
+            <p class="combo-desc">버터의 풍미와 쌉쌀한 커피가 균형을 이뤄요</p>
+          </div>
+        </div>
+        <div class="combo-item">
+          <img src="images/emoji-strawberry.png" class="combo-emoji" alt="딸기" />
+          <div class="combo-text">
+            <p class="combo-name">딸기잼 곁들이기</p>
+            <p class="combo-desc">달콤새콤한 잼이 담백한 크루아상을 완성해요</p>
+          </div>
+        </div>
+        <div class="combo-item">
+          <img src="images/emoji-egg.png" class="combo-emoji" alt="달걀" />
+          <div class="combo-text">
+            <p class="combo-name">수란 + 에그 크루아상</p>
+            <p class="combo-desc">브런치로 든든하게 하루를 시작하는 조합이에요</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Texture Data (section08) -->
+    <div class="taste-section">
+      <h2 class="taste-title">식감 데이터</h2>
+      <div class="taste-box">
+        <!-- 바삭 -> 쫄깃 -->
+        <div class="taste-row">
+          <span class="taste-label">바삭</span>
+          <div class="taste-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot on"></span>
+            <span class="dot"></span>
+          </div>
+          <span class="taste-label taste-label-right">쫄깃</span>
+        </div>
+        <!-- 촉촉 -> 꾸덕 -->
+        <div class="taste-row">
+          <span class="taste-label">촉촉</span>
+          <div class="taste-dots">
+            <span class="dot"></span>
+            <span class="dot on"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+          <span class="taste-label taste-label-right">꾸덕</span>
+        </div>
+        <!-- 버터 -> 담백 -->
+        <div class="taste-row">
+          <span class="taste-label">버터</span>
+          <div class="taste-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot on"></span>
+            <span class="dot"></span>
+          </div>
+          <span class="taste-label taste-label-right">담백</span>
+        </div>
+        <!-- 당도 -->
+        <div class="taste-row" style="width: 243px;">
+          <span class="taste-label">당도</span>
+          <div class="taste-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot on"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mascot Comment (section09) -->
+    <div class="mascot-banner">
+      <div class="mascot-img-wrap">
+        <img src="images/mascot-happy.png" alt="와앙이" />
+      </div>
+      <div class="mascot-text-box">
+        <p class="mascot-speech-title">와앙이의 한마디 !</p>
+        <p class="mascot-speech-text">
+          겉은 바삭, 속은 촉촉해서<br>
+          한 입 먹으면 멈출 수 없거든…<br>
+          와앙이가 보장해!
+        </p>
+      </div>
+    </div>
+ 
+    <!-- Ingredients (section10) -->
+    <div class="ingredient-section">
+      <h2 class="sec-title">성분 구성</h2>
+      <div class="ingredient-row">
+        <div class="ingredient-circle"><span class="ingredient-name">밀가루</span></div>
+        <div class="ingredient-circle"><span class="ingredient-name">버터</span></div>
+        <div class="ingredient-circle"><span class="ingredient-name">달걀</span></div>
+      </div>
+    </div>
+    </div><!-- /.scroll-inner -->
+  </div><!-- /.scroll-content -->
+  </div><!-- /.bottom-card-wrapper -->
+
+
+</div><!-- /#app -->
+
+<script>
+  /* ── Bottom Sheet Drag Logic ── */
+  const bottomSheet = document.getElementById('bottomCard');
+  const scrollContent = document.querySelector('.scroll-content');
+  const dimOverlay = document.getElementById('dimOverlay');
+  
+  let sheetStartY = 0;
+  let currentY = 0;
+  let isDraggingSheet = false;
+  let startTouchY = 0;
+
+  const MAX_Y = 0;
+  const MIN_Y = -587; 
+
+  let startScrollTop = 0;
+
+  function collapseSheet() {
+    currentY = MAX_Y;
+    bottomSheet.classList.remove('expanded');
+    scrollContent.scrollTop = 0;
+    bottomSheet.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
+    bottomSheet.style.transform = `translateY(${currentY}px)`;
+    updateDim();
+  }
+
+  function updateDim() {
+    if (!dimOverlay) return;
+    const ratio = Math.abs(currentY / MIN_Y);
+    dimOverlay.style.opacity = ratio;
+    // 카드가 올라가 있을 때만 딤 클릭 가능
+    dimOverlay.classList.toggle('active', ratio > 0.1);
+  }
+
+  // 딤 영역(카드 밖) 터치 → 카드 닫기
+  dimOverlay.addEventListener('pointerdown', (e) => {
+    e.stopPropagation();
+    collapseSheet();
+  });
+
+  bottomSheet.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return; // 마우스 우클릭 방지
+
+    // 모바일(터치)이고 시트가 완전히 열려있을 때 내부 스크롤 중이라면 네이티브 스크롤을 우선함
+    if (bottomSheet.classList.contains('expanded')) {
+      if (e.pointerType !== 'mouse' && scrollContent.scrollTop > 0) {
+        return; 
+      }
+    }
+
+    isDraggingSheet = true;
+    startTouchY = e.clientY;
+    sheetStartY = currentY;
+    startScrollTop = scrollContent.scrollTop;
+
+    bottomSheet.style.transition = 'none'; // 드래그 중엔 애니메이션 끔
+    bottomSheet.setPointerCapture(e.pointerId);
+  });
+
+  bottomSheet.addEventListener('pointermove', (e) => {
+    if (!isDraggingSheet) return;
+    
+    const deltaY = e.clientY - startTouchY;
+
+    // 카드가 열린 상태일 때 마우스/터치 드래그로 스크롤 수동 제어
+    if (bottomSheet.classList.contains('expanded')) {
+      // 터치 디바이스에서 위로 쓸어올리는 경우 (컨텐츠 스크롤) 네이티브 스크롤에 양보
+      if (e.pointerType !== 'mouse' && deltaY < 0) {
+        isDraggingSheet = false;
+        bottomSheet.releasePointerCapture(e.pointerId);
+        return;
+      }
+
+      let newScrollTop = startScrollTop - deltaY;
+      
+      // 위쪽 방향 스크롤 (양수)일 경우 수동으로 내부 컨텐츠 스크롤
+      if (newScrollTop > 0) {
+        scrollContent.scrollTop = newScrollTop;
+        return; // 시트는 움직이지 않음
+      } else {
+        // 스크롤이 맨 위에 도달했는데 아래로 계속 당기는 경우 시트를 내리기 시작
+        bottomSheet.classList.remove('expanded');
+        scrollContent.scrollTop = 0;
+        startTouchY = e.clientY;
+        sheetStartY = MIN_Y; // 현재 위치(MIN_Y)를 기준으로 새롭게 드래그 시작
+      }
+    }
+
+    // expanded가 아니면 전체 시트를 이동
+    if (!bottomSheet.classList.contains('expanded')) {
+      let newY = sheetStartY + deltaY;
+      if (newY < MIN_Y) newY = MIN_Y; // 상단 제한
+      if (newY > MAX_Y) newY = MAX_Y; // 하단 제한
+      currentY = newY;
+      bottomSheet.style.transform = `translateY(${currentY}px)`;
+      updateDim();
+    }
+  });
+
+  bottomSheet.addEventListener('pointerup', (e) => {
+    if (!isDraggingSheet) return;
+    isDraggingSheet = false;
+    bottomSheet.releasePointerCapture(e.pointerId);
+    bottomSheet.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
+
+    // 스냅 동작: 절반 이상 올렸으면 끝까지 열고, 아니면 다시 닫음
+    if (!bottomSheet.classList.contains('expanded')) {
+      if (currentY < MIN_Y / 2) {
+        currentY = MIN_Y; // 위로 밀착
+        bottomSheet.classList.add('expanded');
+      } else {
+        currentY = MAX_Y; // 아래로 복귀
+        bottomSheet.classList.remove('expanded');
+      }
+      bottomSheet.style.transform = `translateY(${currentY}px)`;
+      updateDim();
+    }
+
+    // 탭(거의 움직임 없음)으로 카드 상단 60px 터치 시 닫기
+    const moved = Math.abs(e.clientY - startTouchY);
+    if (moved < 8 && bottomSheet.classList.contains('expanded')) {
+      const cardTop = bottomSheet.getBoundingClientRect().top;
+      if (e.clientY - cardTop < 60) {
+        collapseSheet();
+      }
+    }
+  });
+
+  bottomSheet.addEventListener('pointercancel', (e) => {
+    if (!isDraggingSheet) return;
+    isDraggingSheet = false;
+    bottomSheet.releasePointerCapture(e.pointerId);
+    bottomSheet.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
+    bottomSheet.style.transform = `translateY(${currentY}px)`;
+    updateDim();
+  });
+
+  /* ── Hero Slider Logic ── */
+  const slider = document.getElementById('heroSlider');
+  const slides = [
+    document.getElementById('slide-0'),
+    document.getElementById('slide-1'),
+    document.getElementById('slide-2')
+  ];
+  const dots = document.querySelectorAll('.slide-dot');
+  let current = 0;
+  let startX = 0;
+  let diffX = 0;
+  let dragging = false;
+
+  /* 클래스를 스왑하여 애니메이션 트리거 */
+  function updatePositions() {
+    slides.forEach((slide, i) => {
+      const pos = (i - current + 3) % 3;
+      slide.className = `hero-img-item pos-${pos}`;
+      slide.style.transform = ''; // 터치 중 사용한 transform 초기화
+      slide.style.transition = 'all 0.4s cubic-bezier(0.34, 1.26, 0.64, 1)';
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  /* 터치 시작 */
+  slider.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    diffX = 0;
+    dragging = true;
+    slides.forEach(slide => slide.style.transition = 'none'); // 즉각적인 추적
+  }, { passive: true });
+
+  /* 터치 이동 - 손가락에 맞춰 X축 이동 */
+  slider.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    diffX = e.touches[0].clientX - startX;
+    slides.forEach(slide => {
+      slide.style.transform = `translateX(${diffX}px)`;
+    });
+  }, { passive: true });
+
+  /* 터치 끝 - 임계값 도달 시 인덱스 변경 및 상태 업데이트 */
+  slider.addEventListener('touchend', () => {
+    if (!dragging) return;
+    dragging = false;
+    if (diffX < -50) {
+      current = (current + 1) % 3; // 다음 이미지
+    } else if (diffX > 50) {
+      current = (current + 2) % 3; // 이전 이미지
+    }
+    updatePositions();
+  });
+
+  /* 마우스 드래그 (PC 테스트용) */
+  slider.addEventListener('mousedown', e => {
+    startX = e.clientX;
+    diffX = 0;
+    dragging = true;
+    slides.forEach(slide => slide.style.transition = 'none');
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    diffX = e.clientX - startX;
+    slides.forEach(slide => slide.style.transform = `translateX(${diffX}px)`);
+  });
+  window.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    if (diffX < -50) current = (current + 1) % 3;
+    else if (diffX > 50) current = (current + 2) % 3;
+    updatePositions();
+  });
+
+  /* 인디케이터 클릭 */
+  function goSlide(idx) { 
+    current = idx;
+    updatePositions();
+  }
+
+  /* 5초 자동 스와이프 */
+  setInterval(() => {
+    if (!dragging) {
+      current = (current + 1) % 3;
+      updatePositions();
+    }
+  }, 5000);
+  /* ── Donut Chart Animation Logic ── */
+  const donutObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const wrap = entry.target;
+        if (!wrap.classList.contains('animate')) {
+          wrap.classList.add('animate');
+          animateValue(wrap.querySelector('.donut-pct-shop, .donut-pct-bread'));
+        }
+      }
+    });
+  }, { threshold: 0.7 }); // 70% 이상 보일 때 시작하도록 임계값 상향
+
+  document.querySelectorAll('.donut-wrap, .taste-section').forEach(el => donutObserver.observe(el));
+
+  function animateValue(obj) {
+    if (!obj) return;
+    const target = parseInt(obj.innerText);
+    let start = 0;
+    const duration = 1500;
+    const startTime = performance.now();
+
+    function step(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const value = Math.floor(progress * target);
+      obj.innerText = value + "%";
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+</script>
+</body>
+</html>

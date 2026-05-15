@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=430, user-scalable=no" />
+  <meta name="theme-color" content="#F8F4EC" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>POOKSHIN - 홈 추천화면</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="navbar.css" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Header Section (55-105px) -->
+      <div class="header-section">
+        <a href="location-setting.html" class="location-box" style="text-decoration:none;">
+          <span class="min-icon" style="font-size: 24px; color: white;">&#xEFA0;</span>
+          <span>성수동 2가</span>
+        </a>
+        <span class="min-icon" style="font-size: 24px; color: white;">&#xEF40;</span>
+      </div>
+
+      <!-- Headline (105-210px) -->
+      <div class="headline-section">
+        <h1 class="headline-title">
+          <span class="highlight-text">바삭한 한입,</span>
+          <img src="images/bread-icon.svg" class="bread-mascot-icon" alt="" />
+          <br />
+          와앙이가 취향대로 딱 골랐어요 :)
+        </h1>
+      </div>
+
+      <!-- Hero Area (210-465px) -->
+      <div class="hero-area">
+        <!-- Hills Background -->
+        <div class="hills-background"></div>
+        <div class="main-hero-card">
+          <img src="images/main-croissant.png" alt="Croissant" />
+        </div>
+      </div>
+
+      <!-- Content Card Overlay (Swoop at 465px, Body at 512px) -->
+      <div class="content-card-overlay"></div>
+
+      <div class="menu-info-layer">
+        <div class="title-row">
+          <div class="title-left">
+            <h2 class="product-name">크루아상</h2>
+            <div class="badges-group">
+              <span class="badge-yellow-outline">도보 4분</span>
+              <a
+                href="time-poki.html"
+                class="badge-coral-text time-bar"
+                aria-label="View fresh baked time"
+              >
+                <span class="min-icon" style="font-size: 18px; color: inherit; font-weight: 500; font-feature-settings: 'ss09' 0; font-variation-settings: 'rond' 3, 'edpt' 1;">&#xEF60;</span>
+                30분
+                <img src="images/arrow-4-right.svg" alt="" style="width: 13px; height: 13px; filter: invert(61%) sepia(82%) saturate(4041%) hue-rotate(325deg) brightness(101%) contrast(97%);" />
+              </a>
+            </div>
+          </div>
+          <a href="detail.html" class="link-details-box">
+            상세보기
+            <img src="images/arrow-4-right.svg" alt="" style="width: 13px; height: 13px;" />
+          </a>
+        </div>
+
+        <div class="tag-list">
+          <span class="tag-item">#바삭70%</span>
+          <span class="tag-item">#버터30%</span>
+          <span class="tag-item">#크런치</span>
+          <span class="tag-item">#겉바속촉</span>
+        </div>
+      </div>
+
+      <!-- Pricing Area (y=609) -->
+      <div class="pricing-layer">
+        <p class="description-text">
+          크런치한 겉바속촉!<br />
+          폭신 베이커리의 시그니처 메뉴
+        </p>
+        <div class="price-row">
+          <span class="price-value">5,600원</span>
+          <div class="rating-group">
+            <div class="rating-item">
+              <span
+                class="min-icon"
+                style="font-size: 18px; color: var(--accent-coral)"
+                >&#xE0A0;</span
+              >
+              4.3
+            </div>
+            <a href="review.html" class="btn-review-outline">
+              리뷰보기
+              <img
+                src="images/arrow-4-right.svg"
+                alt=""
+                style="width: 13px; height: 13px"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6.7 Action Buttons (739-793px) -->
+      <div class="footer-buttons-row">
+        <a href="home.html" class="btn-base btn-next">NEXT</a>
+        <a href="poki-success.html" class="btn-base btn-poki">POKI</a>
+      </div>
+
+      <!-- Tab Bar (Bottom Navigation) -->
+      <nav class="menu-bar">
+        <a href="home.html" class="menu-item active">
+          <span class="min-icon">&#xE110;</span>
+          <span>HOME</span>
+        </a>
+        <a href="map.html" class="menu-item">
+          <span class="min-icon">&#xEFA0;</span>
+          <span>MAP</span>
+        </a>
+        <a href="my.html" class="menu-item">
+          <span class="min-icon">&#xEF20;</span>
+          <span>MY PAGE</span>
+        </a>
+        <a href="setting.html" class="menu-item">
+          <span class="min-icon">&#xE0B0;</span>
+          <span>SETTING</span>
+        </a>
+      </nav>
+    </div>
+  </body>
+</html>
