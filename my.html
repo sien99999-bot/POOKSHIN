@@ -21,22 +21,33 @@
     <link rel="stylesheet" href="navbar.css" />
     <link rel="stylesheet" href="minIcon-round.css" />
     <style>
-      /* override home.css fixed height so page scrolls */
       #app {
         background-color: #f8f4ec;
-        height: auto !important;
-        min-height: 932px;
-        overflow-y: auto !important;
-        overflow-x: hidden;
+        height: 932px !important;
+        position: relative;
+        overflow: hidden !important;
       }
       @media (max-width: 480px) {
         #app {
           width: 100% !important;
           max-width: 430px !important;
-          min-height: 100dvh !important;
-          height: auto !important;
+          height: 100dvh !important;
           box-shadow: none !important;
         }
+      }
+
+      .my-content-scroll {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding-bottom: 120px;
+        box-sizing: border-box;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .my-content-scroll::-webkit-scrollbar {
+        display: none;
       }
 
       /* ─── TOPBAR (header y:71, h:29 → total area = 100px) ─── */
@@ -379,21 +390,15 @@
 
       /* ─── Bottom spacer before nav ─── */
       .bottom-spacer {
-        height: 130px;
-      } /* Increased to ensure nav bar doesn't overlap */
-
-      /* Make navbar sticky so it floats properly */
-      .menu-bar {
-        position: sticky !important;
-        bottom: 25px;
-        margin: 0 auto;
+        height: 30px;
       }
     </style>
   </head>
   <body>
     <div id="app">
-      <!-- TOPBAR -->
-      <div class="my-topbar">
+      <div class="my-content-scroll">
+        <!-- TOPBAR -->
+        <div class="my-topbar">
         <a href="home.html" class="my-topbar-back">
           <svg
             width="24"
@@ -503,9 +508,9 @@
           </div>
         </div>
       </div>
-
-      <!-- 27px gap before nav -->
-      <div class="bottom-spacer"></div>
+        <!-- 27px gap before nav -->
+        <div class="bottom-spacer"></div>
+      </div>
 
       <!-- Tab Bar (y:1036) -->
       <nav class="menu-bar">

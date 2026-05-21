@@ -14,7 +14,12 @@
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
   <style>
     body { background: #EFEFEF; }
-    #app { background-color: #FFFFFF; }
+    #app {
+      background-color: #FFFFFF;
+      height: 932px !important;
+      position: relative;
+      overflow: hidden !important;
+    }
     @media (max-width: 480px) {
       body {
         align-items: flex-start !important;
@@ -23,10 +28,23 @@
       #app {
         width: 100% !important;
         max-width: 430px !important;
-        min-height: 100dvh !important;
-        height: auto !important;
+        height: 100dvh !important;
         box-shadow: none !important;
       }
+    }
+
+    .setting-content-scroll {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-bottom: 120px;
+      box-sizing: border-box;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .setting-content-scroll::-webkit-scrollbar {
+      display: none;
     }
     
     .setting-header {
@@ -165,8 +183,9 @@
 </head>
 <body>
   <div id="app">
+    <div class="setting-content-scroll">
 
-    <div class="setting-header">
+      <div class="setting-header">
       <a href="my.html" class="btn-back">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M15 18L9 12L15 6" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -220,6 +239,7 @@
         <a href="withdraw.html">회원탈퇴</a>
         <a href="onboarding.html">로그아웃</a>
       </div>
+    </div>
     </div>
 
     <!-- Tab Bar -->

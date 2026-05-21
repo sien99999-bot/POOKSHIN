@@ -13,22 +13,33 @@
   <title>POOKSHIN - 마이페이지</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
   <style>
-    /* override home.css fixed height so page scrolls */
     #app {
       background-color: #F8F4EC;
-      height: auto !important;
-      min-height: 932px;
-      overflow-y: auto !important;
-      overflow-x: hidden;
+      height: 932px !important;
+      position: relative;
+      overflow: hidden !important;
     }
     @media (max-width: 480px) {
       #app {
         width: 100% !important;
         max-width: 430px !important;
-        min-height: 100dvh !important;
-        height: auto !important;
+        height: 100dvh !important;
         box-shadow: none !important;
       }
+    }
+
+    .my-content-scroll {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding-bottom: 120px;
+      box-sizing: border-box;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .my-content-scroll::-webkit-scrollbar {
+      display: none;
     }
 
     /* ─── TOPBAR (header y:71, h:29 → total area = 100px) ─── */
@@ -281,14 +292,7 @@
     }
 
     /* ─── Bottom spacer before nav ─── */
-    .bottom-spacer { height: 130px; } /* Increased to ensure nav bar doesn't overlap */
-    
-    /* Make navbar sticky so it floats properly */
-    .menu-bar {
-      position: sticky !important;
-      bottom: 25px;
-      margin: 0 auto;
-    }
+    .bottom-spacer { height: 30px; }
   </style>
   <link rel="stylesheet" crossorigin href="/assets/home-DsQNiKwc.css">
   <link rel="stylesheet" crossorigin href="/assets/minIcon-round-CIgpdV9E.css">
@@ -296,8 +300,9 @@
 </head>
 <body>
   <div id="app">
+    <div class="my-content-scroll">
 
-    <!-- TOPBAR -->
+      <!-- TOPBAR -->
     <div class="my-topbar">
       <a href="home.html" class="my-topbar-back">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -395,8 +400,9 @@
 
     <!-- 27px gap before nav -->
     <div class="bottom-spacer"></div>
+  </div>
 
-    <!-- Tab Bar (y:1036) -->
+  <!-- Tab Bar (y:1036) -->
     <nav class="menu-bar">
       <a href="home.html" class="menu-item">
         <span class="min-icon">&#xE110;</span>
