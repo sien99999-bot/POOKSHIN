@@ -415,7 +415,7 @@ body {
 /* Mobile Layout Safe Area Override */
 @media (max-width: 480px) {
   body {
-    align-items: center !important;
+    align-items: flex-start !important;
     justify-content: center !important;
     background-color: var(--bg-warm) !important;
     overflow: hidden;
@@ -424,8 +424,9 @@ body {
     width: 430px !important;
     height: 932px !important;
     box-shadow: none !important;
-    transform-origin: center center;
+    transform-origin: top center;
     transform: scale(min(1, min(100dvh / 932, 100dvw / 430)));
   }
 }
+
 
