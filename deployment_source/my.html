@@ -15,31 +15,18 @@
   <style>
     #app {
       background-color: #F8F4EC;
-      height: 932px !important;
-      position: relative;
-      overflow: hidden !important;
+      height: auto !important;
+      min-height: 932px;
+      overflow-x: hidden;
     }
     @media (max-width: 480px) {
       #app {
-        width: 100% !important;
-        max-width: 430px !important;
-        height: 100dvh !important;
+        width: 430px !important;
+        height: 932px !important;
         box-shadow: none !important;
+        transform-origin: center center;
+        transform: scale(min(1, min(100dvh / 932, 100dvw / 430)));
       }
-    }
-
-    .my-content-scroll {
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding-bottom: 120px;
-      box-sizing: border-box;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    .my-content-scroll::-webkit-scrollbar {
-      display: none;
     }
 
     /* ─── TOPBAR (header y:71, h:29 → total area = 100px) ─── */
@@ -292,7 +279,7 @@
     }
 
     /* ─── Bottom spacer before nav ─── */
-    .bottom-spacer { height: 30px; }
+    .bottom-spacer { height: 130px; }
   </style>
   <link rel="stylesheet" crossorigin href="/assets/home-DsQNiKwc.css">
   <link rel="stylesheet" crossorigin href="/assets/minIcon-round-CIgpdV9E.css">
@@ -300,9 +287,8 @@
 </head>
 <body>
   <div id="app">
-    <div class="my-content-scroll">
 
-      <!-- TOPBAR -->
+    <!-- TOPBAR -->
     <div class="my-topbar">
       <a href="home.html" class="my-topbar-back">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -400,7 +386,6 @@
 
     <!-- 27px gap before nav -->
     <div class="bottom-spacer"></div>
-  </div>
 
   <!-- Tab Bar (y:1036) -->
     <nav class="menu-bar">

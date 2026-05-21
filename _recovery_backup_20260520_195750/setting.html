@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=430, user-scalable=no" />
+    <meta name="theme-color" content="#F8F4EC" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>POOKSHIN - 설정</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="home.css" />
+  <link rel="stylesheet" href="navbar.css" />
+  <style>
+    #app { background-color: #F8F4EC; }
+    
+    .setting-header {
+      padding: 70px 24px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .setting-header .title { font-size: 28px; font-weight: 800; color: #333; }
+    
+    .user-summary-card {
+      margin: 0 16px;
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+    .user-thumb { width: 60px; height: 60px; border-radius: 50%; background: #F2F2F2; overflow: hidden; }
+    .user-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .user-text h3 { font-size: 18px; font-weight: 800; margin-bottom: 2px; }
+    .user-text p { font-size: 13px; color: #9B9B9B; }
+    
+    .setting-group {
+      margin: 30px 16px;
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+    
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      border-bottom: 1px solid #F8F8F8;
+      text-decoration: none;
+      color: #333;
+    }
+    .setting-row:last-child { border-bottom: none; }
+    .setting-row .label { font-size: 16px; font-weight: 700; }
+    
+    .toggle-switch {
+      width: 44px;
+      height: 24px;
+      background: #EFEFEF;
+      border-radius: 20px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .toggle-switch::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+    .toggle-switch.active { background: #FF9F46; }
+    .toggle-switch.active::after { transform: translateX(20px); }
+    
+    .footer-actions {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 40px;
+    }
+    .footer-actions a { color: #9B9B9B; font-size: 14px; font-weight: 600; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div id="app">
+
+    <div class="setting-header">
+       <div style="display:flex; align-items:center; gap:12px;">
+          <a href="my.html" style="text-decoration:none;"><span class="min-icon" style="font-size:24px; color:#333;">&#xE150;</span></a>
+       <span class="title">설정</span>
+       </div>
+       <span class="min-icon" style="font-size:24px; color:#333;">&#xEF40;</span>
+    </div>
+
+    <!-- User Card (1016:1802) -->
+    <div class="user-summary-card">
+       <div class="user-thumb">
+          <img src="images/decoration-1.svg" alt="" />
+       </div>
+       <div class="user-text">
+           <h3>와앙이1234</h3>
+          <p>sien99999@gmail.com</p>
+       </div>
+       <a href="profile-edit.html" style="margin-left:auto; background:#F2F2F2; padding:6px 12px; border-radius:8px; font-size:12px; font-weight:700; color:#9B9B9B; text-decoration:none;">수정하기</a>
+    </div>
+
+    <!-- Setting Groups (1016:1811) -->
+    <div class="setting-group">
+       <a href="taste-data.html" class="setting-row">
+          <span class="label">식감 취향 설정</span>
+          <span class="min-icon" style="color:#C3C3C3; font-size:18px;">&#xE150;</span>
+       </a>
+       <a href="location-setting.html" class="setting-row">
+          <span class="label">위치 설정</span>
+          <span class="min-icon" style="color:#C3C3C3; font-size:18px;">&#xE150;</span>
+       </a>
+       <div class="setting-row">
+          <span class="label">알림 설정</span>
+          <div class="toggle-switch active"></div>
+       </div>
+    </div>
+
+    <div class="setting-group">
+       <a href="display-setting.html" class="setting-row">
+          <span class="label">디스플레이 설정</span>
+          <span class="min-icon" style="color:#C3C3C3; font-size:18px;">&#xE150;</span>
+       </a>
+       <div class="setting-row">
+          <span class="label">다크모드</span>
+          <div class="toggle-switch"></div>
+       </div>
+    </div>
+
+    <div class="setting-group">
+       <a href="privacy.html" class="setting-row">
+          <span class="label">개인정보 처리방침</span>
+          <span class="min-icon" style="color:#C3C3C3; font-size:18px;">&#xE150;</span>
+       </a>
+       <a href="terms.html" class="setting-row">
+          <span class="label">서비스 이용약관</span>
+          <span class="min-icon" style="color:#C3C3C3; font-size:18px;">&#xE150;</span>
+       </a>
+       <a href="contact.html" class="setting-row">
+          <span class="label">문의하기</span>
+          <span class="min-icon" style="color:#C3C3C3; font-size:18px;">&#xE150;</span>
+       </a>
+    </div>
+
+    <div class="footer-actions">
+      <a href="withdraw.html">회원탈퇴</a>
+      <a href="onboarding.html">로그아웃</a>
+    </div>
+    <!-- Tab Bar (Bottom Navigation) -->
+    <nav class="menu-bar">
+      <a href="home.html" class="menu-item">
+        <span class="min-icon">&#xE110;</span>
+        <span>HOME</span>
+      </a>
+      <a href="map.html" class="menu-item">
+        <span class="min-icon">&#xEFA0;</span>
+        <span>MAP</span>
+      </a>
+      <a href="my.html" class="menu-item">
+        <span class="min-icon">&#xEF20;</span>
+        <span>MY PAGE</span>
+      </a>
+      <a href="setting.html" class="menu-item active">
+        <span class="min-icon">&#xE0B0;</span>
+        <span>SETTING</span>
+      </a>
+    </nav>
+
+  </div>
+</body>
+</html>

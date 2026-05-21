@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=430, user-scalable=no" />
+  <meta name="theme-color" content="#F8F4EC" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>POOKSHIN - Onboarding</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      margin: 0;
+      background-color: #EFEFEF;
+      font-family: 'Pretendard Variable', sans-serif;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+    }
+
+    #app {
+      width: 430px;
+      height: 932px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+      background: #F8F4EC;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      transform-origin: center center;
+      transform: scale(min(1, min(100dvh / 932, 100dvw / 430)));
+    }
+
+    /* 화면 전환 */
+    .screen {
+      position: absolute;
+      inset: 0;
+      width: 430px;
+      height: 932px;
+      background: #F8F4EC;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .screen.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* 인트로 배경 요소 */
+    .intro-bg-bread-left {
+      position:absolute; width:312px; height:376px; left:-70px; top:304px; 
+      opacity:0.4; overflow:hidden; pointer-events:none;
+    }
+    .intro-bg-bread-left img { position:absolute; width:585px; height:511px; left:0; top:-53px; }
+    
+    .intro-bg-wheat-right {
+      position:absolute; width:279px; height:307px; left:115px; top:-38px; 
+      opacity:0.4; overflow:hidden; pointer-events:none; 
+      transform:rotate(-18.52deg); transform-origin:center;
+    }
+    .intro-bg-wheat-right img { position:absolute; width:668px; height:583px; left:-360px; top:-18px; }
+
+    .intro-bg-bread-bottom {
+      position:absolute; width:293px; height:289px; left:146px; top:640px; 
+      opacity:0.4; overflow:hidden; pointer-events:none; 
+      transform:rotate(-14.8deg); transform-origin:center;
+    }
+    .intro-bg-bread-bottom img { position:absolute; width:737px; height:643px; left:-398px; top:-356px; }
+
+    .intro-text-box {
+      position:absolute; right:16px; top:calc(50% - 190px);
+      text-align:right; font-weight:600; font-size:52px;
+      color:#FF9F46; line-height:1.83; letter-spacing:2.08px;
+      white-space:nowrap;
+    }
+
+    /* 마스코트 레이아웃 */
+    .mascot-container { position:absolute; overflow:hidden; pointer-events:none; }
+    .mascot-happy { width:287px; height:320px; left:24px; top:433px; }
+    .mascot-happy img { position:absolute; width:516px; height:344px; left:-133px; top:0; }
+    
+    .mascot-thinking { width:284px; height:333px; left:101px; top:433px; }
+    .mascot-thinking img { position:absolute; width:521px; height:347px; left:-166px; top:0; }
+
+    .mascot-excited { width:301px; height:329px; left:71px; top:441px; }
+    .mascot-excited img { position:absolute; width:513px; height:341px; left:-131px; top:0; }
+
+    /* 하이라이트 박스 */
+    .highlight-box { position:absolute; background:#FF9F46; }
+    .hl-waang { width:106px; height:50px; left:274px; top:237px; }
+    .hl-taste { width:114px; height:50px; left:162px; top:306px; }
+    .hl-pick { width:145px; height:50px; left:198px; top:289px; }
+
+
+    /* 빵 선택 카드 */
+    .bread-card {
+      position: absolute;
+      width: 131.4px;
+      height: 131.4px;
+      background: white;
+      border-radius: 9px;
+      border: 3px solid transparent;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .bread-card.selected { border-color: #FB7459; }
+    .bread-card img {
+      position: absolute;
+      pointer-events: none;
+    }
+
+    /* 취향 칩 */
+    .chip {
+      position: absolute;
+      border-radius: 10px;
+      border: 2px solid;
+      padding: 5px 10px;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      line-height: 22px;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .chip-unsel { background: #F2F2F2; border-color: #9B9B9B; color: #9B9B9B; }
+    .chip-red   { background: #FFEDEB; border-color: #FB7459; color: #FB7459; }
+    .chip-yellow{ background: #FFFAE5; border-color: #FFDA46; color: #FFDA46; }
+
+    /* 하단 버튼 */
+    .btn {
+      position: absolute;
+      border: none;
+      border-radius: 10px;
+      font-family: 'Pretendard Variable', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.36px;
+      line-height: 1.5;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+    .btn-orange { background: #FF9F46; color: white; }
+    .btn-white  { background: white;   color: #9B9B9B; }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- =====================================================
+       SCREEN 1 온보딩 1 (1016-844): 감성 인트로
+  ===================================================== -->
+  <div class="screen active" id="step-1">
+
+    <!-- 빵 이미지 왼쪽 하단 (opacity 40%) -->
+    <div class="intro-bg-bread-left">
+      <img src="images/bread-baguette.png" alt="" />
+    </div>
+
+    <!-- 밀 이미지 오른쪽 상단 -18.52도 회전 (opacity 40%) -->
+    <div class="intro-bg-wheat-right">
+      <img src="images/bread-wheat.png" alt="" />
+    </div>
+
+    <!-- 빵 이미지 오른쪽 하단 -14.8도 회전 (opacity 40%) -->
+    <div class="intro-bg-bread-bottom">
+      <img src="images/bread-baguette.png" alt="" />
+    </div>
+
+    <div class="intro-text-box">
+      <p>당신을 위한</p>
+      <p>오븐이 열리고</p>
+      <p>있어요</p>
+      <p>...</p>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       SCREEN 2 온보딩 2 (1016-867): 와앙이 소개
+  ===================================================== -->
+  <div class="screen" id="step-2">
+
+    <!-- 하이라이트 박스 배경 (오렌지): 와앙이, 빵 취향 -->
+    <!-- "와앙이" 강조 박스: top 237, left 274 -->
+    <div class="highlight-box hl-waang"></div>
+    <!-- "빵 취향" 강조 박스: top 306, left 162 -->
+    <div class="highlight-box hl-taste"></div>
+
+    <!-- 텍스트 블록: 오른쪽 정렬, 40px SemiBold/Bold, #FF9F46 -->
+    <div style="
+      position:absolute;
+      right:14px;
+      top:161px;
+      text-align:right;
+      font-family:'Pretendard Variable',sans-serif;
+      font-size:40px;
+      color:#FF9F46;
+      line-height:1.7;
+      letter-spacing:-2px;
+      white-space:nowrap;
+    ">
+      <p style="font-weight:600;">안녕 -!</p>
+      <p>
+        <span style="font-weight:600;">나는 </span><span style="font-weight:700;color:white;">와앙이</span><span style="font-weight:600;"> 야</span>
+      </p>
+      <p>
+        <span style="font-weight:600;">너의 </span><span style="font-weight:700;color:white;">빵 취향 </span><span style="font-weight:600;">이 궁금해</span>
+      </p>
+      <p style="font-weight:600;">알려줄 수 있을까?</p>
+    </div>
+
+    <!-- 와앙이 캐릭터 (happy): 287x320px, left:24, top:433 -->
+    <div class="mascot-container mascot-happy">
+      <img src="images/mascot-happy.png" alt="와앙이" />
+    </div>
+
+    <!-- CTA 버튼 "시작하기": width:354, left:41, top:801, height:54 -->
+    <button class="btn btn-orange"
+            style="left:41px;top:801px;width:354px;height:54px;"
+            onclick="goStep(3)">시작하기</button>
+  </div>
+
+  <!-- =====================================================
+       SCREEN 3 온보딩 3 (1016-886): 빵 종류 선택
+  ===================================================== -->
+  <div class="screen" id="step-3">
+
+    <!-- 진행 점 표시: left:188, top:66, 54x10 -->
+    <img src="images/dots-indicator-1.svg"
+         style="position:absolute;left:188px;top:66px;width:54px;height:10px;" alt="" />
+
+    <!-- 타이틀: center, 24px Bold, #000, letter-spacing:-0.48px, line-height:1.5 -->
+    <div style="
+      position:absolute;
+      top:183px;left:0;right:0;
+      text-align:center;
+      font-weight:700;font-size:24px;color:#000;
+      letter-spacing:-0.48px;line-height:1.5;
+    ">
+      <p>와앙! 지금 당장 한입 크게</p>
+      <p>베어 물고 싶은 빵은 뭐야?</p>
+    </div>
+
+    <!-- 서브타이틀: Medium 16px, #8B8B8B, top:262 -->
+    <p style="
+      position:absolute;top:262px;left:0;right:0;
+      text-align:center;font-weight:500;font-size:16px;
+      color:#8B8B8B;letter-spacing:-0.32px;line-height:1.5;
+    ">선호하는 빵을 선택해 주세요.</p>
+
+    <!-- 도넛 (좌상단): left:83, top:328 -->
+    <div class="bread-card" id="card-donut" style="left:83px;top:328px;" onclick="toggleCard('donut')">
+      <img src="images/onboarding-breads-2.png"
+           style="position:absolute; width:289.6px; height:287.9px; left:-14.6px; top:-16.9px; pointer-events:none; max-width:none;" alt="도넛" />
+    </div>
+
+    <!-- 크루아상 (우상단): left:226, top:328 -->
+    <div class="bread-card selected" id="card-croissant" style="left:226px;top:328px;" onclick="toggleCard('croissant')">
+      <img src="images/onboarding-breads-1.png"
+           style="position:absolute; width:268px; height:267.8px; left:-130px; top:-10.7px; pointer-events:none; max-width:none;" alt="크루아상" />
+    </div>
+    <!-- 크루아상 라벨: 16px Bold #FB7459, top:459, left:226, width:131.4 -->
+    <p id="lbl-croissant" style="
+      position:absolute;top:459px;left:226px;width:131.4px;
+      text-align:center;font-weight:700;font-size:16px;
+      color:#FB7459;letter-spacing:0.16px;line-height:1.5;
+    ">Croissant</p>
+
+    <!-- 핫도그 (좌하단): left:83, top:488 -->
+    <div class="bread-card" id="card-hotdog" style="left:83px;top:488px;" onclick="toggleCard('hotdog')">
+      <img src="images/onboarding-breads-1.png"
+           style="position:absolute; width:269.4px; height:269.1px; left:-10.5px; top:-119.2px; pointer-events:none; max-width:none;" alt="핫도그" />
+    </div>
+
+    <!-- 와플 (우하단): left:226, top:488 -->
+    <div class="bread-card" id="card-waffle" style="left:226px;top:488px;" onclick="toggleCard('waffle')">
+      <img src="images/onboarding-breads-1.png"
+           style="position:absolute; width:277.8px; height:276.7px; left:-137px; top:-129.6px; pointer-events:none; max-width:none;" alt="와플" />
+    </div>
+
+    <!-- 버튼: 이전(white) left:41 top:801 / 다음(orange) left:223 top:801 -->
+    <button class="btn btn-white"  style="left:41px;top:801px;width:172px;height:54px;" onclick="goStep(2)">이전</button>
+    <button class="btn btn-orange" style="left:223px;top:801px;width:172px;height:54px;" onclick="goStep(4)">다음</button>
+  </div>
+
+  <!-- =====================================================
+       SCREEN 4 온보딩 4 (1016-922): 식감 태그 선택
+  ===================================================== -->
+  <div class="screen" id="step-4">
+
+    <!-- Progress dots -->
+    <img src="images/dots-indicator-2.svg"
+         style="position:absolute;left:188px;top:66px;width:54px;height:10px;" alt="" />
+
+    <!-- 타이틀 -->
+    <div style="
+      position:absolute;top:182px;left:0;right:0;
+      text-align:center;
+      font-weight:700;font-size:24px;color:#000;
+      letter-spacing:-0.48px;line-height:1.5;
+    ">
+      <p>가장 지금 가까이 끌리는</p>
+      <p>식감을 골라봐</p>
+    </div>
+    <p style="
+      position:absolute;top:262px;left:0;right:0;
+      text-align:center;font-weight:500;font-size:16px;
+      color:#8B8B8B;letter-spacing:-0.32px;line-height:1.5;
+    ">선호하는 식감을 선택해 주세요</p>
+
+    <!-- 칩 Row 1: top:330 -->
+    <div class="chip chip-red"   style="left:44px; top:330px;" onclick="toggleChip(this,'red')">#바삭한</div>
+    <div class="chip chip-unsel" style="left:131px;top:330px;" onclick="toggleChip(this,'red')">#쫄깃한</div>
+    <div class="chip chip-unsel" style="left:218px;top:330px;" onclick="toggleChip(this,'red')">#촉촉한</div>
+    <div class="chip chip-unsel" style="left:305px;top:330px;" onclick="toggleChip(this,'red')">#버터리한</div>
+    <!-- 칩 Row 2: top:374 -->
+    <div class="chip chip-red"   style="left:101px;top:374px;" onclick="toggleChip(this,'red')">#담백한</div>
+    <div class="chip chip-unsel" style="left:188px;top:374px;" onclick="toggleChip(this,'red')">#고소한</div>
+    <div class="chip chip-unsel" style="left:275px;top:374px;" onclick="toggleChip(this,'red')">#달콤한</div>
+
+    <!-- 와앙이 캐릭터 (thinking): 284x333px, left:101, top:433 -->
+    <div class="mascot-container mascot-thinking">
+      <img src="images/mascot-thinking.png" alt="고민하는 와앙이" />
+    </div>
+
+    <!-- 버튼: 이전(white) left:41 top:801 / 다음(orange) left:223 top:801 -->
+    <button class="btn btn-white"  style="left:41px;top:801px;width:172px;height:54px;" onclick="goStep(3)">이전</button>
+    <button class="btn btn-orange" style="left:223px;top:801px;width:172px;height:54px;" onclick="goStep(5)">다음</button>
+  </div>
+
+  <!-- =====================================================
+       SCREEN 5 온보딩 5 (1016-962): 세부 취향 선택
+  ===================================================== -->
+  <div class="screen" id="step-5">
+
+    <!-- Progress dots -->
+    <img src="images/dots-indicator-3.svg"
+         style="position:absolute;left:188px;top:66px;width:54px;height:10px;" alt="" />
+
+    <!-- 타이틀 -->
+    <div style="
+      position:absolute;top:183px;left:0;right:0;
+      text-align:center;
+      font-weight:700;font-size:24px;color:#000;
+      letter-spacing:-0.48px;line-height:1.5;
+    ">
+      <p>디테일 차이!</p>
+      <p>네가 아는 작은 차이 취향을 알려줘</p>
+    </div>
+    <p style="
+      position:absolute;top:263px;left:0;right:0;
+      text-align:center;font-weight:500;font-size:16px;
+      color:#8B8B8B;letter-spacing:-0.32px;line-height:1.5;
+    ">선호하는 빵의 취향을 선택해 주세요</p>
+
+    <!-- 칩 Row 1: top:327 -->
+    <div class="chip chip-yellow" style="left:49px; top:327px;" onclick="toggleChip(this,'yellow')">#겉바속촉</div>
+    <div class="chip chip-unsel"  style="left:171px;top:327px;" onclick="toggleChip(this,'yellow')">#버터향가득</div>
+    <div class="chip chip-unsel"  style="left:292px;top:327px;" onclick="toggleChip(this,'yellow')">#고소담백</div>
+    <!-- 칩 Row 2: top:373 -->
+    <div class="chip chip-unsel"  style="left:121px;top:373px;" onclick="toggleChip(this,'yellow')">#폭신폭신</div>
+    <div class="chip chip-yellow" style="left:229px;top:373px;" onclick="toggleChip(this,'yellow')">#디저트형</div>
+    <!-- 칩 Row 3: top:419, 중앙 -->
+    <div class="chip chip-unsel"  style="left:50%;top:419px;transform:translateX(-50%);" onclick="toggleChip(this,'yellow')">#쫄깃계</div>
+
+    <!-- 와앙이 캐릭터 (excited): 301x329px, left:71, top:441 -->
+    <div class="mascot-container mascot-excited">
+      <img src="images/mascot-excited.png" alt="신난 와앙이" />
+    </div>
+
+    <!-- 버튼: 이전(white) left:41 top:801 / 다음(orange) left:223 top:801 -->
+    <button class="btn btn-white"  style="left:41px;top:801px;width:172px;height:54px;" onclick="goStep(4)">이전</button>
+    <button class="btn btn-orange" style="left:223px;top:801px;width:172px;height:54px;" onclick="goStep(6)">다음</button>
+  </div>
+
+  <!-- =====================================================
+       SCREEN 6 로그인 (1016-1000)
+  ===================================================== -->
+  <div class="screen" id="step-6">
+
+    <!-- 오렌지 하이라이트 박스: left:198, top:289, w:145, h:50 -->
+    <div class="highlight-box hl-pick"></div>
+
+    <!-- 타이틀: top:224, center, 40px, #FF9F46, letter-spacing:-0.8px, SemiBold/Bold 혼합 -->
+    <div style="
+      position:absolute;
+      top:224px;left:0;right:0;
+      text-align:center;
+      font-family:'Pretendard Variable',sans-serif;
+      font-size:40px;color:#FF9F46;
+      line-height:1.5;letter-spacing:-0.8px;
+      white-space:nowrap;
+    ">
+      <p style="font-weight:600;">이제 골라봐</p>
+      <p>
+        <span style="font-weight:600;">와앙이가 </span><span style="font-weight:700;color:white;">정해줄게</span><span style="font-weight:600;"> -!</span>
+      </p>
+    </div>
+
+    <!-- 카카오 로그인: left:39, top:603, w:344, h:60 -->
+    <a href="home.html" style="
+      position:absolute;left:39px;top:603px;
+      width:344px;height:60px;border-radius:10px;
+      background:#FEE500;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      text-decoration:none;
+      font-family:'Pretendard Variable',sans-serif;font-weight:500;font-size:18px;
+      color:#000;letter-spacing:-0.36px;line-height:22px;
+    ">
+      <img src="images/icon-kakao.svg" style="width:22px;height:22px;" alt="" />
+      카카오 로그인
+    </a>
+
+    <!-- 구글 로그인: left:39, top:683, w:344, h:60 -->
+    <a href="home.html" style="
+      position:absolute;left:39px;top:683px;
+      width:344px;height:60px;border-radius:10px;
+      background:white;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      text-decoration:none;
+      font-family:'Pretendard Variable',sans-serif;font-weight:500;font-size:18px;
+      color:#000;letter-spacing:-0.36px;line-height:22px;
+    ">
+      <img src="images/icon-google.svg" style="width:23px;height:23px;" alt="" />
+      구글 로그인
+    </a>
+
+    <!-- 애플 로그인: left:39, top:763, w:344, h:60 -->
+    <a href="home.html" style="
+      position:absolute;left:39px;top:763px;
+      width:344px;height:60px;border-radius:10px;
+      background:#000;border:1px solid #000;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+      text-decoration:none;
+      font-family:'Pretendard Variable',sans-serif;font-weight:500;font-size:18px;
+      color:white;letter-spacing:-0.36px;line-height:22px;
+    ">
+      <img src="images/icon-apple.svg" style="width:18px;height:22px;" alt="" />
+      애플 로그인
+    </a>
+  </div>
+
+</div><!-- /#app -->
+
+<script>
+  // Step 1에서 Step 2로 자동 전환 (2.5초)
+  setTimeout(() => {
+    if (document.getElementById('step-1').classList.contains('active')) {
+      goStep(2);
+    }
+  }, 2500);
+
+  function goStep(n) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById('step-' + n);
+    if (target) target.classList.add('active');
+  }
+
+  // 빵 카드는 단일 선택
+  const cards = ['donut', 'croissant', 'hotdog', 'waffle'];
+  function toggleCard(name) {
+    const el = document.getElementById('card-' + name);
+    const wasSelected = el.classList.contains('selected');
+    cards.forEach(c => document.getElementById('card-' + c).classList.remove('selected'));
+    if (!wasSelected) el.classList.add('selected');
+    // 크루아상 선택 라벨 표시
+    const lbl = document.getElementById('lbl-croissant');
+    if (lbl) {
+      lbl.style.display = document.getElementById('card-croissant').classList.contains('selected') ? 'block' : 'none';
+    }
+  }
+
+  // 칩 선택 토글
+  function toggleChip(el, type) {
+    const sel = type === 'red' ? 'chip-red' : 'chip-yellow';
+    if (el.classList.contains(sel)) {
+      el.classList.remove(sel);
+      el.classList.add('chip-unsel');
+    } else {
+      el.classList.remove('chip-unsel');
+      el.classList.add(sel);
+    }
+  }
+</script>
+</body>
+</html>

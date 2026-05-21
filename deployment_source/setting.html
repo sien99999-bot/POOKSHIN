@@ -16,9 +16,9 @@
     body { background: #EFEFEF; }
     #app {
       background-color: #FFFFFF;
-      height: 932px !important;
-      position: relative;
-      overflow: hidden !important;
+      height: auto !important;
+      min-height: 932px;
+      overflow-x: hidden;
     }
     @media (max-width: 480px) {
       body {
@@ -26,25 +26,12 @@
         background-color: #FFFFFF !important;
       }
       #app {
-        width: 100% !important;
-        max-width: 430px !important;
-        height: 100dvh !important;
+        width: 430px !important;
+        height: 932px !important;
         box-shadow: none !important;
+        transform-origin: center center;
+        transform: scale(min(1, min(100dvh / 932, 100dvw / 430)));
       }
-    }
-
-    .setting-content-scroll {
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding-bottom: 120px;
-      box-sizing: border-box;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    .setting-content-scroll::-webkit-scrollbar {
-      display: none;
     }
     
     .setting-header {
@@ -183,9 +170,8 @@
 </head>
 <body>
   <div id="app">
-    <div class="setting-content-scroll">
 
-      <div class="setting-header">
+    <div class="setting-header">
       <a href="my.html" class="btn-back">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
           <path d="M15 18L9 12L15 6" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -239,7 +225,6 @@
         <a href="withdraw.html">회원탈퇴</a>
         <a href="onboarding.html">로그아웃</a>
       </div>
-    </div>
     </div>
 
     <!-- Tab Bar -->

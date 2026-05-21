@@ -23,31 +23,18 @@
     <style>
       #app {
         background-color: #f8f4ec;
-        height: 932px !important;
-        position: relative;
-        overflow: hidden !important;
+        height: auto !important;
+        min-height: 932px;
+        overflow-x: hidden;
       }
       @media (max-width: 480px) {
         #app {
-          width: 100% !important;
-          max-width: 430px !important;
-          height: 100dvh !important;
+          width: 430px !important;
+          height: 932px !important;
           box-shadow: none !important;
+          transform-origin: center center;
+          transform: scale(min(1, min(100dvh / 932, 100dvw / 430)));
         }
-      }
-
-      .my-content-scroll {
-        width: 100%;
-        height: 100%;
-        overflow-y: auto;
-        overflow-x: hidden;
-        padding-bottom: 120px;
-        box-sizing: border-box;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-      .my-content-scroll::-webkit-scrollbar {
-        display: none;
       }
 
       /* ─── TOPBAR (header y:71, h:29 → total area = 100px) ─── */
@@ -390,15 +377,15 @@
 
       /* ─── Bottom spacer before nav ─── */
       .bottom-spacer {
-        height: 30px;
+        height: 130px;
       }
     </style>
   </head>
   <body>
     <div id="app">
-      <div class="my-content-scroll">
-        <!-- TOPBAR -->
-        <div class="my-topbar">
+
+      <!-- TOPBAR -->
+      <div class="my-topbar">
         <a href="home.html" class="my-topbar-back">
           <svg
             width="24"
@@ -508,9 +495,9 @@
           </div>
         </div>
       </div>
-        <!-- 27px gap before nav -->
-        <div class="bottom-spacer"></div>
-      </div>
+
+      <!-- 27px gap before nav -->
+      <div class="bottom-spacer"></div>
 
       <!-- Tab Bar (y:1036) -->
       <nav class="menu-bar">

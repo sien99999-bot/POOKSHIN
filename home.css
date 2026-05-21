@@ -372,12 +372,14 @@ body {
   color: white;
 }
 
-/* 5.3 Tab Bar (y:822) */
+/* 5.3 Tab Bar (y:822) — Override navbar.css fixed positioning for the home canvas */
 .menu-bar {
-  position: absolute;
-  bottom: 29px; /* Positioned relative to bottom (932 - 822 - 81) */
+  position: absolute !important;
+  bottom: 29px;
   left: 16px;
+  right: auto;
   width: 398px;
+  transform: none;
   height: 81px;
   background: white;
   border-radius: 40px;
@@ -414,13 +416,16 @@ body {
 @media (max-width: 480px) {
   body {
     align-items: center !important;
-    background-color: #efefef !important;
+    justify-content: center !important;
+    background-color: var(--bg-warm) !important;
+    overflow: hidden;
   }
   #app {
-    width: 100% !important;
-    max-width: 430px !important;
-    max-height: 100dvh !important;
-    aspect-ratio: 430 / 932 !important;
+    width: 430px !important;
+    height: 932px !important;
     box-shadow: none !important;
+    transform-origin: center center;
+    transform: scale(min(1, min(100dvh / 932, 100dvw / 430)));
   }
 }
+
