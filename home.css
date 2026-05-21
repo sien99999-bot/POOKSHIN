@@ -55,17 +55,17 @@ body {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-/* 6.2 Header (y:0, h:105) */
+/* 6.2 Header (y:0, h:105) - Shifted up to overlap with status bar */
 .header-section {
   position: absolute;
   top: 0;
   width: 100%;
-  height: 105px;
+  height: 75px;
   background-color: transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 40px 18px 0;
+  padding: 15px 18px 0;
   box-sizing: border-box;
   z-index: 900;
 }
@@ -83,10 +83,10 @@ body {
   letter-spacing: -0.32px;
 }
 
-/* 6.3 Headline (y:125, h:105) */
+/* 6.3 Headline (y:125, h:105) - Shifted up */
 .headline-section {
   position: absolute;
-  top: 125px;
+  top: 80px;
   width: 100%;
   padding: 0 17px;
   box-sizing: border-box;
@@ -126,10 +126,10 @@ body {
   margin-left: 5px;
 }
 
-/* 6.4 Hero Area (y:210, h:255) */
+/* 6.4 Hero Area (y:210, h:255) - Shifted up */
 .hero-area {
   position: absolute;
-  top: 210px;
+  top: 165px;
   width: 100%;
   height: 400px;
   background-color: transparent;
@@ -168,10 +168,10 @@ body {
   object-fit: cover;
 }
 
-/* 6.1 Content Card (y:465) */
+/* 6.1 Content Card (y:465) - Shifted up */
 .content-card-overlay {
   position: absolute;
-  top: 465px;
+  top: 415px;
   width: 100%;
   bottom: 0;
   background-image: url("images/bottom-background.svg");
@@ -181,10 +181,10 @@ body {
   pointer-events: none;
 }
 
-/* 6.5 Menu Info (y:512) */
+/* 6.5 Menu Info (y:512) - Shifted up */
 .menu-info-layer {
   position: absolute;
-  top: 520px;
+  top: 465px;
   left: 35px;
   right: 35px;
   z-index: 900;
@@ -266,10 +266,10 @@ body {
   font-weight: 600;
 }
 
-/* 6.6 Pricing (y:609 originally, adjusted for visual gap) */
+/* 6.6 Pricing - Shifted up */
 .pricing-layer {
   position: absolute;
-  top: 590px; /* Reduced from 609px to match screenshot gap between tags and description */
+  top: 535px;
   left: 35px;
   right: 35px;
   z-index: 900;
@@ -337,10 +337,10 @@ body {
   color: var(--gray-sub);
 }
 
-/* 6.7 Buttons (y:739) */
+/* 6.7 Buttons (y:739) - Shifted up */
 .footer-buttons-row {
   position: absolute;
-  bottom: 139px; /* Positioned relative to bottom (932 - 739 - 54) */
+  bottom: 194px;
   left: 35px;
   right: 35px;
   display: flex;
