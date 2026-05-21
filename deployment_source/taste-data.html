@@ -1,367 +1,536 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=430, user-scalable=no" />
-  <meta name="theme-color" content="#F8F4EC" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
-  <link rel="apple-touch-icon" href="/assets/icon-hWEU-vOK.png" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <title>POOKSHIN - Taste Data</title>
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-  <style>
-    #app {
-      background-color: #F8F4EC;
-      height: auto !important;
-      min-height: 932px;
-      overflow-y: auto !important;
-      overflow-x: hidden;
-      padding-bottom: 50px;
-    }
-    @media (max-width: 480px) {
-      #app {
-        width: 100% !important;
-        max-width: 430px !important;
-        min-height: 100dvh !important;
-        height: auto !important;
-        box-shadow: none !important;
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=430, user-scalable=no" />
+    <meta name="theme-color" content="#F8F4EC" />
+    <title>POOKSHIN - 내 취향 데이터</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <link rel="stylesheet" href="minIcon-round.css" />
+    <style>
+      :root {
+        --primary: #FF9F46;
+        --accent-coral: #FB7459;
+        --accent-yellow: #FFDA46;
+        --bg-warm: #F8F4EC;
+        --bg-yellow-soft: #FFF7DF;
+        --black: #000000;
+        --gray-sub: #9B9B9B;
+        --gray-fill: #F2F2F2;
       }
-    }
+      body {
+        margin: 0;
+        background-color: var(--bg-warm);
+        font-family: 'Interop', 'Pretendard Variable', sans-serif;
+        display: flex;
+        justify-content: center;
+        overflow-y: auto;
+      }
+      #app {
+        width: 100%;
+        max-width: 430px;
+        min-height: 100dvh;
+        height: auto !important;
+        background-color: var(--bg-warm);
+        position: relative;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        padding-bottom: 50px;
+      }
+      
+      /* Header */
+      .header {
+        position: relative;
+        height: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 16px;
+      }
+      .header-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--black);
+      }
+      .header-close {
+        position: absolute;
+        right: 16px;
+        color: var(--black);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-    /* ─── TOPBAR (header y:71, h:29) ─── */
-    .taste-topbar {
-      position: relative;
-      width: 100%;
-      height: 100px;
-      padding-top: 44px; /* status bar */
-      box-sizing: border-box;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .taste-topbar-title {
-      font-size: 16px; font-weight: 700;
-      color: #000; letter-spacing: -0.32px;
-    }
-    .taste-topbar-close {
-      position: absolute;
-      right: 16px; top: 74px;
-      font-family: 'Min Icon VF', sans-serif;
-      font-size: 24px; color: #000;
-      text-decoration: none;
-      font-feature-settings: 'ss09' 1;
-      font-variation-settings: 'rond' 3, 'edpt' 1;
-      line-height: 1;
-    }
+      /* Hero */
+      .hero {
+        position: relative;
+        width: 100%;
+        height: 230px;
+        margin-top: 12px;
+        overflow: visible;
+        flex-shrink: 0;
+      }
+      .hero-white-strip {
+        position: absolute;
+        left: 0;
+        top: 135px;
+        width: 100%;
+        height: 95px;
+        background: white;
+        border-radius: 0 50px 0 0;
+        z-index: 2; /* Over badge */
+      }
+      .hero-mascot {
+        position: absolute;
+        left: 40px;
+        top: 0;
+        width: 172px;
+        height: 217px;
+        z-index: 3;
+        pointer-events: none;
+      }
+      .hero-mascot img {
+        position: absolute;
+        width: 198.54%;
+        height: 104.79%;
+        left: -53.71%;
+        top: 0;
+        object-fit: contain;
+      }
+      /* name badge – section01-top: x:232, y:64, w:139, h:90 */
+      .hero-badge {
+        position: absolute;
+        left: 232px;
+        top: 64px;
+        width: 139px;
+        height: 90px;
+        z-index: 1; /* Under white strip */
+      }
+      .hero-badge img {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      /* name text – section01-title inside badge: x:17, y:27 relative to badge */
+      .hero-name {
+        position: absolute;
+        left: 249px;
+        top: 91px; /* 232+17, 64+27 */
+        font-size: 20px;
+        font-weight: 700;
+        color: white;
+        letter-spacing: -0.4px;
+        z-index: 1; /* Under white strip */
+        line-height: 1.8;
+      }
+      /* status text – section01-txt: x:235, y:168 within hero */
+      .hero-status-wrap {
+        position: absolute;
+        left: 235px;
+        top: 168px;
+        width: 146px;
+        height: 29px;
+        z-index: 4;
+      }
+      .hero-status-text {
+        display: inline-block;
+        position: relative;
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+        letter-spacing: -0.32px;
+        line-height: 1.8;
+      }
+      /* yellow underline: y:17 within status = bottom underlay */
+      .hero-status-text::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 5px;
+        width: 100%;
+        height: 7px;
+        background: #ffcb30;
+        z-index: -1;
+      }
+      /* tags placed below status text, absolutely positioned to align */
+      .hero-tags {
+        position: absolute;
+        left: 210px;
+        top: 202px;
+        display: flex;
+        gap: 6px;
+        z-index: 4;
+      }
+      .tag {
+        background-color: #FFA74A;
+        color: white;
+        font-size: 14px;
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
 
-    /* ─── HERO section01 (y:112, h:230) ─── */
-    .hero-wrap {
-      position: relative;
-      width: 100%;
-      height: 230px;
-      margin-top: 12px;
-      overflow: visible;
-      flex-shrink: 0;
-    }
-    .hero-white-strip {
-      position: absolute;
-      left: 0; top: 135px; /* relative to 112 page-y -> 247 */
-      width: 414px; height: 95px;
-      background: white;
-      border-radius: 0 50px 0 0;
-      z-index: 2;
-    }
-    .hero-mascot {
-      position: absolute;
-      left: 39px; top: 10px; /* relative 122 page-y -> 10 inside hero */
-      width: 172px; height: 217px;
-      z-index: 3;
-      pointer-events: none;
-    }
-    .hero-mascot img {
-      position: absolute;
-      width: 198%; height: 105%;
-      left: -53%; top: 0;
-      object-fit: contain;
-    }
-    .hero-badge {
-      position: absolute;
-      left: 231px; top: 74px; /* relative to hero y:112 -> 186 page y */
-      width: 139px; height: 90px;
-      z-index: 1;
-    }
-    .hero-badge img { width: 100%; height: 100%; display: block; }
-    .hero-name {
-      position: absolute;
-      left: 248px; top: 101px;
-      font-size: 20px; font-weight: 700;
-      color: white; letter-spacing: -0.4px;
-      z-index: 1; line-height: 1.8;
-    }
-    .hero-status-wrap {
-      position: absolute;
-      left: 240px; top: 176px;
-      height: 29px;
-      z-index: 4;
-    }
-    .hero-status-text {
-      display: inline-block; position: relative;
-      font-size: 16px; font-weight: 600;
-      color: #000; letter-spacing: -0.32px;
-      line-height: 1.8;
-    }
-    .hero-status-text::after {
-      content: ''; position: absolute;
-      left: 0; bottom: 5px;
-      width: 100%; height: 7px;
-      background: #FFCB30; z-index: -1;
-    }
-    .hero-tags {
-      position: absolute;
-      left: 216px; top: 213px;
-      display: flex; gap: 5px;
-      z-index: 4;
-    }
-    .hero-tag {
-      background: #FFA74A; color: white;
-      font-size: 13px; padding: 2px 8px;
-      border-radius: 8px; letter-spacing: -0.26px;
-    }
+      /* Section Titles */
+      .section-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 40px 16px 20px;
+        color: var(--black);
+      }
 
-    /* ─── Shared Titles ─── */
-    .section-title {
-      font-size: 20px; font-weight: 700; color: #000;
-      letter-spacing: -0.4px; padding-left: 25px;
-      margin-top: 50px; margin-bottom: 14px;
-    }
+      /* DNA Summary */
+      .card {
+        background: white;
+        border-radius: 20px;
+        margin: 0 16px;
+        padding: 24px;
+      }
+      .word-cloud {
+        position: relative;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        color: var(--accent-coral);
+        padding: 10px 0;
+      }
+      .word {
+        white-space: nowrap;
+        margin: 0 4px;
+      }
+      .word.large {
+        font-size: 24px;
+        font-weight: 700;
+      }
+      .word.small {
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .divider {
+        height: 1px;
+        background: url('data:image/svg+xml;utf8,<svg width="100%" height="1" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="0" x2="100%" y2="0" stroke="%23E5E5E5" stroke-dasharray="4 4" /></svg>');
+        margin: 20px 0;
+      }
+      .dna-desc {
+        font-size: 16px;
+        line-height: 1.5;
+        font-weight: 600;
+        color: var(--black);
+        display: flex;
+        gap: 10px;
+      }
+      .dna-desc-title {
+        flex-shrink: 0;
+      }
 
-    /* ─── DNA 요약 (y:436) ─── */
-    .dna-card {
-      margin: 0 16px; padding: 15px 27px;
-      background: white; border-radius: 20px;
-      display: flex; flex-direction: column; gap: 18px;
-    }
-    .dna-words {
-      position: relative; height: 144px; width: 100%;
-      text-align: center;
-    }
-    .dna-word { position: absolute; white-space: nowrap; }
-    .dna-divider { width: 100%; height: 1px; background: url('images/section02-bar.svg') repeat-x; margin: 10px 0; }
-    .dna-desc {
-      display: flex; gap: 18px; align-items: flex-start;
-      font-size: 16px; color: #000; line-height: 1.5;
-    }
-    .dna-desc strong { font-weight: 600; }
+      /* Radar Chart */
+      .radar-container {
+        position: relative;
+        height: 240px;
+        margin: 0 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .radar-bg {
+        width: 240px;
+        height: 240px;
+      }
+      .radar-labels span {
+        position: absolute;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--black);
+      }
+      .banner {
+        background-color: var(--bg-yellow-soft);
+        border-radius: 20px;
+        margin: 16px 16px 0;
+        padding: 16px;
+        font-size: 16px;
+        color: var(--black);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .banner img {
+        width: 24px;
+        height: 24px;
+      }
 
-    /* ─── 취향 밸런스 ─── */
-    .radar-chart-wrap {
-      margin: 20px 45px 0;
-      position: relative; height: 312px;
-    }
-    .radar-bg {
-      position: absolute; left: 35px; top: 41px;
-      width: 230px; height: 230px;
-    }
-    .radar-labels { position: absolute; inset: 0; font-size: 20px; font-weight: 500; }
-    
-    .yellow-box {
-      margin: 10px 16px 0; background: #FFF7DF;
-      border-radius: 0 20px 20px 20px;
-      padding: 16px; display: flex; align-items: center; gap: 6px;
-    }
-    .yellow-box img { width: 34px; height: 34px; }
-    .yellow-box p { font-size: 16px; letter-spacing: -0.32px; color: #000; margin: 0; }
+      /* Trend */
+      .trend-header {
+        display: flex;
+        margin: 0 16px;
+        gap: 20px;
+      }
+      .donut-wrap {
+        width: 140px;
+        height: 140px;
+        position: relative;
+      }
+      .donut-wrap svg {
+        transform: rotate(-90deg);
+        width: 100%;
+        height: 100%;
+      }
+      .donut-text {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 44px;
+        font-weight: 700;
+        color: var(--accent-coral);
+      }
+      .trend-text {
+        flex: 1;
+        background: white;
+        border-radius: 20px;
+        padding: 24px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .trend-text h3 {
+        font-size: 24px;
+        color: var(--black);
+        margin: 0 0 10px;
+        position: relative;
+        display: inline-block;
+      }
+      .trend-text h3::after {
+        content: '';
+        position: absolute;
+        bottom: 2px;
+        left: 0;
+        width: 100%;
+        height: 7px;
+        background-color: var(--accent-yellow);
+        z-index: -1;
+      }
+      .trend-text p {
+        font-size: 15px;
+        color: var(--black);
+        margin: 0;
+        line-height: 1.5;
+        font-weight: 500;
+      }
+      .trend-graph {
+        margin: 20px 16px 0;
+        background: white;
+        border-radius: 20px;
+        padding: 24px 0 16px;
+      }
+      .graph-svg {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .x-axis {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        font-size: 14px;
+        color: var(--gray-sub);
+        padding: 0 24px;
+      }
 
-    /* ─── 내 취향 트렌드 ─── */
-    .trend-row {
-      margin: 10px 16px 0; display: flex; gap: 28px;
-    }
-    .trend-donut {
-      width: 150px; height: 150px; position: relative;
-    }
-    .trend-donut svg { width: 100%; height: 100%; }
-    .trend-donut span {
-      position: absolute; left: 0; top: 0; right: 0; bottom: 0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 48px; font-weight: 700; color: #FB7459;
-    }
-    .trend-desc {
-      background: white; border-radius: 20px 20px 20px 0;
-      padding: 18px 27px; flex: 1;
-    }
-    .trend-desc h4 {
-      display: inline-block; position: relative;
-      font-size: 24px; font-weight: 600; margin: 0 0 10px;
-    }
-    .trend-desc h4::after {
-      content: ''; position: absolute; left: 0; bottom: 5px;
-      width: 100%; height: 7px; background: #FFCB30; z-index: -1;
-    }
-    .trend-desc p { font-size: 16px; font-weight: 500; line-height: 1.5; margin: 0; }
-    
-    .trend-graph-card {
-      margin: 30px 41px 0; background: white;
-      border-radius: 20px; padding: 43px 29px 10px;
-    }
-    .trend-graph-img { width: 100%; height: auto; display: block; }
-    .trend-graph-labels {
-      display: flex; justify-content: space-between;
-      color: #9B9B9B; font-size: 14px; margin-top: 10px;
-    }
+      /* Comment */
+      .comment-section {
+        position: relative;
+        margin-top: 40px;
+        height: 250px;
+        display: flex;
+      }
+      .comment-card {
+        background: white;
+        border-radius: 0 20px 20px 0;
+        padding: 28px 20px;
+        width: 270px;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      .comment-card h3 {
+        font-size: 20px;
+        margin: 0 0 16px;
+        text-align: center;
+      }
+      .comment-card p {
+        font-size: 15px;
+        line-height: 1.6;
+        margin: 0;
+      }
+      .comment-mascot {
+        position: absolute;
+        right: -10px;
+        bottom: 0;
+        width: 172px;
+        height: 172px;
+        object-fit: contain;
+      }
 
-    /* ─── 와앙이의 코멘트 ─── */
-    .comment-section {
-      margin-top: 50px; position: relative; height: 231px;
-    }
-    .comment-card {
-      background: white; width: 258px; height: 231px;
-      border-radius: 0 20px 20px 0;
-      padding: 22px 17px 33px 16px; box-sizing: border-box;
-    }
-    .comment-card h3 { font-size: 20px; font-weight: 700; margin: 0 0 22px; text-align: center; }
-    .comment-card p { font-size: 15px; line-height: 22px; margin: 0; }
-    .comment-mascot {
-      position: absolute; right: 16px; bottom: 0;
-      width: 148px; height: 172px;
-    }
-    
-    /* ─── 추천 빵 ─── */
-    .recommend-section { margin: 10px 16px 0; background: #FFF7DF; border-radius: 20px 20px 0 0; padding: 39px 24px 30px; display: flex; gap: 17px; }
-    .bread-card { flex: 1; text-align: center; }
-    .bread-img { width: 100%; aspect-ratio: 1.45; border-radius: 10px; object-fit: cover; margin-bottom: 6px; }
-    .bread-card p { font-size: 15px; margin: 0; }
-  </style>
-  <link rel="stylesheet" crossorigin href="/assets/home-DsQNiKwc.css">
-  <link rel="stylesheet" crossorigin href="/assets/minIcon-round-CIgpdV9E.css">
-</head>
-<body>
-  <div id="app">
-    <!-- TOPBAR -->
-    <div class="taste-topbar">
-      <span class="taste-topbar-title">내 취향 데이터</span>
-      <a href="my.html" class="taste-topbar-close">&#xEA00;</a> <!-- close icon -->
+      /* Recommend */
+      .recommend-scroll {
+        display: flex;
+        gap: 16px;
+        padding: 0 16px;
+        overflow-x: auto;
+        background-color: var(--bg-yellow-soft);
+        padding-top: 32px;
+        padding-bottom: 32px;
+        border-radius: 20px 20px 0 0;
+        margin: 16px 16px 0;
+      }
+      .recommend-scroll::-webkit-scrollbar {
+        display: none;
+      }
+      .rec-card {
+        width: 148px;
+        flex-shrink: 0;
+      }
+      .rec-img {
+        width: 100%;
+        height: 102px;
+        border-radius: 10px;
+        object-fit: cover;
+        background: #D9D9D9;
+      }
+      .rec-title {
+        font-size: 15px;
+        text-align: center;
+        margin-top: 10px;
+        font-weight: 500;
+        color: var(--black);
+      }
+    </style>
+    <link rel="stylesheet" crossorigin href="/assets/home-B4cQDazP.css">
+  </head>
+  <body>
+    <div id="app">
+      <div class="header">
+        <div class="header-title">내 취향 데이터</div>
+        <a href="my.html" class="header-close">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="hero">
+        <div class="hero-white-strip"></div>
+        <div class="hero-mascot">
+          <img src="/assets/mascot-mypage-Q-_96RfB.png" alt="와앙이" />
+        </div>
+        <div class="hero-badge">
+          <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20139%2090'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group%209039'%3e%3cpath%20id='Rectangle%203468629'%20d='M0%2023.5813C0%2011.232%2011.0813%201.8336%2023.265%203.84961L113.897%2018.8464C128.379%2021.2426%20139%2033.7655%20139%2048.4439V90H0V23.5813Z'%20fill='var(--fill-0,%20%23FFA74A)'/%3e%3c/g%3e%3c/svg%3e" alt="" />
+        </div>
+        <div class="hero-name">와앙이1234</div>
+        <div class="hero-status-wrap">
+          <span class="hero-status-text">요즘은 바삭한게 좋아 -!</span>
+        </div>
+        <div class="hero-tags">
+          <span class="tag">#크루아상</span>
+          <span class="tag">#소금빵</span>
+          <span class="tag">#크림빵</span>
+        </div>
+      </div>
+
+      <div class="section-title">DNA 요약</div>
+      <div class="card">
+        <div class="word-cloud">
+          <div><span class="word large">바삭파</span> <span class="word small">성수동활동형</span></div>
+          <div><span class="word small">리뷰확신형</span> <span class="word large">크루아상매니아</span></div>
+          <div><span class="word large">푹신베이커리</span> <span class="word small">겉바속촉</span></div>
+          <div><span class="word small">담백파</span> <span class="word large">디저트좋아</span></div>
+          <div><span class="word small" style="margin-left: -50px;">조용한분위기</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="dna-desc">
+          <span class="dna-desc-title">당신은...</span>
+          <span>
+            <strong>바삭파 크루아상매니아,</strong><br/>
+            디저트 좋아하는 조용한 성수동빵순이 🥐
+          </span>
+        </div>
+      </div>
+
+      <div class="section-title">취향 밸런스</div>
+      <div class="radar-container">
+        <img src="data:image/svg+xml,%3csvg%20width='240'%20height='240'%20viewBox='0%200%20240%20240'%20xmlns='http://www.w3.org/2000/svg'%3e%3cdefs%3e%3cstyle%3e%20.bg-hex%20{%20fill:%20none;%20stroke:%20%23C3C3C3;%20stroke-width:%201.5;%20}%20.axis%20{%20stroke:%20%23C3C3C3;%20stroke-width:%201.5;%20}%20.data-hex%20{%20fill:%20rgba(251,116,89,0.5);%20stroke:%20none;%20}%20%3c/style%3e%3c/defs%3e%3c!--%20Outer%20Hexagon%20(R=80)%20--%3e%3cpolygon%20class='bg-hex'%20points='120,40%20189.28,80%20189.28,160%20120,200%2050.72,160%2050.72,80'/%3e%3c!--%20Inner%20Hexagon%20(R=40)%20--%3e%3cpolygon%20class='bg-hex'%20points='120,80%20154.64,100%20154.64,140%20120,160%2085.36,140%2085.36,100'/%3e%3c!--%20Axes%20--%3e%3cline%20class='axis'%20x1='120'%20y1='120'%20x2='120'%20y2='40'/%3e%3cline%20class='axis'%20x1='120'%20y1='120'%20x2='189.28'%20y2='80'/%3e%3cline%20class='axis'%20x1='120'%20y1='120'%20x2='189.28'%20y2='160'/%3e%3cline%20class='axis'%20x1='120'%20y1='120'%20x2='120'%20y2='200'/%3e%3cline%20class='axis'%20x1='120'%20y1='120'%20x2='50.72'%20y2='160'/%3e%3cline%20class='axis'%20x1='120'%20y1='120'%20x2='50.72'%20y2='80'/%3e%3c!--%20Data%20Polygon%20matched%20to%20user%20image%20--%3e%3cpolygon%20class='data-hex'%20points='120,48%20178.8,86%20168.5,148%20120,148%2085.36,140%2078.4,96'/%3e%3c/svg%3e" alt="취향 밸런스 차트" class="radar-bg" />
+        <div class="radar-labels">
+          <span style="top: -25px; left: 105px;">바삭</span>
+          <span style="top: 60px; right: 0;">버터</span>
+          <span style="bottom: 60px; right: 0;">촉촉</span>
+          <span style="bottom: -25px; left: 105px;">쫄깃</span>
+          <span style="bottom: 60px; left: 0;">담백</span>
+          <span style="top: 60px; left: 0;">꾸덕</span>
+        </div>
+      </div>
+      <div class="banner">
+        <img src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M5%2012H19M19%2012L12%205M19%2012L12%2019'%20stroke='%23FFA74A'%20stroke-width='3'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e" alt="" />
+        겉바속촉을 좋아하는 너! 쫄깃담백한건 조금 싫어할지도?
+      </div>
+
+      <div class="section-title">내 취향 트렌드</div>
+      <div class="trend-header">
+        <div class="donut-wrap">
+          <svg viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#F8F4EC" stroke-width="10" />
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#FB7459" stroke-width="10" stroke-dasharray="314" stroke-dashoffset="56" stroke-linecap="round" />
+          </svg>
+          <div class="donut-text">82%</div>
+        </div>
+        <div class="trend-text">
+          <div><h3>#바삭</h3></div>
+          <p>바삭함을 가장 좋아해요.<br/>바삭 취향이 가장 크게<br/>증가했어요.</p>
+        </div>
+      </div>
+      
+      <div class="trend-graph">
+        <img src="data:image/svg+xml,%3csvg%20width='300'%20height='150'%20viewBox='0%200%20300%20150'%20xmlns='http://www.w3.org/2000/svg'%3e%3cdefs%3e%3clinearGradient%20id='trendGrad'%20x1='0'%20y1='0'%20x2='0'%20y2='1'%3e%3cstop%20offset='0%25'%20stop-color='%23FB7459'%20stop-opacity='0.6'/%3e%3cstop%20offset='100%25'%20stop-color='%23FB7459'%20stop-opacity='0'/%3e%3c/linearGradient%3e%3c/defs%3e%3c!--%20Smooth%20Curve%20for%20Trend%20--%3e%3cpath%20d='M%200%20110%20C%2020%20110,%2030%20130,%2050%20130%20C%2080%20130,%20120%2080,%20150%2080%20C%20180%2080,%20200%2085,%20220%2085%20C%20260%2085,%20280%2020,%20300%2020%20L%20300%20150%20L%200%20150%20Z'%20fill='url(%23trendGrad)'/%3e%3cpath%20d='M%200%20110%20C%2020%20110,%2030%20130,%2050%20130%20C%2080%20130,%20120%2080,%20150%2080%20C%20180%2080,%20200%2085,%20220%2085%20C%20260%2085,%20280%2020,%20300%2020'%20fill='none'%20stroke='%23FB7459'%20stroke-width='3'%20stroke-linecap='round'/%3e%3c!--%20Point%20at%20the%20end%20--%3e%3ccircle%20cx='300'%20cy='20'%20r='4'%20fill='%23FB7459'/%3e%3c/svg%3e" alt="트렌드 그래프" class="graph-svg" />
+        <div class="x-axis">
+          <span>4주전</span>
+          <span>3주전</span>
+          <span>2주전</span>
+          <span>1주전</span>
+        </div>
+      </div>
+      <div class="banner">
+        <img src="data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M21%207L13%2015L9%2011L3%2017M21%207V13M21%207H15'%20stroke='%23FFA74A'%20stroke-width='3'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e" alt="" />
+        지난 4주간 바삭 취향이 &nbsp;<strong style="color: #FFA74A; font-size: 18px;">12% 상승</strong>&nbsp; 했어요 !
+      </div>
+
+      <div class="comment-section">
+        <div class="comment-card">
+          <h3>와앙이의 코멘트</h3>
+          <p>
+            넌 겉바속촉 정통파야! 바삭 82%는 첫 한입 소리까지 중요하게 여긴다는 뜻이야. 버터 73%는 풍미 진한 유럽식 빵을 좋아한다는 신호!<br/>
+            <strong style="color: #FFA74A;">에피 바게트나 덴마크 페이스트리</strong>를 다음에 추천해줄게!
+          </p>
+        </div>
+        <img src="/assets/mascot-excited-B-k-s9va.png" alt="와앙이" class="comment-mascot" />
+      </div>
+
+      <div class="section-title">추천 빵</div>
+      <div class="recommend-scroll">
+        <div class="rec-card">
+          <img src="/assets/bread-garlic-DIuYkabN.png" alt="갈릭 휘낭시에" class="rec-img" />
+          <div class="rec-title">갈릭 휘낭시에</div>
+        </div>
+        <div class="rec-card">
+          <img src="/assets/bread-epi-DHJ2novY.png" alt="에피 바게트" class="rec-img" />
+          <div class="rec-title">에피 바게트</div>
+        </div>
+        <div class="rec-card">
+          <img src="/assets/bread-salt-CcH0Woet.png" alt="소금빵" class="rec-img" />
+          <div class="rec-title">소금빵</div>
+        </div>
+      </div>
     </div>
-
-    <!-- HERO -->
-    <div class="hero-wrap">
-      <div class="hero-white-strip"></div>
-      <div class="hero-mascot">
-        <img src="/assets/mascot-mypage-Q-_96RfB.png" alt="와앙이" />
-      </div>
-      <div class="hero-badge">
-        <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20139%2090'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group%209039'%3e%3cpath%20id='Rectangle%203468629'%20d='M0%2023.5813C0%2011.232%2011.0813%201.8336%2023.265%203.84961L113.897%2018.8464C128.379%2021.2426%20139%2033.7655%20139%2048.4439V90H0V23.5813Z'%20fill='var(--fill-0,%20%23FFA74A)'/%3e%3c/g%3e%3c/svg%3e" alt="" />
-      </div>
-      <div class="hero-name">와앙이1234</div>
-      <div class="hero-status-wrap">
-        <span class="hero-status-text">요즘은 바삭한게 좋아 -!</span>
-      </div>
-      <div class="hero-tags">
-        <span class="hero-tag">#크루아상</span>
-        <span class="hero-tag">#소금빵</span>
-        <span class="hero-tag">#크림빵</span>
-      </div>
-    </div>
-
-    <!-- DNA 요약 -->
-    <h2 class="section-title">DNA 요약</h2>
-    <div class="dna-card">
-      <div class="dna-words">
-        <!-- Exact words matching Figma 1016:1492 -->
-        <span class="dna-word" style="left:0; top:60px; font-size:24px; font-weight:600; color:#FA534C;">푹신베이커리</span>
-        <span class="dna-word" style="left:72px; top:0; font-size:24px; font-weight:600; color:#FA534C;">바삭파</span>
-        <span class="dna-word" style="left:155px; top:29px; font-size:24px; font-weight:600; color:#FA534C;">크루아상매니아</span>
-        <span class="dna-word" style="left:169px; top:87px; font-size:24px; font-weight:600; color:#FA534C;">디저트좋아</span>
-        <span class="dna-word" style="left:122px; top:96px; font-size:16px; color:#FA534C;">담백파</span>
-        <span class="dna-word" style="left:130px; top:69px; font-size:16px; color:#FA534C;">겉바속촉</span>
-        <span class="dna-word" style="left:66px; top:120px; font-size:16px; color:#FA534C;">조용한분위기</span>
-        <span class="dna-word" style="left:140px; top:9px; font-size:16px; color:#FA534C;">성수동활동형</span>
-        <span class="dna-word" style="left:79px; top:36px; font-size:16px; color:#FA534C;">리뷰확신형</span>
-      </div>
-      <div class="dna-divider"></div>
-      <div class="dna-desc">
-        <span style="font-size:20px; flex-shrink:0;">당신은...</span>
-        <span><strong>바삭파 크루아상매니아,</strong><br/>디저트 좋아하는 조용한 성수동빵순이 🥐</span>
-      </div>
-    </div>
-
-    <!-- 취향 밸런스 -->
-    <h2 class="section-title">취향 밸런스</h2>
-    <div class="radar-chart-wrap">
-      <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20230%20230'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group%209048'%3e%3cpath%20id='Polygon%201'%20d='M214.093%2057.7881V172.211L115%20229.423L15.9072%20172.211V57.7881L115%200.576172L214.093%2057.7881Z'%20fill='var(--fill-0,%20%23F2F2F2)'%20stroke='var(--stroke-0,%20%239B9B9B)'/%3e%3cpath%20id='Polygon%202'%20d='M188.979%2072.2881V157.711L115%20200.423L41.0215%20157.711V72.2881L115%2029.5762L188.979%2072.2881Z'%20fill='var(--fill-0,%20%23F2F2F2)'%20stroke='var(--stroke-0,%20%239B9B9B)'/%3e%3cpath%20id='Polygon%203'%20d='M163.863%2086.7881V143.211L115%20171.423L66.1367%20143.211V86.7881L115%2058.5762L163.863%2086.7881Z'%20fill='var(--fill-0,%20%23F2F2F2)'%20stroke='var(--stroke-0,%20%239B9B9B)'/%3e%3cpath%20id='Vector%20180'%20d='M51.5%2079L112.5%200L205.5%2072L196.5%20164L112.5%20177.5L66%20143L51.5%2079Z'%20fill='var(--fill-0,%20%23FFA74A)'%20fill-opacity='0.7'/%3e%3c/g%3e%3c/svg%3e" alt="" class="radar-bg" />
-      <div class="radar-labels">
-        <span style="position:absolute; left:138px; top:0;">바삭</span>
-        <span style="position:absolute; left:138px; top:287px;">쫄깃</span>
-        <span style="position:absolute; left:0; top:83px;">꾸덕</span>
-        <span style="position:absolute; right:0; top:210px;">촉촉</span>
-        <span style="position:absolute; right:0; top:83px;">버터</span>
-        <span style="position:absolute; left:0; top:210px;">담백</span>
-      </div>
-    </div>
-    <div class="yellow-box">
-      <img src="/assets/yellow-arrow-BOhsdIhX.png" alt="" />
-      <p>겉바속촉을 좋아하는 너! 쫄깃담백한건 조금 싫어할지도?</p>
-    </div>
-
-    <!-- 내 취향 트렌드 -->
-    <h2 class="section-title">내 취향 트렌드</h2>
-    <div class="trend-row">
-      <div class="trend-donut">
-        <svg viewBox="0 0 150 150">
-          <circle cx="75" cy="75" r="70" fill="none" stroke="#F2F2F2" stroke-width="10" />
-          <circle cx="75" cy="75" r="70" fill="none" stroke="#FB7459" stroke-width="10" stroke-dasharray="440" stroke-dashoffset="79" transform="rotate(-90 75 75)" stroke-linecap="round" />
-        </svg>
-        <span>82%</span>
-      </div>
-      <div class="trend-desc">
-        <h4>#바삭</h4>
-        <p>바삭함을 가장 좋아해요.<br/>바삭 취향이 가장 크게<br/>증가했어요.</p>
-      </div>
-    </div>
-    
-    <div class="trend-graph-card">
-      <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20328%20127'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group%209053'%3e%3cpath%20id='Vector%20178'%20d='M42.7312%2048.6816C8.11352%2047.6775%202.70451%2079.8081%200%2087.8408V127H324V4C322.377%206.00816%20288.814%2030.6015%20274.778%2034.1224C254.765%2039.1429%20225%2034.1224%20180.12%2034.1224C138.362%2034.1224%20128%2071%20101.5%2071C77.0303%2071%2077.3489%2049.6857%2042.7312%2048.6816Z'%20fill='url(%23paint0_linear_1199_1246)'/%3e%3ccircle%20id='Ellipse%20416'%20cx='323'%20cy='5'%20r='5'%20fill='var(--fill-0,%20%23FA534C)'/%3e%3cpath%20id='Intersect'%20d='M325.056%205.25687C324.824%205.54394%20324.458%205.87128%20324.135%206.15043C323.765%206.4696%20323.286%206.86238%20322.718%207.31351C321.58%208.21779%20320.041%209.39159%20318.209%2010.7452C314.543%2013.4537%20309.667%2016.9079%20304.401%2020.4092C299.139%2023.9086%20293.466%2027.4697%20288.21%2030.3838C282.997%2033.2739%20278.044%2035.6145%20274.265%2036.5625C263.941%2039.1523%20251.221%2039.1305%20235.693%2038.5039C220.08%2037.8739%20201.506%2036.6221%20179.12%2036.6221C158.948%2036.6221%20146.372%2045.4765%20135.364%2054.6006C129.903%2059.127%20124.66%2063.8753%20119.178%2067.418C113.624%2071.0065%20107.632%2073.5%20100.5%2073.5C87.5081%2073.5%2080.9617%2067.7228%2073.7246%2062.3203C70.112%2059.6236%2066.3025%2056.9859%2061.3184%2054.9434C56.3428%2052.9044%2050.112%2051.4255%2041.6729%2051.1807C25.1487%2050.7015%2015.3596%2058.2264%209.2832%2066.8536C3.90979%2074.4827%201.47786%2082.8887%200%2087.7256V75.5664C1.49932%2072.0224%203.44713%2068.1935%206.0127%2064.5508C12.7213%2055.026%2023.6959%2046.6579%2041.7891%2047.1827C50.6586%2047.4399%2057.3704%2049.0024%2062.8359%2051.2422C68.2925%2053.4784%2072.4237%2056.3571%2076.1172%2059.1143C83.4927%2064.62%2089.0223%2069.5%20100.5%2069.5C106.618%2069.5%20111.859%2067.3837%20117.007%2064.0577C122.225%2060.6859%20127.15%2056.2143%20132.812%2051.5215C144.049%2042.2069%20157.534%2032.6221%20179.12%2032.6221C201.614%2032.6221%20220.363%2033.8818%20235.854%2034.5069C251.432%2035.1354%20263.602%2035.1132%20273.291%2032.6827C276.53%2031.8702%20281.098%2029.7537%20286.271%2026.8858C291.4%2024.0419%20296.976%2020.5432%20302.187%2017.0782C307.394%2013.6151%20312.216%2010.1996%20315.832%207.52836C317.641%206.19217%20319.139%205.04774%20320.229%204.18168C320.775%203.74787%20321.209%203.39174%20321.522%203.12113C321.883%202.81064%20321.974%202.70706%20321.944%202.7432L325.056%205.25687Z'%20fill='url(%23paint1_linear_1199_1246)'/%3e%3c/g%3e%3cdefs%3e%3clinearGradient%20id='paint0_linear_1199_1246'%20x1='162'%20y1='4'%20x2='162'%20y2='127'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20offset='0.153846'%20stop-color='%23FA534C'%20stop-opacity='0.7'/%3e%3cstop%20offset='1'%20stop-color='white'%20stop-opacity='0.3'/%3e%3c/linearGradient%3e%3clinearGradient%20id='paint1_linear_1199_1246'%20x1='0'%20y1='45.231'%20x2='325.056'%20y2='45.231'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20offset='0.350962'%20stop-color='%23FFCFCF'/%3e%3cstop%20offset='1'%20stop-color='%23FA534C'/%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e" alt="트렌드 그래프" class="trend-graph-img" />
-      <div class="trend-graph-labels">
-        <span>4주전</span>
-        <span>3주전</span>
-        <span>2주전</span>
-        <span>1주전</span>
-      </div>
-    </div>
-    
-    <div class="yellow-box" style="border-radius: 20px 20px 20px 0;">
-      <img src="/assets/rising-arrow-BczzjAb9.png" alt="" />
-      <p>지난 4주간 바삭 취향이 <strong style="color:#FFA74A; font-size:20px;">12% 상승</strong> 했어요 !</p>
-    </div>
-
-    <!-- 와앙이의 코멘트 -->
-    <div class="comment-section">
-      <div class="comment-card">
-        <h3>와앙이의 코멘트</h3>
-        <p>넌 겉바속촉 정통파야! 바삭 82%는<br/>첫 한입 소리까지 중요하게 여긴다는<br/>뜻이야. 버터 73%는 풍미 진한 유럽식<br/>빵을 좋아한다는 신호!<br/><strong style="color:#FFA74A;">에피 바게트나 덴마크 페이스트리</strong>를<br/>다음에 추천해줄게!</p>
-      </div>
-      <img src="/assets/mascot-mypage-Q-_96RfB.png" alt="" class="comment-mascot" />
-    </div>
-
-    <!-- 추천 빵 -->
-    <h2 class="section-title">추천 빵</h2>
-    <div class="recommend-section">
-      <div class="bread-card">
-        <img src="/assets/bread-garlic-DIuYkabN.png" alt="" class="bread-img" />
-        <p>갈릭 휘낭시에</p>
-      </div>
-      <div class="bread-card">
-        <img src="/assets/bread-epi-DHJ2novY.png" alt="" class="bread-img" />
-        <p>에피 바게트</p>
-      </div>
-      <div class="bread-card">
-        <img src="/assets/bread-salt-CcH0Woet.png" alt="" class="bread-img" />
-        <p>소금빵</p>
-      </div>
-    </div>
-
-  </div>
-</body>
+  </body>
 </html>

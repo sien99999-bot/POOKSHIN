@@ -9,40 +9,41 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
   <link rel="apple-touch-icon" href="/assets/icon-hWEU-vOK.png" />
-  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="manifest" href="/assets/manifest-D8ky9eCq.webmanifest" />
   <title>POOKSHIN - Onboarding</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #EFEFEF;
+      margin: 0;
+      background-color: #EFEFEF;
       font-family: 'Pretendard Variable', sans-serif;
-      -webkit-font-smoothing: antialiased;
+      color: #333;
       display: flex;
       align-items: center;
       justify-content: center;
       min-height: 100dvh;
-      margin: 0;
     }
 
     #app {
-      width: 100%;
-      max-width: 430px;
-      max-height: 100dvh;
-      aspect-ratio: 430 / 932;
+      width: 430px;
+      height: 932px;
+      margin: 0 auto;
       position: relative;
       overflow: hidden;
       background: #F8F4EC;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      transform-origin: center center;
+      transform: scale(min(1, min(100dvh / 932, 100dvw / 430)));
     }
 
     /* 화면 전환 */
     .screen {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
+      width: 430px;
+      height: 932px;
       background: #F8F4EC;
       opacity: 0;
       pointer-events: none;
@@ -227,7 +228,7 @@
 
     <!-- CTA 버튼 "시작하기": width:354, left:41, top:801, height:54 -->
     <button class="btn btn-orange"
-            style="left:41px;bottom:77px;width:354px;height:54px;"
+            style="left:41px;top:801px;width:354px;height:54px;"
             onclick="goStep(3)">시작하기</button>
   </div>
 
@@ -290,8 +291,8 @@
     </div>
 
     <!-- 버튼: 이전(white) left:41 top:801 / 다음(orange) left:223 top:801 -->
-    <button class="btn btn-white"  style="left:41px;bottom:77px;width:172px;height:54px;" onclick="goStep(2)">이전</button>
-    <button class="btn btn-orange" style="left:223px;bottom:77px;width:172px;height:54px;" onclick="goStep(4)">다음</button>
+    <button class="btn btn-white"  style="left:41px;top:801px;width:172px;height:54px;" onclick="goStep(2)">이전</button>
+    <button class="btn btn-orange" style="left:223px;top:801px;width:172px;height:54px;" onclick="goStep(4)">다음</button>
   </div>
 
   <!-- =====================================================
@@ -335,8 +336,8 @@
     </div>
 
     <!-- 버튼: 이전(white) left:41 top:801 / 다음(orange) left:223 top:801 -->
-    <button class="btn btn-white"  style="left:41px;bottom:77px;width:172px;height:54px;" onclick="goStep(3)">이전</button>
-    <button class="btn btn-orange" style="left:223px;bottom:77px;width:172px;height:54px;" onclick="goStep(5)">다음</button>
+    <button class="btn btn-white"  style="left:41px;top:801px;width:172px;height:54px;" onclick="goStep(3)">이전</button>
+    <button class="btn btn-orange" style="left:223px;top:801px;width:172px;height:54px;" onclick="goStep(5)">다음</button>
   </div>
 
   <!-- =====================================================
@@ -380,8 +381,8 @@
     </div>
 
     <!-- 버튼: 이전(white) left:41 top:801 / 다음(orange) left:223 top:801 -->
-    <button class="btn btn-white"  style="left:41px;bottom:77px;width:172px;height:54px;" onclick="goStep(4)">이전</button>
-    <button class="btn btn-orange" style="left:223px;bottom:77px;width:172px;height:54px;" onclick="goStep(6)">다음</button>
+    <button class="btn btn-white"  style="left:41px;top:801px;width:172px;height:54px;" onclick="goStep(4)">이전</button>
+    <button class="btn btn-orange" style="left:223px;top:801px;width:172px;height:54px;" onclick="goStep(6)">다음</button>
   </div>
 
   <!-- =====================================================
@@ -410,7 +411,7 @@
 
     <!-- 카카오 로그인: left:39, top:603, w:344, h:60 -->
     <a href="home.html" style="
-      position:absolute;left:39px;bottom:269px;
+      position:absolute;left:39px;top:603px;
       width:344px;height:60px;border-radius:10px;
       background:#FEE500;
       display:flex;align-items:center;justify-content:center;gap:8px;
@@ -424,7 +425,7 @@
 
     <!-- 구글 로그인: left:39, top:683, w:344, h:60 -->
     <a href="home.html" style="
-      position:absolute;left:39px;bottom:189px;
+      position:absolute;left:39px;top:683px;
       width:344px;height:60px;border-radius:10px;
       background:white;
       display:flex;align-items:center;justify-content:center;gap:8px;
@@ -438,7 +439,7 @@
 
     <!-- 애플 로그인: left:39, top:763, w:344, h:60 -->
     <a href="home.html" style="
-      position:absolute;left:39px;bottom:109px;
+      position:absolute;left:39px;top:763px;
       width:344px;height:60px;border-radius:10px;
       background:#000;border:1px solid #000;
       display:flex;align-items:center;justify-content:center;gap:8px;

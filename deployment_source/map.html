@@ -1,477 +1,639 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=430, user-scalable=no" />
-  <meta name="theme-color" content="#F5F7F8" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
-  <link rel="apple-touch-icon" href="/assets/icon-hWEU-vOK.png" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <title>POOKSHIN - Map</title>
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-  <style>
-    /* 전체 화면 규격 (홈 화면과 동기화) */
-    body {
-      margin: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background-color: #EFEFEF; /* 프레임 외부 배경 */
-      font-family: 'Interop', 'Pretendard Variable', sans-serif;
-    }
-
-    #app {
-      width: 430px;
-      height: 932px;
-      background-color: #F8F4EC;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    }
-    @media (max-width: 480px) {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=430, user-scalable=no" />
+    <meta name="theme-color" content="#F5F7F8" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
+    <link rel="apple-touch-icon" href="/assets/icon-hWEU-vOK.png" />
+    <link rel="manifest" href="/assets/manifest-D8ky9eCq.webmanifest" />
+    <title>POOKSHIN - Map</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="minIcon-round.css" />
+    <style>
+      /* 전체 화면 규격 (홈 화면과 동기화) */
       body {
-        align-items: flex-start !important;
-        background-color: #F8F4EC !important;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background-color: #efefef; /* 프레임 외부 배경 */
+        font-family: "Interop", "Pretendard Variable", sans-serif;
       }
+
       #app {
-        width: 100% !important;
-        max-width: 430px !important;
-        height: 100dvh !important;
-        box-shadow: none !important;
+        width: 430px;
+        height: 932px;
+        background-color: #f8f4ec;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
       }
-    }
-    
-    /* 지도 페이지 전용 스타일 */
+      @media (max-width: 480px) {
+        body {
+          align-items: flex-start !important;
+          background-color: #f8f4ec !important;
+        }
+        #app {
+          width: 100% !important;
+          max-width: 430px !important;
+          height: 100dvh !important;
+          box-shadow: none !important;
+        }
+      }
 
-    /* 1. 상단 바 (Header) */
-    .map-header {
-      position: absolute;
-      top: 71px;
-      left: 16px;
-      right: 16px;
-      height: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-    }
-    .btn-back { 
-      text-decoration: none; 
-      display: flex; 
-      align-items: center;
-      width: 24px;
-      height: 24px;
-    }
-    .btn-back img {
-      width: 13px;
-      height: 13px;
-      transform: rotate(180deg); /* 오른쪽 화살표를 왼쪽으로 회전 */
-    }
-    .location-chip-black {
-      background: #000000;
-      padding: 1px 10px;
-      border-radius: 9px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      color: white;
-      height: 24px;
-      box-sizing: border-box;
-    }
-    .location-chip-black span { font-weight: 700; font-size: 16px; letter-spacing: -0.32px; }
+      /* 지도 페이지 전용 스타일 */
 
-    /* 2. 지도 영역 (화면 전체 배경으로 설정) */
-    .map-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%; /* 화면 전체를 배경으로 채움 */
-      background-image: url('/assets/map-DEYR9ttV.svg');
-      background-color: #F5F7F8;
-      background-size: cover;
-      background-position: center;
-      z-index: 0; /* 가장 뒤쪽에 배치 */
-    }
-    /* 현재 위치 마커 */
-    .current-location-marker {
-      position: absolute;
-      left: 172px;
-      top: 256px;
-      width: 30px;
-      height: 30px;
-      background: rgba(251, 116, 89, 0.2);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-    }
-    .current-location-marker::after {
-      content: '';
-      width: 10px;
-      height: 10px;
-      background: #FB7459;
-      border: 2px solid white;
-      border-radius: 50%;
-      box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    }
-    
-    /* 베이커리 마커 (지도.png 반영) */
-    .bakery-marker {
-      position: absolute;
-      width: 24px;
-      height: 24px;
-      background: #FF9F46;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 2px solid white;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      z-index: 5;
-    }
-    .bakery-marker::before {
-      content: '\e110'; /* bread icon */
-      font-family: 'Min Icon VF';
-      color: white;
-      font-size: 14px;
-    }
+      /* 1. 상단 바 (Header) */
+      .map-header {
+        position: absolute;
+        top: 71px;
+        left: 16px;
+        right: 16px;
+        height: 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+      }
+      .btn-back {
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        width: 24px;
+        height: 24px;
+      }
+      .btn-back img {
+        width: 13px;
+        height: 13px;
+        transform: rotate(180deg); /* 오른쪽 화살표를 왼쪽으로 회전 */
+      }
+      .location-chip-black {
+        background: #000000;
+        padding: 1px 10px;
+        border-radius: 9px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        color: white;
+        height: 24px;
+        box-sizing: border-box;
+      }
+      .location-chip-black span {
+        font-weight: 700;
+        font-size: 16px;
+        letter-spacing: -0.32px;
+      }
 
-    /* 현위치 버튼 */
-    .btn-now {
-      position: absolute;
-      right: 18px;
-      top: 360px;
-      width: 30px;
-      height: 30px;
-      background: white;
-      border-radius: 15px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      cursor: pointer;
-      z-index: 20;
-    }
+      /* 2. 지도 영역 (화면 전체 배경으로 설정) */
+      .map-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%; /* 화면 전체를 배경으로 채움 */
+        background-image: url("/assets/map-ZGnK0DFx.png");
+        background-color: #f5f7f8;
+        background-size: cover;
+        background-position: center;
+        z-index: 0; /* 가장 뒤쪽에 배치 */
+      }
+      /* 현재 위치 마커 */
+      .current-location-marker {
+        position: absolute;
+        left: 172px;
+        top: 256px;
+        width: 30px;
+        height: 30px;
+        background: rgba(251, 116, 89, 0.2);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 10;
+      }
+      .current-location-marker::after {
+        content: "";
+        width: 10px;
+        height: 10px;
+        background: #fb7459;
+        border: 2px solid white;
+        border-radius: 50%;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+      }
 
-    /* 3. 하단 베이커리 리스트 (Bottom Sheet - Figma 1154:776 & 784 정밀 반영) */
-    .bakery-list-container {
-      position: absolute;
-      top: 391px;
-      left: 16px;
-      width: 398px;
-      height: calc(100% - 391px);
-      background: #F8F4EC;
-      border-radius: 40px 40px 0 0;
-      z-index: 900;
-      padding: 14px 17px 0;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
-      touch-action: pan-y;
-    }
-    .top-title {
-      width: 100%;
-      height: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 14px;
-      flex-shrink: 0;
-    }
-    .dots-indicator { width: 54px; height: 10px; }
-    .dots-indicator img { width: 100%; height: 100%; object-fit: contain; }
+      /* 베이커리 마커 (지도.png 반영) */
+      .bakery-marker {
+        position: absolute;
+        width: 24px;
+        height: 24px;
+        background: #ff9f46;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid white;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 5;
+      }
+      .bakery-marker::before {
+        content: "\e110"; /* bread icon */
+        font-family: "Min Icon VF";
+        color: white;
+        font-size: 14px;
+      }
 
-    /* 리스트 스크롤 영역 */
-    .bakery-scroll-area {
-      width: 100%;
-      height: 100%;
-      overflow-y: auto;
-      padding-left: 0;
-      padding-right: 0;
-      padding-bottom: 120px;
-      box-sizing: border-box;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;  /* 14 → 16px (카드 크기에 맞게) */
-      align-items: center;
-      -ms-overflow-style: none; scrollbar-width: none;
-    }
-    .bakery-scroll-area::-webkit-scrollbar { display: none; }
+      /* 현위치 버튼 */
+      .btn-now {
+        position: absolute;
+        right: 18px;
+        top: 390px;
+        width: 30px;
+        height: 30px;
+        background: white;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        z-index: 20;
+      }
 
-    /* 카드 스타일 */
-    .bakery-map-card {
-      position: relative;
-      width: 364px;
-      height: 112px;  /* 120 → 112px (살짝 축소) */
-      flex-shrink: 0;
-      box-sizing: border-box;
-    }
-    .card-bg {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: #ffffff;
-      /* 왼쪽 = 카드 높이(112) ÷ 2 = 56px, 오른쪽 = 10px */
-      border-radius: 56px 10px 10px 56px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
-      z-index: 1;
-    }
-    .card-contents {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      height: 100%;
-      /* 왼쪽 패딩 = 8(left offset) + 90(이미지 원) + 12(gap) = 110px */
-      padding: 10px 14px 10px 110px;
-      box-sizing: border-box;
-    }
-    .card-img-circle {
-      position: absolute;
-      left: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 90px;  /* 96 → 90px */
-      height: 90px;
-      border-radius: 50%;
-      overflow: hidden;
-      z-index: 3;
-      box-sizing: border-box;
-      border: 3px solid #ffffff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    }
-    .card-img-circle img { width: 100%; height: 100%; object-fit: cover; }
+      /* 3. 하단 베이커리 리스트 (Bottom Sheet - Figma 1154:776 & 784 정밀 반영) */
+      .bakery-list-container {
+        position: absolute;
+        top: 431px;
+        left: 16px;
+        width: 398px;
+        height: calc(100% - 431px);
+        background: #f8f4ec;
+        border-radius: 40px 40px 0 0;
+        z-index: 900;
+        padding: 14px 17px 0;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+        touch-action: pan-y;
+      }
+      .top-title {
+        width: 100%;
+        height: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 14px;
+        flex-shrink: 0;
+      }
+      .dots-indicator {
+        width: 54px;
+        height: 10px;
+      }
+      .dots-indicator img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
 
-    .card-info-box { 
-      width: 240px;
-      height: 90px;  /* 96 → 90px */
-      display: flex; 
-      flex-direction: column; 
-      justify-content: space-between;
-      position: relative; 
-    }
-    .card-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-    .card-name { font-weight: 700; font-size: 16px; color: #000; letter-spacing: -0.32px; line-height: 1.2; }
-    .card-bookmark { 
-      font-family: 'Min Icon VF', sans-serif; 
-      font-size: 16.8px; 
-      color: #9B9B9B; 
-      cursor: pointer; 
-      font-feature-settings: 'ss09' 1; 
-      font-variation-settings: 'rond' 3, 'edpt' 1; 
-    }
-    .card-bookmark.on { color: #FFCB30; }
+      /* 리스트 스크롤 영역 */
+      .bakery-scroll-area {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 120px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 16px; /* 14 → 16px (카드 크기에 맞게) */
+        align-items: center;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      .bakery-scroll-area::-webkit-scrollbar {
+        display: none;
+      }
 
-    .card-address-row { display: flex; align-items: flex-start; gap: 4px; color: #CACACA; margin-top: 2px; }
-    .card-address { 
-      font-size: 13px; 
-      letter-spacing: -0.26px; 
-      line-height: 1.4; 
-      word-break: keep-all; 
-      max-width: 220px; 
-    }
+      /* 카드 스타일 */
+      .bakery-map-card {
+        position: relative;
+        width: 364px;
+        height: 112px; /* 120 → 112px (살짝 축소) */
+        flex-shrink: 0;
+        box-sizing: border-box;
+      }
+      .card-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+        /* 왼쪽 = 카드 높이(112) ÷ 2 = 56px, 오른쪽 = 10px */
+        border-radius: 56px 10px 10px 56px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+        z-index: 1;
+      }
+      .card-contents {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        height: 100%;
+        /* 왼쪽 패딩 = 8(left offset) + 90(이미지 원) + 12(gap) = 110px */
+        padding: 10px 14px 10px 110px;
+        box-sizing: border-box;
+      }
+      .card-img-circle {
+        position: absolute;
+        left: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 90px; /* 96 → 90px */
+        height: 90px;
+        border-radius: 50%;
+        overflow: hidden;
+        z-index: 3;
+        box-sizing: border-box;
+        border: 3px solid #ffffff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+      .card-img-circle img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
 
-    .card-tag-row { display: flex; gap: 5px; }
-    .card-tag { background: #F2F2F2; color: #9B9B9B; font-size: 10px; padding: 2px 8px; border-radius: 8px; font-weight: 400; line-height: 1.5; }
+      .card-info-box {
+        width: 240px;
+        height: 90px; /* 96 → 90px */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+      }
+      .card-top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+      .card-name {
+        font-weight: 700;
+        font-size: 16px;
+        color: #000;
+        letter-spacing: -0.32px;
+        line-height: 1.2;
+      }
+      .card-bookmark {
+        font-family: "Min Icon VF", sans-serif;
+        font-size: 16.8px;
+        color: #9b9b9b;
+        cursor: pointer;
+        font-feature-settings: "ss09" 1;
+        font-variation-settings:
+          "rond" 3,
+          "edpt" 1;
+      }
+      .card-bookmark.on {
+        color: #ffcb30;
+      }
 
-    .card-bottom-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-    .card-rating { display: flex; align-items: center; gap: 2px; color: #9B9B9B; font-size: 13px; line-height: 1.5; }
-    .btn-find-path {
-      background: #FFA74A;
-      color: white;
-      font-size: 13px;
-      font-weight: 600;
-      padding: 2px 17px;
-      border-radius: 8px;
-      text-decoration: none;
-      letter-spacing: -0.26px;
-      line-height: 1.8;
-    }
+      .card-address-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 4px;
+        color: #cacaca;
+        margin-top: 2px;
+      }
+      .card-address {
+        font-size: 13px;
+        letter-spacing: -0.26px;
+        line-height: 1.4;
+        word-break: keep-all;
+        max-width: 220px;
+      }
 
-    /* 4. 내비게이션 바 활성화 상태 */
-    .menu-bar .menu-item.active .min-icon { color: #000000; }
-    .menu-bar .menu-item.active span:not(.min-icon) { color: #000000; display: block; }
-  </style>
-  <link rel="stylesheet" crossorigin href="/assets/home-DsQNiKwc.css">
-  <link rel="stylesheet" crossorigin href="/assets/minIcon-round-CIgpdV9E.css">
-  <link rel="stylesheet" crossorigin href="/assets/navbar-Dbb8EQ3Z.css">
-  <link rel="stylesheet" crossorigin href="/assets/style-GMkqmfHw.css">
-</head>
-<body>
-  <div id="app">
+      .card-tag-row {
+        display: flex;
+        gap: 5px;
+      }
+      .card-tag {
+        background: #f2f2f2;
+        color: #9b9b9b;
+        font-size: 10px;
+        padding: 2px 8px;
+        border-radius: 8px;
+        font-weight: 400;
+        line-height: 1.5;
+      }
 
-    <!-- 1. Map Header -->
-    <div class="map-header">
-       <a href="home.html" class="btn-back">
+      .card-bottom-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+      .card-rating {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        color: #9b9b9b;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .btn-find-path {
+        background: #ffa74a;
+        color: white;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 2px 17px;
+        border-radius: 8px;
+        text-decoration: none;
+        letter-spacing: -0.26px;
+        line-height: 1.8;
+      }
+
+      /* 4. 내비게이션 바 활성화 상태 */
+      .menu-bar .menu-item.active .min-icon {
+        color: #000000;
+      }
+      .menu-bar .menu-item.active span:not(.min-icon) {
+        color: #000000;
+        display: block;
+      }
+    </style>
+    <link rel="stylesheet" crossorigin href="/assets/home-B4cQDazP.css">
+    <link rel="stylesheet" crossorigin href="/assets/navbar-Cq1MMkkt.css">
+    <link rel="stylesheet" crossorigin href="/assets/style-GMkqmfHw.css">
+  </head>
+  <body>
+    <div id="app">
+      <!-- 1. Map Header -->
+      <div class="map-header">
+        <a href="home.html" class="btn-back">
           <img src="data:image/svg+xml,%3csvg%20width='13'%20height='13'%20viewBox='0%200%2013%2013'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M4.87498%202.16671L9.20831%206.50004L4.87498%2010.8334'%20stroke='%238B8B8B'%20stroke-width='1.125'%20stroke-linecap='round'/%3e%3c/svg%3e" alt="Back" />
-       </a>
-       <div class="location-chip-black">
-          <span class="min-icon" style="font-size:24px; color:white;">&#xEFA0;</span>
-           <span>성수동 2가</span>
-       </div>
-       <span class="min-icon" style="font-size:24px; color:#000;">&#xEF40;</span>
-    </div>
+        </a>
+        <div class="location-chip-black">
+          <span class="min-icon" style="font-size: 24px; color: white"
+            >&#xEFA0;</span
+          >
+          <span>성수동 2가</span>
+        </div>
+        <span class="min-icon" style="font-size: 24px; color: #000"
+          >&#xEF40;</span
+        >
+      </div>
 
-    <!-- 2. Map Area -->
-    <div class="map-container">
-       <!-- 현재 위치 마커 -->
-       <div class="current-location-marker"></div>
-       
-       <!-- 추가 베이커리 마커 (지도.png 기반) -->
-       <div class="bakery-marker" style="top: 100px; left: 80px;"></div>
-       <div class="bakery-marker" style="top: 180px; left: 300px;"></div>
-       <div class="bakery-marker" style="top: 320px; left: 120px;"></div>
-       <div class="bakery-marker" style="top: 40px; left: 380px;"></div>
-       
-       <!-- 현위치 버튼 -->
-       <div class="btn-now">
-         <span class="min-icon" style="font-size:19.2px; color:#9B9B9B;">&#xE140;</span>
-       </div>
-    </div>
+      <!-- 2. Map Area -->
+      <div class="map-container">
+        <!-- 현재 위치 마커 -->
+        <div class="current-location-marker"></div>
 
-    <!-- 2. Bottom Sheet (Bakery List) -->
-    <div class="bakery-list-container">
-       <div class="top-title">
+        <!-- 추가 베이커리 마커 (지도.png 기반) -->
+        <div class="bakery-marker" style="top: 100px; left: 80px"></div>
+        <div class="bakery-marker" style="top: 180px; left: 300px"></div>
+        <div class="bakery-marker" style="top: 320px; left: 120px"></div>
+        <div class="bakery-marker" style="top: 40px; left: 380px"></div>
+
+        <!-- 현위치 버튼 -->
+        <div class="btn-now">
+          <span class="min-icon" style="font-size: 19.2px; color: #9b9b9b"
+            >&#xE140;</span
+          >
+        </div>
+      </div>
+
+      <!-- 2. Bottom Sheet (Bakery List) -->
+      <div class="bakery-list-container">
+        <div class="top-title">
           <div class="dots-indicator">
-             <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2054%2010'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group%208901'%3e%3ccircle%20id='Ellipse%204'%20cx='5'%20cy='5'%20r='5'%20fill='var(--fill-0,%20%23FF9F46)'/%3e%3ccircle%20id='Ellipse%205'%20cx='27'%20cy='5'%20r='5'%20fill='var(--fill-0,%20%239B9B9B)'/%3e%3ccircle%20id='Ellipse%206'%20cx='49'%20cy='5'%20r='5'%20fill='var(--fill-0,%20%239B9B9B)'/%3e%3c/g%3e%3c/svg%3e" alt="Indicator" />
+            <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2054%2010'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group%208901'%3e%3ccircle%20id='Ellipse%204'%20cx='5'%20cy='5'%20r='5'%20fill='var(--fill-0,%20%23FF9F46)'/%3e%3ccircle%20id='Ellipse%205'%20cx='27'%20cy='5'%20r='5'%20fill='var(--fill-0,%20%239B9B9B)'/%3e%3ccircle%20id='Ellipse%206'%20cx='49'%20cy='5'%20r='5'%20fill='var(--fill-0,%20%239B9B9B)'/%3e%3c/g%3e%3c/svg%3e" alt="Indicator" />
           </div>
-       </div>
-       
-       <div class="bakery-scroll-area">
-          
+        </div>
+
+        <div class="bakery-scroll-area">
           <!-- Card 1: 푹신베이커리 (Section01) -->
           <div class="bakery-map-card">
-             <div class="card-bg"></div>
-             <div class="card-img-circle">
-               <img src="/assets/bakery-photo-C_CGLNpe.png" alt="" />
-             </div>
-             <div class="card-contents">
-                <div class="card-info-box">
-                   <div class="card-top-row">
-                      <span class="card-name">푹신베이커리</span>
-                      <span class="card-bookmark on" style="font-feature-settings: 'ss09' 1;">&#xF020;</span>
-                   </div>
-                   <div class="card-address-row">
-                      <span class="min-icon" style="font-size:19.2px; color:#CACACA; font-feature-settings: 'ss01' 1; font-variation-settings: 'rond' 3, 'edpt' 1;">&#xEFA0;</span>
-                      <span class="card-address">서울특별시 성동구 연무장길 27-3, 1층</span>
-                   </div>
-                   <div class="card-tag-row">
-                      <span class="card-tag">#바삭70%</span>
-                      <span class="card-tag">#버터30%</span>
-                   </div>
-                   <div class="card-bottom-row">
-                      <div class="card-rating">
-                         <span class="min-icon" style="color:#FB7459; font-size:13.8px; font-feature-settings: 'ss09' 1; font-variation-settings: 'rond' 3, 'edpt' 1;">&#xE0A0;</span>
-                         <span>4.5</span>
-                      </div>
-                      <a href="https://map.kakao.com" class="btn-find-path">길찾기</a>
-                   </div>
+            <div class="card-bg"></div>
+            <div class="card-img-circle">
+              <img src="/assets/bakery-photo1-W0rqhnbH.png" alt="" />
+            </div>
+            <div class="card-contents">
+              <div class="card-info-box">
+                <div class="card-top-row">
+                  <span class="card-name">푹신베이커리</span>
+                  <span
+                    class="card-bookmark on"
+                    style="font-feature-settings: &quot;ss09&quot; 1"
+                    >&#xF020;</span
+                  >
                 </div>
-             </div>
+                <div class="card-address-row">
+                  <span
+                    class="min-icon"
+                    style="
+                      font-size: 19.2px;
+                      color: #cacaca;
+                      font-feature-settings: &quot;ss01&quot; 1;
+                      font-variation-settings:
+                        &quot;rond&quot; 3,
+                        &quot;edpt&quot; 1;
+                    "
+                    >&#xEFA0;</span
+                  >
+                  <span class="card-address"
+                    >서울특별시 성동구 연무장길 27-3, 1층</span
+                  >
+                </div>
+                <div class="card-tag-row">
+                  <span class="card-tag">#바삭70%</span>
+                  <span class="card-tag">#버터30%</span>
+                </div>
+                <div class="card-bottom-row">
+                  <div class="card-rating">
+                    <span
+                      class="min-icon"
+                      style="
+                        color: #fb7459;
+                        font-size: 13.8px;
+                        font-feature-settings: &quot;ss09&quot; 1;
+                        font-variation-settings:
+                          &quot;rond&quot; 3,
+                          &quot;edpt&quot; 1;
+                      "
+                      >&#xE0A0;</span
+                    >
+                    <span>4.5</span>
+                  </div>
+                  <a href="https://map.kakao.com" class="btn-find-path"
+                    >길찾기</a
+                  >
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Card 2: 르뺑 성수 -->
           <div class="bakery-map-card">
-             <div class="card-bg"></div>
-             <div class="card-img-circle">
-               <img src="/assets/bakery-photo2-1dFflFQ6.png" alt="" />
-             </div>
-             <div class="card-contents">
-                <div class="card-info-box">
-                   <div class="card-top-row">
-                      <span class="card-name">르뺑 성수</span>
-                      <span class="card-bookmark on" style="font-feature-settings: 'ss09' 1;">&#xF020;</span>
-                   </div>
-                    <div class="card-address-row">
-                       <span class="min-icon" style="font-size:19.2px; color:#CACACA; font-feature-settings: 'ss01' 1; font-variation-settings: 'rond' 3, 'edpt' 1;">&#xEFA0;</span>
-                       <span class="card-address">서울특별시 성동구 아차산로 45</span>
-                    </div>
-                   <div class="card-tag-row">
-                      <span class="card-tag">#촉촉60%</span>
-                      <span class="card-tag">#버터80%</span>
-                   </div>
-                   <div class="card-bottom-row">
-                      <div class="card-rating">
-                         <span class="min-icon" style="color:#FB7459; font-size:13.8px; font-feature-settings: 'ss09' 1; font-variation-settings: 'rond' 3, 'edpt' 1;">&#xE0A0;</span>
-                         <span>4.1</span>
-                      </div>
-                      <a href="https://map.kakao.com" class="btn-find-path">길찾기</a>
-                   </div>
+            <div class="card-bg"></div>
+            <div class="card-img-circle">
+              <img src="/assets/bakery-photo2-CjUoOqR4.png" alt="" />
+            </div>
+            <div class="card-contents">
+              <div class="card-info-box">
+                <div class="card-top-row">
+                  <span class="card-name">르뺑 성수</span>
+                  <span
+                    class="card-bookmark on"
+                    style="font-feature-settings: &quot;ss09&quot; 1"
+                    >&#xF020;</span
+                  >
                 </div>
-             </div>
+                <div class="card-address-row">
+                  <span
+                    class="min-icon"
+                    style="
+                      font-size: 19.2px;
+                      color: #cacaca;
+                      font-feature-settings: &quot;ss01&quot; 1;
+                      font-variation-settings:
+                        &quot;rond&quot; 3,
+                        &quot;edpt&quot; 1;
+                    "
+                    >&#xEFA0;</span
+                  >
+                  <span class="card-address"
+                    >서울특별시 성동구 아차산로 45</span
+                  >
+                </div>
+                <div class="card-tag-row">
+                  <span class="card-tag">#촉촉60%</span>
+                  <span class="card-tag">#버터80%</span>
+                </div>
+                <div class="card-bottom-row">
+                  <div class="card-rating">
+                    <span
+                      class="min-icon"
+                      style="
+                        color: #fb7459;
+                        font-size: 13.8px;
+                        font-feature-settings: &quot;ss09&quot; 1;
+                        font-variation-settings:
+                          &quot;rond&quot; 3,
+                          &quot;edpt&quot; 1;
+                      "
+                      >&#xE0A0;</span
+                    >
+                    <span>4.1</span>
+                  </div>
+                  <a href="https://map.kakao.com" class="btn-find-path"
+                    >길찾기</a
+                  >
+                </div>
+              </div>
+            </div>
           </div>
 
           <!-- Card 3: 베이크하우스 -->
           <div class="bakery-map-card">
-             <div class="card-bg"></div>
-             <div class="card-img-circle">
-               <img src="/assets/bakery-photo3-CiPQN-TI.png" alt="" />
-             </div>
-             <div class="card-contents">
-                <div class="card-info-box">
-                   <div class="card-top-row">
-                       <span class="card-name">베이크하우스</span>
-                       <span class="card-bookmark">&#xF020;</span>
-                   </div>
-                    <div class="card-address-row">
-                       <span class="min-icon" style="font-size:19.2px; color:#CACACA; font-feature-settings: 'ss01' 1; font-variation-settings: 'rond' 3, 'edpt' 1;">&#xEFA0;</span>
-                       <span class="card-address">서울특별시 성동구 서울숲2길 32-14</span>
-                    </div>
-                   <div class="card-tag-row">
-                      <span class="card-tag">#달달70%</span>
-                      <span class="card-tag">#꾸덕80%</span>
-                   </div>
-                   <div class="card-bottom-row">
-                      <div class="card-rating">
-                         <span class="min-icon" style="color:#FB7459; font-size:13.8px; font-feature-settings: 'ss09' 1; font-variation-settings: 'rond' 3, 'edpt' 1;">&#xE0A0;</span>
-                         <span>4.2</span>
-                      </div>
-                      <a href="https://map.kakao.com" class="btn-find-path">길찾기</a>
-                   </div>
+            <div class="card-bg"></div>
+            <div class="card-img-circle">
+              <img src="/assets/bakery-photo3-Dbw_p8yA.png" alt="" />
+            </div>
+            <div class="card-contents">
+              <div class="card-info-box">
+                <div class="card-top-row">
+                  <span class="card-name">베이크하우스</span>
+                  <span class="card-bookmark">&#xF020;</span>
                 </div>
-             </div>
+                <div class="card-address-row">
+                  <span
+                    class="min-icon"
+                    style="
+                      font-size: 19.2px;
+                      color: #cacaca;
+                      font-feature-settings: &quot;ss01&quot; 1;
+                      font-variation-settings:
+                        &quot;rond&quot; 3,
+                        &quot;edpt&quot; 1;
+                    "
+                    >&#xEFA0;</span
+                  >
+                  <span class="card-address"
+                    >서울특별시 성동구 서울숲2길 32-14</span
+                  >
+                </div>
+                <div class="card-tag-row">
+                  <span class="card-tag">#달달70%</span>
+                  <span class="card-tag">#꾸덕80%</span>
+                </div>
+                <div class="card-bottom-row">
+                  <div class="card-rating">
+                    <span
+                      class="min-icon"
+                      style="
+                        color: #fb7459;
+                        font-size: 13.8px;
+                        font-feature-settings: &quot;ss09&quot; 1;
+                        font-variation-settings:
+                          &quot;rond&quot; 3,
+                          &quot;edpt&quot; 1;
+                      "
+                      >&#xE0A0;</span
+                    >
+                    <span>4.2</span>
+                  </div>
+                  <a href="https://map.kakao.com" class="btn-find-path"
+                    >길찾기</a
+                  >
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
 
-       </div>
+      <!-- 4. Tab Bar (Bottom Navigation) -->
+      <nav class="menu-bar">
+        <a href="home.html" class="menu-item">
+          <span class="min-icon">&#xE110;</span>
+          <span>HOME</span>
+        </a>
+        <a href="map.html" class="menu-item active">
+          <span class="min-icon">&#xEFA0;</span>
+          <span>MAP</span>
+        </a>
+        <a href="my.html" class="menu-item">
+          <span class="min-icon">&#xEF20;</span>
+          <span>MY PAGE</span>
+        </a>
+        <a href="setting.html" class="menu-item">
+          <span class="min-icon">&#xE0B0;</span>
+          <span>SETTING</span>
+        </a>
+      </nav>
     </div>
 
-    <!-- 4. Tab Bar (Bottom Navigation) -->
-    <nav class="menu-bar">
-      <a href="home.html" class="menu-item">
-        <span class="min-icon">&#xE110;</span>
-        <span>HOME</span>
-      </a>
-      <a href="map.html" class="menu-item active">
-        <span class="min-icon">&#xEFA0;</span>
-        <span>MAP</span>
-      </a>
-      <a href="my.html" class="menu-item">
-        <span class="min-icon">&#xEF20;</span>
-        <span>MY PAGE</span>
-      </a>
-      <a href="setting.html" class="menu-item">
-        <span class="min-icon">&#xE0B0;</span>
-        <span>SETTING</span>
-      </a>
-    </nav>
-
-  </div>
-
-  <script>
-    // 북마크 클릭 시 상태 토글 (노란색 <-> 회색)
-    document.querySelectorAll('.card-bookmark').forEach(bookmark => {
-      bookmark.addEventListener('click', () => {
-        bookmark.classList.toggle('on');
+    <script>
+      // 북마크 클릭 시 상태 토글 (노란색 <-> 회색)
+      document.querySelectorAll(".card-bookmark").forEach((bookmark) => {
+        bookmark.addEventListener("click", () => {
+          bookmark.classList.toggle("on");
+        });
       });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>

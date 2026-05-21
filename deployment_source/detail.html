@@ -16,36 +16,8 @@
   <style>
     /* 기본 리셋 */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      margin: 0;
-      background: #EFEFEF;
-      font-family: 'Pretendard Variable', sans-serif;
-      -webkit-font-smoothing: antialiased;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100dvh;
-    }
-    #app {
-      width: 430px;
-      height: 932px;
-      background: #F8F4EC;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    }
-    @media (max-width: 480px) {
-      body {
-        align-items: flex-start !important;
-        background-color: #F8F4EC !important;
-      }
-      #app {
-        width: 100% !important;
-        max-width: 430px !important;
-        height: 100dvh !important;
-        box-shadow: none !important;
-      }
-    }
+    body { background: #F8F4EC; font-family: 'Pretendard Variable', sans-serif; width: 430px; margin: 0 auto; -webkit-font-smoothing: antialiased; overflow: hidden; height: 100vh; }
+    #app { width: 430px; height: 100vh; background: #F8F4EC; overflow: hidden; position: relative; }
     .mi { font-family: 'Min Icon VF', 'Round Bold', sans-serif; font-feature-settings: 'ss09' 1; font-style: normal; line-height: normal; }
 
 
@@ -97,8 +69,8 @@
       /* overflow: hidden 제거 - 그림자가 잘리지 않도록 함 */
       transition: all 0.4s cubic-bezier(0.34, 1.26, 0.64, 1);
       border-radius: 0 0 68px 68px;
-      -webkit-mask-image: url("data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20301%20335.677'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Rectangle%203468591'%20d='M0%2040.0041C0%2016.2933%2020.5084%20-2.21297%2044.0947%200.214245L256.118%2022.0332C281.616%2024.6571%20301%2046.138%20301%2071.7705V335.677H0V40.0041Z'%20fill='var(--fill-0,%20%23FF9F46)'/%3e%3c/svg%3e");
-      mask-image: url("data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20301%20335.677'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Rectangle%203468591'%20d='M0%2040.0041C0%2016.2933%2020.5084%20-2.21297%2044.0947%200.214245L256.118%2022.0332C281.616%2024.6571%20301%2046.138%20301%2071.7705V335.677H0V40.0041Z'%20fill='var(--fill-0,%20%23FF9F46)'/%3e%3c/svg%3e");
+      -webkit-mask-image: url("data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20323%20361.523'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Rectangle%203468598'%20d='M0%2040.0042C0%2016.2658%2020.5539%20-2.24926%2044.1633%200.221497L278.204%2024.7141C303.665%2027.3786%20323%2048.8431%20323%2074.4426V311.523C323%20339.138%20300.614%20361.523%20273%20361.523H50C22.3858%20361.523%200%20339.138%200%20311.523V40.0042Z'%20fill='var(--fill-0,%20%23FF9F46)'/%3e%3c/svg%3e");
+      mask-image: url("data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20323%20361.523'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Rectangle%203468598'%20d='M0%2040.0042C0%2016.2658%2020.5539%20-2.24926%2044.1633%200.221497L278.204%2024.7141C303.665%2027.3786%20323%2048.8431%20323%2074.4426V311.523C323%20339.138%20300.614%20361.523%20273%20361.523H50C22.3858%20361.523%200%20339.138%200%20311.523V40.0042Z'%20fill='var(--fill-0,%20%23FF9F46)'/%3e%3c/svg%3e");
       -webkit-mask-size: 100% 100%;
       mask-size: 100% 100%;
       -webkit-mask-repeat: no-repeat;
@@ -441,9 +413,9 @@
     <!-- 이미지 슬라이더 -->
     <div class="hero-slider" id="heroSlider">
       <!-- 3개의 이미지가 클래스(pos-0, pos-1, pos-2) 스와핑으로 이동 -->
-      <div class="hero-img-item pos-0" id="slide-0"><img src="/assets/main-croissant-DxiOSest.png" alt="크루아상" /></div>
-      <div class="hero-img-item pos-1" id="slide-1"><img src="/assets/bakery-photo2-1dFflFQ6.png" alt="베이커리" /></div>
-      <div class="hero-img-item pos-2" id="slide-2"><img src="/assets/bakery-photo3-CiPQN-TI.png" alt="베이커리" /></div>
+      <div class="hero-img-item pos-0" id="slide-0"><img src="/assets/hero-croissant-DxiOSest.png" alt="크루아상" /></div>
+      <div class="hero-img-item pos-1" id="slide-1"><img src="/assets/bakery-photo2-CjUoOqR4.png" alt="베이커리" /></div>
+      <div class="hero-img-item pos-2" id="slide-2"><img src="/assets/bakery-photo3-Dbw_p8yA.png" alt="베이커리" /></div>
     </div>
 
     <!-- top-image-icon: 메인 이미지 위 장식 아이콘 -->
