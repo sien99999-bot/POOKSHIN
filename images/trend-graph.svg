@@ -1,0 +1,13 @@
+<svg width="300" height="150" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="trendGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FB7459" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FB7459" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- Smooth Curve for Trend -->
+  <path d="M 0 110 C 20 110, 30 130, 50 130 C 80 130, 120 80, 150 80 C 180 80, 200 85, 220 85 C 260 85, 280 20, 300 20 L 300 150 L 0 150 Z" fill="url(#trendGrad)"/>
+  <path d="M 0 110 C 20 110, 30 130, 50 130 C 80 130, 120 80, 150 80 C 180 80, 200 85, 220 85 C 260 85, 280 20, 300 20" fill="none" stroke="#FB7459" stroke-width="3" stroke-linecap="round"/>
+  <!-- Point at the end -->
+  <circle cx="300" cy="20" r="4" fill="#FB7459"/>
+</svg>

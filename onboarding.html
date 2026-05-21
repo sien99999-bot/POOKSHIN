@@ -16,9 +16,14 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #F8F4EC;
+      margin: 0;
+      background-color: #EFEFEF;
       font-family: 'Pretendard Variable', sans-serif;
-      -webkit-font-smoothing: antialiased;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
     }
 
     #app {
@@ -28,6 +33,9 @@
       position: relative;
       overflow: hidden;
       background: #F8F4EC;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      transform-origin: center center;
+      transform: scale(min(1, min(100dvh / 932, 100dvw / 430)));
     }
 
     /* 화면 전환 */

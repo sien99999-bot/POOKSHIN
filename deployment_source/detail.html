@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=430, user-scalable=no" />
+    <meta name="theme-color" content="#F8F4EC" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
+  <link rel="apple-touch-icon" href="/icon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <title>POOKSHIN - 상세페이지</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="https://poposnail61.github.io/web/css/minIcon-round.css" />
+  <style>
+    /* 기본 리셋 */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      margin: 0;
+      background: #EFEFEF;
+      font-family: 'Pretendard Variable', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+    }
+    #app {
+      width: 430px;
+      height: 932px;
+      background: #F8F4EC;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    @media (max-width: 480px) {
+      body {
+        align-items: flex-start !important;
+        background-color: #F8F4EC !important;
+      }
+      #app {
+        width: 100% !important;
+        max-width: 430px !important;
+        height: 100dvh !important;
+        box-shadow: none !important;
+      }
+    }
+    .mi { font-family: 'Min Icon VF', 'Round Bold', sans-serif; font-feature-settings: 'ss09' 1; font-style: normal; line-height: normal; }
+
+
+    /* ── 히어로 섹션 ── */
+    .hero-section {
+      position: relative; width: 430px; height: 587px; /* Figma bottom-card 기준 시작 높이 */
+      /* overflow: hidden 제거하여 초록색 배경이 밖으로 넘칠 수 있도록 허용 */
+    }
+    /* z-index 레이어 맵:
+       1: green-band
+       2: hill-left / hill-right
+       5: hero-slider (이미지 트랙)
+       10: hero-title
+       15: walk-badge / swipe-hint / slide-dots
+       20: btn-close
+    */
+    .btn-close {
+      position: absolute; top: 18px; right: 20px; z-index: 20;
+      text-decoration: none;
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+    }
+    /* CROISSANT 타이틀 — 피그마: top=101px, 중앙 정렬 */
+    .hero-title {
+      position: absolute; top: 101px; left: 50%; transform: translateX(-50%);
+      font-weight: 800; font-size: 60px; color: #FF9F46;
+      letter-spacing: -1.2px; text-transform: uppercase;
+      z-index: 10; white-space: nowrap; pointer-events: none;
+    }
+    /* 통합된 상단 배경 (녹색 곡선 + 언덕) */
+    .hero-bg-shape {
+      position: absolute; top: 421px; left: -42.5px;
+      width: 515px; height: 293px; /* 5px 더 좁힘, 피그마 원래 높이 적용 */
+      z-index: 1;
+      pointer-events: none;
+      object-fit: cover;
+      object-position: top;
+    }
+    /* ── 이미지 슬라이더 (새로운 State Machine 방식) ── */
+    .hero-slider {
+      position: absolute; top: 0; left: 0; width: 430px; height: 100%;
+      z-index: 5;
+      overflow: hidden;
+    }
+    
+    /* 각 이미지의 공통 속성 */
+    .hero-img-item {
+      position: absolute;
+      /* overflow: hidden 제거 - 그림자가 잘리지 않도록 함 */
+      transition: all 0.4s cubic-bezier(0.34, 1.26, 0.64, 1);
+      border-radius: 0 0 68px 68px;
+      -webkit-mask-image: url("data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20301%20335.677'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Rectangle%203468591'%20d='M0%2040.0041C0%2016.2933%2020.5084%20-2.21297%2044.0947%200.214245L256.118%2022.0332C281.616%2024.6571%20301%2046.138%20301%2071.7705V335.677H0V40.0041Z'%20fill='var(--fill-0,%20%23FF9F46)'/%3e%3c/svg%3e");
+      mask-image: url("data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20301%20335.677'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Rectangle%203468591'%20d='M0%2040.0041C0%2016.2933%2020.5084%20-2.21297%2044.0947%200.214245L256.118%2022.0332C281.616%2024.6571%20301%2046.138%20301%2071.7705V335.677H0V40.0041Z'%20fill='var(--fill-0,%20%23FF9F46)'/%3e%3c/svg%3e");
+      -webkit-mask-size: 100% 100%;
+      mask-size: 100% 100%;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+    }
+    .hero-img-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      transform: scale(1.1); /* 이미지를 살짝 확대 */
+    }
+
+    /* State 0: Center (활성 메인 이미지) */
+    .pos-0 {
+      left: 54px; top: 198px;
+      width: 323px; height: 361px;
+      z-index: 3;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,0.12));
+    }
+    /* State 1: Right (오른쪽 사이드 이미지) */
+    .pos-1 {
+      left: 402px; top: 245px; 
+      width: 200px; height: 223px;
+      z-index: 1;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));
+    }
+    /* State 2: Left (왼쪽 사이드 이미지) */
+    .pos-2 {
+      left: -171px; top: 245px; 
+      width: 200px; height: 223px;
+      z-index: 1;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));
+    }
+    /* 슬라이드 인디케이터 도트 */
+    .slide-dots {
+      position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 6px; z-index: 15;
+    }
+    .slide-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.45);
+      transition: background 0.25s, width 0.25s;
+      cursor: pointer;
+    }
+    .slide-dot.active { background: white; width: 18px; border-radius: 3px; }
+    /* 닫기 버튼 연도 */
+    .btn-close {
+      position: absolute; top: 18px; right: 20px;
+      z-index: 20;
+      text-decoration: none;
+      display: flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px;
+    }
+    /* 히어로 타이틀 */
+    .hero-title {
+      position: absolute; top: 101px; left: 50%; transform: translateX(-50%);
+      font-weight: 800; font-size: 60px; color: #FF9F46;
+      letter-spacing: -1.2px; text-transform: uppercase;
+      z-index: 10; white-space: nowrap;
+    }
+    /* 녹색 바닥 면 */
+    .green-band {
+      position: absolute; bottom: 0; left: 0;
+      width: 430px; height: 256px;
+      background: #BBD884; z-index: 1;
+    }
+    /* 힉 조형 (greeen-band 위) */
+    .hill-right {
+      position: absolute; right: -16px; bottom: 152px;
+      width: 98px; height: 64px; z-index: 2;
+    }
+    .hill-left {
+      position: absolute; left: -16px; bottom: 152px;
+      width: 111px; height: 69px; z-index: 2;
+    }
+    /* 이미지 슬라이더 컨테이너 */
+    .hero-slider {
+      position: absolute; inset: 0;
+      z-index: 5;
+      overflow: hidden;
+    }
+    .hero-slides-track {
+      display: flex;
+      width: 100%; height: 100%;
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    }
+    .hero-slide {
+      flex-shrink: 0;
+      width: 100%; height: 100%;
+      position: relative;
+      display: flex; align-items: flex-start; justify-content: center;
+    }
+
+    /* top-image-icon (빵/아몬드 장식 아이콘) */
+    .top-image-icon {
+      position: absolute;
+      right: -2px;
+      bottom: 20px;
+      width: 90px;
+      height: 90px;
+      z-index: 7;
+      pointer-events: none;
+    }
+    .top-image-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .swipe-hint {
+      position: absolute; bottom: 38px; left: 50%; transform: translateX(-50%);
+      white-space: nowrap; z-index: 12;
+      font-size: 13px; color: white; font-weight: 300;
+      display: flex; align-items: center; gap: 4px; letter-spacing: -0.26px;
+    }
+    /* 도보 배지 */
+    .walk-badge-detail {
+      position: absolute; left: 50%; transform: translateX(-50%); bottom: 210px;
+      border: 1px solid #FFDA46; border-radius: 8px; padding: 1px 8px;
+      font-size: 13px; color: #FFDA46; z-index: 12; font-weight: 500; white-space: nowrap;
+    }
+    /* 슬라이드 인디케이터 도트 */
+    .slide-dots {
+      position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 6px; z-index: 12;
+    }
+    .slide-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      transition: background 0.25s, width 0.25s;
+      cursor: pointer;
+    }
+    .slide-dot.active {
+      background: white;
+      width: 18px;
+      border-radius: 3px;
+    }
+
+    /* 섹션 제목 */
+    .sec-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.8; margin-bottom: 16px; }
+
+    /* 하단 바텀시트 래퍼 (손으로 끌어올리는 형태) */
+    .bottom-card-wrapper {
+      position: absolute;
+      top: 587px;
+      left: 0;
+      width: 430px;
+      height: 100vh;
+      z-index: 20;
+      transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      touch-action: none; /* 드래그 중 기본 스크롤/새로고침 방지 */
+      /* 마스크를 래퍼에 직접 적용하여 내부 콘텐츠가 상단 곡선 밖으로 튀어나가지 않게 함 */
+      -webkit-mask-image: url("data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20430%20466'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='bottom-background'%3e%3cpath%20id='Rectangle%203468589'%20d='M0%2044.1437C0%2020.4989%2020.3997%202.01409%2043.9301%204.33728L384.913%2038.0029C410.5%2040.5292%20430%2062.0494%20430%2087.761V466H0V44.1437Z'%20fill='var(--fill-0,%20white)'/%3e%3c/g%3e%3c/svg%3e"), linear-gradient(#000, #000);
+      -webkit-mask-position: top left, left 200px;
+      -webkit-mask-size: 100% 466px, 100% calc(100% - 200px);
+      -webkit-mask-repeat: no-repeat;
+    }
+    .bottom-card-wrapper.expanded {
+      touch-action: pan-y; /* 열렸을 때는 내부 스크롤을 위해 터치 허용 */
+    }
+    /* 카드 배경 (#FAF7F2 배경색 적용) */
+    .bottom-card-bg {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: #FAF7F2;
+      pointer-events: none;
+    }
+    /* 스크롤 콘텐츠 (내부 스크롤) */
+    .scroll-content { 
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      overflow-y: hidden; /* 위로 다 올라가기 전까지 내부 스크롤 방지 */
+      -ms-overflow-style: none; /* IE, Edge 스크롤바 숨김 */
+      scrollbar-width: none; /* Firefox 스크롤바 숨김 */
+    }
+    .scroll-content::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera 스크롤바 숨김 */
+    }
+    .bottom-card-wrapper.expanded .scroll-content {
+      overflow-y: auto; /* 상단 도달 시 내부 스크롤 허용 */
+    }
+    .scroll-inner { position: relative; z-index: 1; }
+    
+    /* 딤 오버레이 (상단 배경 어둡게 처리) */
+    .dim-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 15;
+      opacity: 0;
+      pointer-events: none;
+      will-change: opacity;
+      cursor: pointer;
+    }
+    .dim-overlay.active { pointer-events: auto; }
+    /* 카드 상단 닫기 핸들 영역 */
+    .card-top-handle {
+      position: absolute; top: 0; left: 0; width: 100%; height: 56px;
+      z-index: 10; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .card-handle-bar {
+      width: 36px; height: 4px; border-radius: 2px;
+      background: rgba(0,0,0,0.15); margin-top: 12px;
+    }
+
+    /* 베이커 노트 */
+    .bakers-note { text-align: center; padding: 64px 16px 48px; }
+    .bakers-note-title {
+      font-weight: 800; font-size: 32px; color: #000;
+      letter-spacing: -0.64px; line-height: 1.71; margin-bottom: 24px;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .bakers-note-title img { width: 22px; height: 42px; object-fit: contain; }
+    .note-body { font-weight: 500; font-size: 19px; color: #000; letter-spacing: -0.38px; line-height: 1.5; }
+
+    /* 도넛 차트 (section02) */
+    .charts-section { position: relative; width: 100%; height: 204px; margin-top: 64px; }
+    .charts-bg { position: absolute; right: 0; top: 0; width: 386px; height: 204px; z-index: 0; }
+    .charts-bg img { width: 100%; height: 100%; object-fit: contain; }
+    .charts-row { position: relative; z-index: 1; display: flex; align-items: center; justify-content: flex-end; gap: 40px; padding: 25px 45px 25px 0; height: 100%; }
+    
+    .donut-wrap { position: relative; display: flex; align-items: center; justify-content: center; width: 125px; height: 125px; flex-shrink: 0; }
+    .donut-wrap.bread { width: 160px; height: 160px; }
+    .donut-wrap svg { position: absolute; top: 0; left: 0; transform: rotate(-90deg); width: 100%; height: 100%; z-index: 0; }
+    .donut-bg-circle { fill: none; stroke: rgba(0,0,0,0.03); stroke-width: 10; }
+    .donut-fill-circle {
+      fill: none;
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: 314; /* 2 * PI * 50 */
+      stroke-dashoffset: 314;
+      transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .shop .donut-fill-circle { stroke: #FFDA46; }
+    .bread .donut-fill-circle { stroke: #FB7459; stroke-width: 12; stroke-dasharray: 408; stroke-dashoffset: 408; }
+    .bread .donut-bg-circle { stroke-width: 12; }
+
+    .donut-text-col { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+    .shop.animate .donut-fill-circle { stroke-dashoffset: calc(314 * (1 - 0.78)); }
+    .bread.animate .donut-fill-circle { stroke-dashoffset: calc(408 * (1 - 0.82)); }
+
+    .donut-label-shop { font-weight: 600; font-size: 13px; color: #C3C3C3; letter-spacing: -0.26px; line-height: 1.2; margin-bottom: 8px; }
+    .donut-pct-shop { font-weight: 700; font-size: 34px; color: #FFDA46; letter-spacing: -0.68px; line-height: 1.2; }
+    .donut-label-bread { font-weight: 600; font-size: 17px; color: #C3C3C3; letter-spacing: -0.34px; line-height: 1.2; margin-bottom: 10px; }
+    .donut-pct-bread { font-weight: 700; font-size: 42px; color: #FB7459; letter-spacing: -0.84px; line-height: 1.2; }
+    
+    .donut-pct-shop, .donut-pct-bread {
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+    .animate .donut-pct-shop, .animate .donut-pct-bread {
+      opacity: 1;
+    }
+
+    /* 갓 구운 시간 배너 (section03) */
+    .fresh-banner-wrap { padding: 64px 0 0; }
+    .fresh-banner { width: 381px; background: #FFF7DF; border-radius: 0 20px 20px 0; display: flex; flex-direction: column; padding: 24px 22px 23px 38px; }
+    .fresh-top { display: flex; align-items: center; gap: 3px; margin-bottom: 12px; }
+    .fresh-alarm-icon { font-size: 31.2px; color: #000; }
+    .fresh-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.8; }
+    .fresh-bottom { display: flex; align-items: center; gap: 23px; }
+    .fresh-time { font-weight: 700; font-size: 32px; color: #FB7459; letter-spacing: -0.64px; }
+    .fresh-desc { font-weight: 500; font-size: 16px; color: #000; letter-spacing: -0.32px; line-height: 1.5; }
+
+    /* 베이커리 정보 (section05) */
+    .bakery-section { position: relative; width: 100%; height: 348px; margin-top: 64px; }
+    .bakery-bg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 0; }
+    .bakery-bg img { width: 100%; height: 100%; object-fit: contain; }
+    .bakery-contents { position: relative; z-index: 1; padding: 16px; width: 100%; box-sizing: border-box; }
+    .bakery-header-row { display: flex; align-items: center; margin-bottom: 18px; }
+    .bakery-name { font-weight: 700; font-size: 28px; color: #000; letter-spacing: -0.56px; line-height: 1.5; width: 164px; }
+    .bakery-badge-wrap { display: flex; align-items: center; gap: 15px; }
+    .bakery-badge { border: 1px solid #FFDA46; border-radius: 8px; padding: 1px 8px; font-size: 13px; color: #FFDA46; font-weight: 400; }
+    .bakery-dist { font-size: 13px; color: #9B9B9B; font-weight: 400; }
+    .bakery-tags { display: flex; gap: 8px; margin-bottom: 22px; flex-wrap: nowrap; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
+    .bakery-tags::-webkit-scrollbar { display: none; }
+    .bakery-tag { background: #F2F2F2; border-radius: 8px; padding: 2px 10px; font-weight: 600; font-size: 14px; color: #9B9B9B; text-align: center; white-space: nowrap; flex-shrink: 0; }
+    .bakery-desc { font-weight: 500; font-size: 16px; color: #000; letter-spacing: -0.32px; line-height: 1.5; margin-bottom: 24px; }
+    .bakery-photo-circle { position: absolute; left: 246px; top: 177px; width: 152px; height: 152px; border-radius: 50%; overflow: hidden; z-index: 2; }
+    .bakery-photo-circle img { width: 100%; height: 100%; object-fit: cover; }
+    .other-menu-btn { display: inline-flex; align-items: center; gap: 2px; border: 1px solid #8B8B8B; border-radius: 8px; padding: 1px 8px; font-size: 15px; color: #8B8B8B; text-decoration: none; width: max-content; }
+
+    /* 정보 카드 */
+    .info-cards-row { display: flex; gap: 8px; padding: 64px 16px 0; }
+    .info-card { flex: 1; height: 127px; background: white; border-radius: 20px; padding: 20px 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
+    .info-card-title { font-weight: 600; font-size: 16px; color: #000; letter-spacing: -0.32px; margin-bottom: 12px; }
+    .info-card-row { display: flex; gap: 12px; font-size: 16px; color: #9B9B9B; letter-spacing: -0.32px; margin-bottom: 6px; }
+    .info-card-row span:first-child { font-weight: 500; }
+    .info-card-addr { font-weight: 500; font-size: 16px; color: #9B9B9B; letter-spacing: -0.32px; line-height: 1.5; }
+
+    /* 추천 조합 (section07) */
+    .combo-section { padding: 64px 16px 0; }
+    .combo-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.8; text-align: left; margin-bottom: 12px; margin-left: 21px; }
+    .combo-box { background: #FFF7DF; border-radius: 20px; padding: 28px 24px 34px 44px; display: flex; flex-direction: column; gap: 40px; }
+    .combo-item { display: flex; align-items: center; gap: 35px; }
+    .combo-emoji { width: 36px; height: 36px; flex-shrink: 0; }
+    .combo-text { flex: 1; text-align: left; }
+    .combo-name { font-weight: 700; font-size: 16px; color: #000; letter-spacing: -0.32px; line-height: 1.8; }
+    .combo-desc { font-size: 13px; color: #9B9B9B; letter-spacing: -0.26px; line-height: 1.8; }
+
+    /* 식감 데이터 (section08) */
+    .taste-section { padding: 64px 0 0; }
+    .taste-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.8; text-align: left; margin-bottom: 12px; margin-left: 35px; }
+    .taste-box { background: #FFF; border-radius: 0 20px 20px 0; padding: 15px 19px 19px 47px; width: 350px; display: flex; flex-direction: column; gap: 12px; }
+    .taste-row { display: flex; align-items: center; gap: 12px; height: 29px; }
+    .taste-label { font-weight: 700; font-size: 16px; color: #000; letter-spacing: -0.32px; flex-shrink: 0; width: 28px; }
+    .taste-dots { display: flex; gap: 6px; flex: 1; justify-content: center; }
+    .dot { width: 36px; height: 7px; background: #F2F2F2; border-radius: 8px; transition: background 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    .dot.on { background: #F2F2F2; } /* 초기에는 회색 */
+    .taste-section.animate .dot.on { background: #FB7459; transform: scale(1.1); }
+    /* 각 줄마다 순차적으로 나타나도록 지연 시간 추가 */
+    .taste-section.animate .taste-row:nth-child(1) .dot.on { transition-delay: 0.1s; }
+    .taste-section.animate .taste-row:nth-child(2) .dot.on { transition-delay: 0.3s; }
+    .taste-section.animate .taste-row:nth-child(3) .dot.on { transition-delay: 0.5s; }
+    .taste-label-right { text-align: right; }
+
+    /* 와앙이의 한마디 (section09) */
+    .mascot-banner { margin-top: 20px; position: relative; height: 340px; display: flex; align-items: flex-start; overflow: visible; }
+    .mascot-img-wrap { width: 300px; height: 340px; z-index: 1; position: absolute; left: -47px; top: 0; }
+    .mascot-img-wrap img { width: 100%; height: 100%; object-fit: contain; }
+    .mascot-text-box { background: white; border-radius: 20px 0 0 20px; padding: 33px 21px 40px; width: 224px; height: 182px; position: absolute; right: 0; top: 70px; z-index: 0; display: flex; flex-direction: column; gap: 10px; text-align: center; justify-content: center; box-sizing: border-box; }
+    .mascot-speech-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.5; margin-bottom: 0; }
+    .mascot-speech-text { font-weight: 400; font-size: 15px; color: #000; letter-spacing: -0.3px; line-height: 1.5; margin-bottom: 0; }
+
+    /* 성분 구성 (section10) */
+    .ingredient-section { padding: 20px 16px 120px; }
+    .ingredient-row { display: flex; gap: 27px; justify-content: center; margin-top: 16px; }
+    .ingredient-circle { width: 96px; height: 96px; border-radius: 50%; border: 2px solid #FB7459; background: white; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
+    .ingredient-name { font-weight: 500; font-size: 20px; color: #FB7459; opacity: 0.8; letter-spacing: -0.4px; }
+
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- Hero -->
+  <div class="hero-section">
+    <!-- 닫기 -->
+    <a href="home.html" class="btn-close">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6L18 18" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <!-- 타이틀 -->
+    <h1 class="hero-title">CROISSANT</h1>
+
+    <!-- 통합 상단 배경 조형 (제일 아래 레이어) -->
+    <img src="data:image/svg+xml,%3csvg%20width='467'%20height='293'%20viewBox='-16%200%20467%20293'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M431.5%200C442.27%200%20451%208.73045%20451%2019.5C451%2030.2696%20442.27%2039%20431.5%2039C430.995%2039%20430.495%2038.9791%20430%2038.9414V293H0V58.5029C-9.157%2056.4518%20-16%2048.2758%20-16%2038.5C-16%2027.1782%20-6.82184%2018%204.5%2018C5.75204%2018%206.97787%2018.1122%208.16797%2018.3271C9.4809%207.99123%2018.3075%200%2029%200C37.2118%200%2044.3212%204.71409%2047.7734%2011.583C52.4936%208.67748%2058.0506%207%2064%207C80.7862%207%2094.4545%2020.342%2094.9824%2037H353.348C355.241%2026.2043%20364.662%2018%20376%2018C378.551%2018%20381.004%2018.4152%20383.297%2019.1816C384.86%2010.5479%20392.416%204%20401.5%204C406.68%204%20411.362%206.1304%20414.721%209.56152C418.118%203.83742%20424.361%200%20431.5%200ZM417.023%2032.5645C415.926%2034.2539%20414.559%2035.7516%20412.985%2037H422.89C420.661%2035.9012%20418.672%2034.3898%20417.023%2032.5645Z'%20fill='%23BBD884'/%3e%3c/svg%3e" class="hero-bg-shape" alt="" aria-hidden="true" />
+
+    <!-- 이미지 슬라이더 -->
+    <div class="hero-slider" id="heroSlider">
+      <!-- 3개의 이미지가 클래스(pos-0, pos-1, pos-2) 스와핑으로 이동 -->
+      <div class="hero-img-item pos-0" id="slide-0"><img src="/assets/main-croissant-DxiOSest.png" alt="크루아상" /></div>
+      <div class="hero-img-item pos-1" id="slide-1"><img src="/assets/bakery-photo2-1dFflFQ6.png" alt="베이커리" /></div>
+      <div class="hero-img-item pos-2" id="slide-2"><img src="/assets/bakery-photo3-CiPQN-TI.png" alt="베이커리" /></div>
+    </div>
+
+    <!-- top-image-icon: 메인 이미지 위 장식 아이콘 -->
+    <div class="top-image-icon" aria-hidden="true">
+      <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2053.1392%2077.9165'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Vector'%20opacity='0.2'%20d='M48.1182%2012.0423C43.0612%209.884%2035.4999%2015.2631%2028.7005%2024.9301C27.8463%2010.8651%2023.3571%200.480217%2017.1644%200.0160095C9.34105%20-0.567839%201.7749%2014.8898%200.265554%2034.5396C-1.24865%2054.1895%203.86664%2070.5947%2011.6852%2071.1785C12.7577%2071.2599%2013.8254%2071.0254%2014.8737%2070.5324C15.5871%2074.002%2017.0916%2076.4571%2019.4066%2077.4429C26.5942%2080.5105%2038.8486%2068.355%2046.7787%2050.2988C54.704%2032.2377%2055.3058%2015.1099%2048.1182%2012.0423Z'%20fill='var(--fill-0,%20%23543117)'/%3e%3c/svg%3e" alt="" style="position:absolute;left:0;top:0;width:53px;height:78px;" />
+      <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2028.8482%2071.19'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Vector'%20d='M28.584%2036.6551C27.0698%2056.305%2019.5037%2071.7578%2011.6852%2071.174C3.86664%2070.5901%20-1.24865%2054.185%200.265554%2034.5351C1.7749%2014.8853%209.34105%20-0.572365%2017.1644%200.0162688C24.983%200.600117%2030.0934%2017.0053%2028.584%2036.6551Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3c/svg%3e" alt="" style="position:absolute;left:4px;top:4px;width:29px;height:71px;" />
+      <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2022.0892%2054.9886'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group'%3e%3cpath%20id='Vector'%20d='M17.2786%200.185032C17.6086%200.788023%2015.2111%202.69271%2011.9206%204.4299C8.63499%206.17187%205.6988%207.09071%205.37363%206.48772C5.04361%205.88473%207.4411%203.98005%2010.7316%202.24286C14.0172%200.500885%2016.9485%20-0.417959%2017.2786%200.185032Z'%20fill='var(--fill-0,%20%23E7B97B)'/%3e%3cpath%20id='Vector_2'%20d='M19.1859%2010.6847C19.5159%2011.2877%2015.8469%2013.8624%2010.9985%2016.4323C6.14529%2019.0022%201.94727%2020.591%201.61725%2019.988C1.28723%2019.385%204.95626%2016.8104%209.80461%2014.2405C14.6578%2011.6754%2018.8558%2010.0817%2019.1859%2010.6847Z'%20fill='var(--fill-0,%20%23E7B97B)'/%3e%3cpath%20id='Vector_3'%20d='M22.0493%2021.6678C22.5637%2022.6106%2018.0502%2025.9844%2011.974%2029.2004C5.89292%2032.4211%200.549541%2034.2636%200.0399535%2033.3208C-0.474487%2032.378%204.039%2029.0042%2010.1152%2025.7882C16.1914%2022.5675%2021.5348%2020.725%2022.0493%2021.6678Z'%20fill='var(--fill-0,%20%23E7B97B)'/%3e%3cpath%20id='Vector_4'%20d='M4.81066%2054.8036C4.48064%2054.2006%206.87813%2052.2959%2010.1686%2050.5587C13.4542%2048.8167%2016.3856%2047.8979%2016.7156%2048.5009C17.0456%2049.1039%2014.6481%2051.0085%2011.3576%2052.7457C8.07202%2054.4877%205.13582%2055.4066%204.81066%2054.8036Z'%20fill='var(--fill-0,%20%23E7B97B)'/%3e%3cpath%20id='Vector_5'%20d='M2.90335%2044.3039C2.57333%2043.7009%206.24236%2041.1262%2011.0907%2038.5563C15.9439%2035.9864%2020.142%2034.3976%2020.472%2035.0006C20.802%2035.6036%2017.133%2038.1782%2012.2846%2040.7481C7.43139%2043.3132%203.22851%2044.9069%202.90335%2044.3039Z'%20fill='var(--fill-0,%20%23E7B97B)'/%3e%3c/g%3e%3c/svg%3e" alt="" style="position:absolute;left:7px;top:12px;width:22px;height:55px;" />
+      <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2038.7523%2066.3493'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Vector'%20d='M32.3882%2038.7314C24.4629%2056.7924%2012.2086%2068.9431%205.02096%2065.8755C-2.16665%2062.808%20-1.56485%2045.6801%206.36044%2027.6191C14.2857%209.5581%2026.5401%20-2.59743%2033.7277%200.474956C40.9202%203.54255%2040.3184%2020.6704%2032.3882%2038.7314Z'%20fill='var(--fill-0,%20%23C98C4F)'/%3e%3c/svg%3e" alt="" style="position:absolute;left:18px;top:12px;width:39px;height:66px;" />
+      <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2029.8438%2048.6609'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group'%3e%3cpath%20id='Vector'%20d='M29.8407%200.559376C29.9523%201.23415%2027.0598%202.25828%2023.381%202.84213C19.7023%203.42598%2016.6302%203.35419%2016.5186%202.67942C16.407%202.00464%2019.2995%200.980512%2022.9782%200.396664C26.657%20-0.19197%2029.729%20-0.115399%2029.8407%200.559376Z'%20fill='var(--fill-0,%20%23E7B97B)'/%3e%3cpath%20id='Vector_2'%20d='M28.1663%2011.0878C28.2779%2011.7626%2023.9683%2013.0116%2018.5375%2013.8778C13.1116%2014.744%208.61757%2014.8924%208.50595%2014.2176C8.39432%2013.5428%2012.704%2012.2938%2018.1347%2011.4276C23.5655%2010.5614%2028.0547%2010.4082%2028.1663%2011.0878Z'%20fill='var(--fill-0,%20%23E7B97B)'/%3e%3cpath%20id='Vector_3'%20d='M27.2345%2022.3723C27.4092%2023.43%2022.0318%2025.1576%2015.2325%2026.2439C8.43315%2027.3255%202.77916%2027.3494%202.60444%2026.2918C2.42973%2025.2389%207.80709%2023.5065%2014.6064%2022.4202C21.4106%2021.3386%2027.0646%2021.3147%2027.2345%2022.3723Z'%20fill='var(--fill-0,%20%23E7B97B)'/%3e%3cpath%20id='Vector_4'%20d='M0.00312512%2048.0999C-0.108499%2047.4252%202.78401%2046.401%206.46275%2045.8172C10.1415%2045.2333%2013.2136%2045.3051%2013.3252%2045.9799C13.4368%2046.6547%2010.5443%2047.6788%206.86556%2048.2627C3.18198%2048.8513%200.109896%2048.7795%200.00312512%2048.0999Z'%20fill='var(--fill-0,%20%23E7B97B)'/%3e%3cpath%20id='Vector_5'%20d='M1.67748%2037.5763C1.56586%2036.9015%205.88036%2035.6525%2011.3063%2034.7863C16.737%2033.9249%2021.2262%2033.7717%2021.3378%2034.4465C21.4495%2035.1213%2017.1398%2036.3703%2011.7091%2037.2365C6.27833%2038.098%201.78425%2038.2511%201.67748%2037.5763Z'%20fill='var(--fill-0,%20%23E7B97B)'/%3e%3c/g%3e%3c/svg%3e" alt="" style="position:absolute;left:22px;top:21px;width:30px;height:49px;" />
+    </div>
+    <div class="slide-dots" id="slideDots">
+      <div class="slide-dot active" onclick="goSlide(0)"></div>
+      <div class="slide-dot" onclick="goSlide(1)"></div>
+      <div class="slide-dot" onclick="goSlide(2)"></div>
+    </div>
+  <!-- 딤 오버레이 -->
+  <div class="dim-overlay" id="dimOverlay"></div>
+
+  <!-- Bottom Card Wrapper -->
+  <div class="bottom-card-wrapper" id="bottomCard">
+    <div class="bottom-card-bg"></div>
+    <div class="scroll-content">
+    <div class="scroll-inner">
+
+    <!-- Baker's Note -->
+    <div class="bakers-note">
+      <h2 class="bakers-note-title">
+        <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2023.0124%2029.6787'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group'%3e%3cpath%20id='Vector'%20d='M3.47643%204.56195C4.94026%2015.7373%2012.296%2024.6804%2022.0121%2028.6785'%20stroke='var(--stroke-0,%20%23F4C064)'%20stroke-width='2'%20stroke-miterlimit='10'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20id='Vector_2'%20d='M5.26502%203.14842C5.40683%204.22799%204.64747%205.2115%203.5679%205.35331C2.48833%205.49511%201.50024%204.73576%201.36301%203.65618C1.2212%202.57661%201.79301%200.147579%202.86801%200.00577062C3.94758%20-0.126889%205.12321%202.07342%205.26502%203.14842Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_3'%20d='M3.5679%205.35783C2.48833%205.49964%201.50024%204.74028%201.36301%203.66071C1.2212%202.58114%201.79301%200.152105%202.86801%200.0102971L3.5679%205.35783Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3cpath%20id='Vector_4'%20d='M3.64571%206.37797C3.14252%207.3386%203.51305%208.52796%204.47826%209.03115C5.43889%209.53434%206.62825%209.16381%207.13144%208.1986C7.63463%207.23339%207.93654%204.75861%206.97134%204.25542C6.0107%203.75681%204.1489%205.41733%203.64571%206.37797Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3cpath%20id='Vector_5'%20d='M4.47821%209.03574C5.43884%209.53893%206.6282%209.1684%207.13139%208.20319C7.63458%207.23798%207.9365%204.7632%206.97129%204.26001L4.47821%209.03574Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_6'%20d='M4.09403%206.28196C4.94945%206.9544%205.09583%208.1895%204.42339%209.04493C3.75094%209.90035%202.51584%2010.0467%201.66042%209.37886C0.804995%208.70642%20-0.485001%206.57015%200.187444%205.7193C0.859889%204.86388%203.2386%205.60951%204.09403%206.28196Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_7'%20d='M4.42335%209.04485C3.7509%209.90027%202.5158%2010.0467%201.66038%209.37879C0.804956%208.70634%20-0.48504%206.57007%200.187405%205.71922L4.42335%209.04485Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3cpath%20id='Vector_8'%20d='M4.96772%2011.076C4.51485%2012.064%204.94943%2013.2305%205.93751%2013.6834C6.92559%2014.1363%208.09207%2013.7017%208.54495%2012.7136C8.99782%2011.7255%209.16707%209.23702%208.17899%208.78415C7.19091%208.33128%205.42059%2010.0879%204.96772%2011.076Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3cpath%20id='Vector_9'%20d='M5.94208%2013.6834C6.93017%2014.1363%208.09665%2013.7017%208.54952%2012.7136C9.00239%2011.7255%209.17165%209.23702%208.18357%208.78414L5.94208%2013.6834Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_10'%20d='M5.4114%2010.957C6.29884%2011.5837%206.51384%2012.8096%205.88714%2013.6971C5.26044%2014.5845%204.03449%2014.7995%203.14704%2014.1774C2.2596%2013.5507%200.855242%2011.4876%201.47737%2010.6002C2.10407%209.70817%204.51938%2010.3303%205.4114%2010.957Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_11'%20d='M5.88722%2013.6971C5.26052%2014.5846%204.03457%2014.7996%203.14712%2014.1774C2.25968%2013.5507%200.855321%2011.4877%201.47745%2010.6002L5.88722%2013.6971Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3cpath%20id='Vector_12'%20d='M7.566%2015.3943C7.25036%2016.4327%207.83589%2017.5351%208.8743%2017.8507C9.9127%2018.1664%2011.0151%2017.5808%2011.3308%2016.5424C11.6464%2015.504%2011.4863%2013.011%2010.4433%2012.6953C9.40493%2012.3751%207.88164%2014.3559%207.566%2015.3943Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3cpath%20id='Vector_13'%20d='M8.87433%2017.8507C9.91273%2018.1664%2011.0152%2017.5808%2011.3308%2016.5424C11.6465%2015.504%2011.4863%2013.0109%2010.4434%2012.6953L8.87433%2017.8507Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_14'%20d='M7.98686%2015.2158C8.95207%2015.719%209.32717%2016.9038%208.82398%2017.869C8.32537%2018.8342%207.13601%2019.2093%206.1708%2018.7061C5.20559%2018.2029%203.54049%2016.3457%204.04368%2015.3805C4.54687%2014.4198%207.02165%2014.7172%207.98686%2015.2158Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_15'%20d='M8.82394%2017.869C8.32533%2018.8342%207.13597%2019.2093%206.17076%2018.7061C5.20555%2018.2029%203.54045%2016.3457%204.04364%2015.3805L8.82394%2017.869Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3c/g%3e%3c/svg%3e" alt="" aria-hidden="true" />
+        Baker's Note
+        <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2023.0124%2029.6787'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group'%3e%3cpath%20id='Vector'%20d='M3.47643%204.56195C4.94026%2015.7373%2012.296%2024.6804%2022.0121%2028.6785'%20stroke='var(--stroke-0,%20%23F4C064)'%20stroke-width='2'%20stroke-miterlimit='10'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3cpath%20id='Vector_2'%20d='M5.26502%203.14842C5.40683%204.22799%204.64747%205.2115%203.5679%205.35331C2.48833%205.49511%201.50024%204.73576%201.36301%203.65618C1.2212%202.57661%201.79301%200.147579%202.86801%200.00577062C3.94758%20-0.126889%205.12321%202.07342%205.26502%203.14842Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_3'%20d='M3.5679%205.35783C2.48833%205.49964%201.50024%204.74028%201.36301%203.66071C1.2212%202.58114%201.79301%200.152105%202.86801%200.0102971L3.5679%205.35783Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3cpath%20id='Vector_4'%20d='M3.64571%206.37797C3.14252%207.3386%203.51305%208.52796%204.47826%209.03115C5.43889%209.53434%206.62825%209.16381%207.13144%208.1986C7.63463%207.23339%207.93654%204.75861%206.97134%204.25542C6.0107%203.75681%204.1489%205.41733%203.64571%206.37797Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3cpath%20id='Vector_5'%20d='M4.47821%209.03574C5.43884%209.53893%206.6282%209.1684%207.13139%208.20319C7.63458%207.23798%207.9365%204.7632%206.97129%204.26001L4.47821%209.03574Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_6'%20d='M4.09403%206.28196C4.94945%206.9544%205.09583%208.1895%204.42339%209.04493C3.75094%209.90035%202.51584%2010.0467%201.66042%209.37886C0.804995%208.70642%20-0.485001%206.57015%200.187444%205.7193C0.859889%204.86388%203.2386%205.60951%204.09403%206.28196Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_7'%20d='M4.42335%209.04485C3.7509%209.90027%202.5158%2010.0467%201.66038%209.37879C0.804956%208.70634%20-0.48504%206.57007%200.187405%205.71922L4.42335%209.04485Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3cpath%20id='Vector_8'%20d='M4.96772%2011.076C4.51485%2012.064%204.94943%2013.2305%205.93751%2013.6834C6.92559%2014.1363%208.09207%2013.7017%208.54495%2012.7136C8.99782%2011.7255%209.16707%209.23702%208.17899%208.78415C7.19091%208.33128%205.42059%2010.0879%204.96772%2011.076Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3cpath%20id='Vector_9'%20d='M5.94208%2013.6834C6.93017%2014.1363%208.09665%2013.7017%208.54952%2012.7136C9.00239%2011.7255%209.17165%209.23702%208.18357%208.78414L5.94208%2013.6834Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_10'%20d='M5.4114%2010.957C6.29884%2011.5837%206.51384%2012.8096%205.88714%2013.6971C5.26044%2014.5845%204.03449%2014.7995%203.14704%2014.1774C2.2596%2013.5507%200.855242%2011.4876%201.47737%2010.6002C2.10407%209.70817%204.51938%2010.3303%205.4114%2010.957Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_11'%20d='M5.88722%2013.6971C5.26052%2014.5846%204.03457%2014.7996%203.14712%2014.1774C2.25968%2013.5507%200.855321%2011.4877%201.47745%2010.6002L5.88722%2013.6971Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3cpath%20id='Vector_12'%20d='M7.566%2015.3943C7.25036%2016.4327%207.83589%2017.5351%208.8743%2017.8507C9.9127%2018.1664%2011.0151%2017.5808%2011.3308%2016.5424C11.6464%2015.504%2011.4863%2013.011%2010.4433%2012.6953C9.40493%2012.3751%207.88164%2014.3559%207.566%2015.3943Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3cpath%20id='Vector_13'%20d='M8.87433%2017.8507C9.91273%2018.1664%2011.0152%2017.5808%2011.3308%2016.5424C11.6465%2015.504%2011.4863%2013.0109%2010.4434%2012.6953L8.87433%2017.8507Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_14'%20d='M7.98686%2015.2158C8.95207%2015.719%209.32717%2016.9038%208.82398%2017.869C8.32537%2018.8342%207.13601%2019.2093%206.1708%2018.7061C5.20559%2018.2029%203.54049%2016.3457%204.04368%2015.3805C4.54687%2014.4198%207.02165%2014.7172%207.98686%2015.2158Z'%20fill='var(--fill-0,%20%23C4773D)'/%3e%3cpath%20id='Vector_15'%20d='M8.82394%2017.869C8.32533%2018.8342%207.13597%2019.2093%206.17076%2018.7061C5.20555%2018.2029%203.54045%2016.3457%204.04364%2015.3805L8.82394%2017.869Z'%20fill='var(--fill-0,%20%23F4C064)'/%3e%3c/g%3e%3c/svg%3e" alt="" aria-hidden="true" style="transform: scaleX(-1);" />
+      </h2>
+      <p class="note-body">
+        오븐에서 꺼낸 시간,<br>
+        가장 먼저 전해지는 건 '바삭함'입니다.<br><br>
+        겹겹이 살아있는 결을 따라<br>
+        가볍게 부서지는 식감과<br>
+        버터의 풍미가 함께 느껴지도록 완성했습니다.<br><br>
+        처음 한 입의 바삭함을 즐겨보세요.
+      </p>
+    </div>
+
+    <!-- Donut Charts (section02) -->
+    <div class="charts-section">
+      <div class="charts-bg">
+        <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20386%20204'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='section02-backgound'%20d='M268%200C290.726%200%20311.715%207.43363%20328.671%2020H386V169H344.909C326.21%20190.447%20298.688%20204%20268%20204C237.312%20204%20209.79%20190.447%20191.091%20169H129.285C115.923%20178.448%2099.61%20184%2082%20184C36.7127%20184%200%20147.287%200%20102C0%2060.6949%2030.5402%2026.5243%2070.2715%2020.834C72.0864%2020.2923%2074.009%2020%2076%2020H207.329C224.285%207.43363%20245.274%200%20268%200Z'%20fill='var(--fill-0,%20white)'/%3e%3c/svg%3e" alt="" aria-hidden="true" />
+      </div>
+      <div class="charts-row">
+        <!-- 가게 78% -->
+        <div class="donut-wrap shop">
+          <svg viewBox="0 0 125 125">
+            <circle class="donut-bg-circle" cx="62.5" cy="62.5" r="50"></circle>
+            <circle class="donut-fill-circle" cx="62.5" cy="62.5" r="50"></circle>
+          </svg>
+          <div class="donut-text-col">
+            <span class="donut-label-shop">가게</span>
+            <span class="donut-pct-shop">78%</span>
+          </div>
+        </div>
+        <!-- 빵 82% -->
+        <div class="donut-wrap bread">
+          <svg viewBox="0 0 160 160">
+            <circle class="donut-bg-circle" cx="80" cy="80" r="65"></circle>
+            <circle class="donut-fill-circle" cx="80" cy="80" r="65"></circle>
+          </svg>
+          <div class="donut-text-col">
+            <span class="donut-label-bread">빵</span>
+            <span class="donut-pct-bread">82%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fresh Banner -->
+    <div class="fresh-banner-wrap">
+      <div class="fresh-banner">
+        <div class="fresh-top">
+          <span class="mi fresh-alarm-icon" style="font-weight: 500; font-feature-settings: 'ss09' 0; font-variation-settings: 'rond' 3, 'edpt' 1;">&#xEF60;</span>
+          <span class="fresh-title">갓 구운 시간</span>
+        </div>
+        <div class="fresh-bottom">
+          <span class="fresh-time">30분 전</span>
+          <p class="fresh-desc">아직 따뜻함이 남아있어요!<br>지금 '포키' 하면 가장 맛있어요!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bakery Info (section05) -->
+    <div class="bakery-section">
+      <div class="bakery-bg">
+        <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20430%20348'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20id='Union'%20d='M430%20306H399.237C382.84%20331.277%20354.374%20348%20322%20348C289.626%20348%20261.16%20331.277%20244.763%20306H0V0H430V306Z'%20fill='white'/%3e%3c/svg%3e" alt="" aria-hidden="true" />
+      </div>
+      <div class="bakery-contents">
+        <div class="bakery-header-row">
+          <h2 class="bakery-name">푹신 베이커리</h2>
+          <div class="bakery-badge-wrap">
+            <span class="bakery-badge">도보 4분</span>
+            <span class="bakery-dist">(300M)</span>
+          </div>
+        </div>
+        <div class="bakery-tags">
+          <span class="bakery-tag">#요즘핫플</span>
+          <span class="bakery-tag">#정성가득</span>
+          <span class="bakery-tag">#크루아상맛집</span>
+          <span class="bakery-tag">#겉바속촉</span>
+        </div>
+        <p class="bakery-desc">
+          푹신 베이커리는 바삭하고 결이 살아있는<br>
+          크로아상을 대표 메뉴로, <br>
+          부드럽고 달콤한 빵을 즐길 수 있는<br>
+          따뜻한 베이커리입니다.
+        </p>
+        <a href="#" class="other-menu-btn">
+          같은 가게 다른 메뉴 추천보기
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="#8B8B8B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+      <div class="bakery-photo-circle">
+        <img src="/assets/bakery-photo-C_CGLNpe.png" alt="푹신 베이커리" />
+      </div>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="info-cards-row">
+      <div class="info-card">
+        <div class="info-card-title">영업시간</div>
+        <div class="info-card-row"><span>평일</span><span>08:00 - 22:00</span></div>
+        <div class="info-card-row"><span>주말</span><span>10:00 - 20:00</span></div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">위치</div>
+        <p class="info-card-addr">서울특별시 성동구<br>연무장길 27-3, 1층</p>
+      </div>
+    </div>
+
+    <!-- Recommended Pairings (section07) -->
+    <div class="combo-section">
+      <h2 class="combo-title">추천 조합</h2>
+      <div class="combo-box">
+        <div class="combo-item">
+          <img src="/assets/emoji-coffee-BExlnPQL.png" class="combo-emoji" alt="커피" />
+          <div class="combo-text">
+            <p class="combo-name">아메리카노와 함께</p>
+            <p class="combo-desc">버터의 풍미와 쌉쌀한 커피가 균형을 이뤄요</p>
+          </div>
+        </div>
+        <div class="combo-item">
+          <img src="/assets/emoji-strawberry-DWDn3lM8.png" class="combo-emoji" alt="딸기" />
+          <div class="combo-text">
+            <p class="combo-name">딸기잼 곁들이기</p>
+            <p class="combo-desc">달콤새콤한 잼이 담백한 크루아상을 완성해요</p>
+          </div>
+        </div>
+        <div class="combo-item">
+          <img src="data:image/png;base64,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" class="combo-emoji" alt="달걀" />
+          <div class="combo-text">
+            <p class="combo-name">수란 + 에그 크루아상</p>
+            <p class="combo-desc">브런치로 든든하게 하루를 시작하는 조합이에요</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Texture Data (section08) -->
+    <div class="taste-section">
+      <h2 class="taste-title">식감 데이터</h2>
+      <div class="taste-box">
+        <!-- 바삭 -> 쫄깃 -->
+        <div class="taste-row">
+          <span class="taste-label">바삭</span>
+          <div class="taste-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot on"></span>
+            <span class="dot"></span>
+          </div>
+          <span class="taste-label taste-label-right">쫄깃</span>
+        </div>
+        <!-- 촉촉 -> 꾸덕 -->
+        <div class="taste-row">
+          <span class="taste-label">촉촉</span>
+          <div class="taste-dots">
+            <span class="dot"></span>
+            <span class="dot on"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+          <span class="taste-label taste-label-right">꾸덕</span>
+        </div>
+        <!-- 버터 -> 담백 -->
+        <div class="taste-row">
+          <span class="taste-label">버터</span>
+          <div class="taste-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot on"></span>
+            <span class="dot"></span>
+          </div>
+          <span class="taste-label taste-label-right">담백</span>
+        </div>
+        <!-- 당도 -->
+        <div class="taste-row" style="width: 243px;">
+          <span class="taste-label">당도</span>
+          <div class="taste-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot on"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mascot Comment (section09) -->
+    <div class="mascot-banner">
+      <div class="mascot-img-wrap">
+        <img src="/assets/mascot-happy-ObFNQ8RR.png" alt="와앙이" />
+      </div>
+      <div class="mascot-text-box">
+        <p class="mascot-speech-title">와앙이의 한마디 !</p>
+        <p class="mascot-speech-text">
+          겉은 바삭, 속은 촉촉해서<br>
+          한 입 먹으면 멈출 수 없거든…<br>
+          와앙이가 보장해!
+        </p>
+      </div>
+    </div>
+ 
+    <!-- Ingredients (section10) -->
+    <div class="ingredient-section">
+      <h2 class="sec-title">성분 구성</h2>
+      <div class="ingredient-row">
+        <div class="ingredient-circle"><span class="ingredient-name">밀가루</span></div>
+        <div class="ingredient-circle"><span class="ingredient-name">버터</span></div>
+        <div class="ingredient-circle"><span class="ingredient-name">달걀</span></div>
+      </div>
+    </div>
+    </div><!-- /.scroll-inner -->
+  </div><!-- /.scroll-content -->
+  </div><!-- /.bottom-card-wrapper -->
+
+
+</div><!-- /#app -->
+
+<script>
+  /* ── Bottom Sheet Drag Logic ── */
+  const bottomSheet = document.getElementById('bottomCard');
+  const scrollContent = document.querySelector('.scroll-content');
+  const dimOverlay = document.getElementById('dimOverlay');
+  
+  let sheetStartY = 0;
+  let currentY = 0;
+  let isDraggingSheet = false;
+  let startTouchY = 0;
+
+  const MAX_Y = 0;
+  const MIN_Y = -587; 
+
+  let startScrollTop = 0;
+
+  function collapseSheet() {
+    currentY = MAX_Y;
+    bottomSheet.classList.remove('expanded');
+    scrollContent.scrollTop = 0;
+    bottomSheet.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
+    bottomSheet.style.transform = `translateY(${currentY}px)`;
+    updateDim();
+  }
+
+  function updateDim() {
+    if (!dimOverlay) return;
+    const ratio = Math.abs(currentY / MIN_Y);
+    dimOverlay.style.opacity = ratio;
+    // 카드가 올라가 있을 때만 딤 클릭 가능
+    dimOverlay.classList.toggle('active', ratio > 0.1);
+  }
+
+  // 딤 영역(카드 밖) 터치 → 카드 닫기
+  dimOverlay.addEventListener('pointerdown', (e) => {
+    e.stopPropagation();
+    collapseSheet();
+  });
+
+  bottomSheet.addEventListener('pointerdown', (e) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return; // 마우스 우클릭 방지
+
+    // 모바일(터치)이고 시트가 완전히 열려있을 때 내부 스크롤 중이라면 네이티브 스크롤을 우선함
+    if (bottomSheet.classList.contains('expanded')) {
+      if (e.pointerType !== 'mouse' && scrollContent.scrollTop > 0) {
+        return; 
+      }
+    }
+
+    isDraggingSheet = true;
+    startTouchY = e.clientY;
+    sheetStartY = currentY;
+    startScrollTop = scrollContent.scrollTop;
+
+    bottomSheet.style.transition = 'none'; // 드래그 중엔 애니메이션 끔
+    bottomSheet.setPointerCapture(e.pointerId);
+  });
+
+  bottomSheet.addEventListener('pointermove', (e) => {
+    if (!isDraggingSheet) return;
+    
+    const deltaY = e.clientY - startTouchY;
+
+    // 카드가 열린 상태일 때 마우스/터치 드래그로 스크롤 수동 제어
+    if (bottomSheet.classList.contains('expanded')) {
+      // 터치 디바이스에서 위로 쓸어올리는 경우 (컨텐츠 스크롤) 네이티브 스크롤에 양보
+      if (e.pointerType !== 'mouse' && deltaY < 0) {
+        isDraggingSheet = false;
+        bottomSheet.releasePointerCapture(e.pointerId);
+        return;
+      }
+
+      let newScrollTop = startScrollTop - deltaY;
+      
+      // 위쪽 방향 스크롤 (양수)일 경우 수동으로 내부 컨텐츠 스크롤
+      if (newScrollTop > 0) {
+        scrollContent.scrollTop = newScrollTop;
+        return; // 시트는 움직이지 않음
+      } else {
+        // 스크롤이 맨 위에 도달했는데 아래로 계속 당기는 경우 시트를 내리기 시작
+        bottomSheet.classList.remove('expanded');
+        scrollContent.scrollTop = 0;
+        startTouchY = e.clientY;
+        sheetStartY = MIN_Y; // 현재 위치(MIN_Y)를 기준으로 새롭게 드래그 시작
+      }
+    }
+
+    // expanded가 아니면 전체 시트를 이동
+    if (!bottomSheet.classList.contains('expanded')) {
+      let newY = sheetStartY + deltaY;
+      if (newY < MIN_Y) newY = MIN_Y; // 상단 제한
+      if (newY > MAX_Y) newY = MAX_Y; // 하단 제한
+      currentY = newY;
+      bottomSheet.style.transform = `translateY(${currentY}px)`;
+      updateDim();
+    }
+  });
+
+  bottomSheet.addEventListener('pointerup', (e) => {
+    if (!isDraggingSheet) return;
+    isDraggingSheet = false;
+    bottomSheet.releasePointerCapture(e.pointerId);
+    bottomSheet.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
+
+    // 스냅 동작: 절반 이상 올렸으면 끝까지 열고, 아니면 다시 닫음
+    if (!bottomSheet.classList.contains('expanded')) {
+      if (currentY < MIN_Y / 2) {
+        currentY = MIN_Y; // 위로 밀착
+        bottomSheet.classList.add('expanded');
+      } else {
+        currentY = MAX_Y; // 아래로 복귀
+        bottomSheet.classList.remove('expanded');
+      }
+      bottomSheet.style.transform = `translateY(${currentY}px)`;
+      updateDim();
+    }
+
+    // 탭(거의 움직임 없음)으로 카드 상단 60px 터치 시 닫기
+    const moved = Math.abs(e.clientY - startTouchY);
+    if (moved < 8 && bottomSheet.classList.contains('expanded')) {
+      const cardTop = bottomSheet.getBoundingClientRect().top;
+      if (e.clientY - cardTop < 60) {
+        collapseSheet();
+      }
+    }
+  });
+
+  bottomSheet.addEventListener('pointercancel', (e) => {
+    if (!isDraggingSheet) return;
+    isDraggingSheet = false;
+    bottomSheet.releasePointerCapture(e.pointerId);
+    bottomSheet.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
+    bottomSheet.style.transform = `translateY(${currentY}px)`;
+    updateDim();
+  });
+
+  /* ── Hero Slider Logic ── */
+  const slider = document.getElementById('heroSlider');
+  const slides = [
+    document.getElementById('slide-0'),
+    document.getElementById('slide-1'),
+    document.getElementById('slide-2')
+  ];
+  const dots = document.querySelectorAll('.slide-dot');
+  let current = 0;
+  let startX = 0;
+  let diffX = 0;
+  let dragging = false;
+
+  /* 클래스를 스왑하여 애니메이션 트리거 */
+  function updatePositions() {
+    slides.forEach((slide, i) => {
+      const pos = (i - current + 3) % 3;
+      slide.className = `hero-img-item pos-${pos}`;
+      slide.style.transform = ''; // 터치 중 사용한 transform 초기화
+      slide.style.transition = 'all 0.4s cubic-bezier(0.34, 1.26, 0.64, 1)';
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  /* 터치 시작 */
+  slider.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    diffX = 0;
+    dragging = true;
+    slides.forEach(slide => slide.style.transition = 'none'); // 즉각적인 추적
+  }, { passive: true });
+
+  /* 터치 이동 - 손가락에 맞춰 X축 이동 */
+  slider.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    diffX = e.touches[0].clientX - startX;
+    slides.forEach(slide => {
+      slide.style.transform = `translateX(${diffX}px)`;
+    });
+  }, { passive: true });
+
+  /* 터치 끝 - 임계값 도달 시 인덱스 변경 및 상태 업데이트 */
+  slider.addEventListener('touchend', () => {
+    if (!dragging) return;
+    dragging = false;
+    if (diffX < -50) {
+      current = (current + 1) % 3; // 다음 이미지
+    } else if (diffX > 50) {
+      current = (current + 2) % 3; // 이전 이미지
+    }
+    updatePositions();
+  });
+
+  /* 마우스 드래그 (PC 테스트용) */
+  slider.addEventListener('mousedown', e => {
+    startX = e.clientX;
+    diffX = 0;
+    dragging = true;
+    slides.forEach(slide => slide.style.transition = 'none');
+    e.preventDefault();
+  });
+  window.addEventListener('mousemove', e => {
+    if (!dragging) return;
+    diffX = e.clientX - startX;
+    slides.forEach(slide => slide.style.transform = `translateX(${diffX}px)`);
+  });
+  window.addEventListener('mouseup', () => {
+    if (!dragging) return;
+    dragging = false;
+    if (diffX < -50) current = (current + 1) % 3;
+    else if (diffX > 50) current = (current + 2) % 3;
+    updatePositions();
+  });
+
+  /* 인디케이터 클릭 */
+  function goSlide(idx) { 
+    current = idx;
+    updatePositions();
+  }
+
+  /* 5초 자동 스와이프 주석 처리 */
+  /*
+  setInterval(() => {
+    if (!dragging) {
+      current = (current + 1) % 3;
+      updatePositions();
+    }
+  }, 5000);
+  */
+  /* ── Donut Chart Animation Logic ── */
+  const donutObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const wrap = entry.target;
+        if (!wrap.classList.contains('animate')) {
+          wrap.classList.add('animate');
+          animateValue(wrap.querySelector('.donut-pct-shop, .donut-pct-bread'));
+        }
+      }
+    });
+  }, { threshold: 0.7 }); // 70% 이상 보일 때 시작하도록 임계값 상향
+
+  document.querySelectorAll('.donut-wrap, .taste-section').forEach(el => donutObserver.observe(el));
+
+  function animateValue(obj) {
+    if (!obj) return;
+    const target = parseInt(obj.innerText);
+    let start = 0;
+    const duration = 1500;
+    const startTime = performance.now();
+
+    function step(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const value = Math.floor(progress * target);
+      obj.innerText = value + "%";
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+</script>
+</body>
+</html>

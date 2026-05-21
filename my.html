@@ -1,213 +1,531 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=430, user-scalable=no" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=430, user-scalable=no" />
     <meta name="theme-color" content="#F8F4EC" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
-  <link rel="apple-touch-icon" href="icon.png" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <title>POOKSHIN - 마이페이지</title>
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="home.css" />
-  <link rel="stylesheet" href="navbar.css" />
-  <style>
-    #app { background-color: #F8F4EC; }
-    
-    .my-header {
-      padding: 70px 24px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .my-title { font-size: 32px; font-weight: 900; color: #333; }
-    
-    .profile-card {
-      margin: 0 16px;
-      background: white;
-      border-radius: 24px;
-      padding: 30px 24px;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-      position: relative;
-    }
-    
-    .profile-avatar {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: #F2F2F2;
-      overflow: hidden;
-      border: 4px solid #FF9F46;
-    }
-    .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
-    
-    .profile-info h2 { font-size: 24px; font-weight: 800; margin-bottom: 4px; }
-    .profile-info p { font-size: 14px; color: #9B9B9B; }
-    
-    .profile-edit-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: #F2F2F2;
-      padding: 4px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      color: #9B9B9B;
-      text-decoration: none;
-    }
-    
-    .taste-summary-banner {
-      margin: 20px 16px;
-      background: #FFF;
-      border-radius: 20px;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-    }
-    
-    .taste-text { font-size: 16px; font-weight: 700; color: #333; }
-    .taste-text .highlight { color: #FF9F46; }
-    
-    .quick-stats {
-      display: flex;
-      margin: 20px 16px;
-      background: white;
-      border-radius: 24px;
-      padding: 24px 0;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-    }
-    
-    .stat-item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      border-right: 1px solid #F2F2F2;
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-item .count { font-size: 20px; font-weight: 800; }
-    .stat-item .label { font-size: 13px; color: #9B9B9B; font-weight: 600; }
-    
-    .info-list {
-      margin: 20px 16px;
-      background: white;
-      border-radius: 24px;
-      padding: 10px 24px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-    }
-    
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 18px 0;
-      border-bottom: 1px solid #F8F8F8;
-    }
-    .info-row:last-child { border-bottom: none; }
-    .info-row .label { font-weight: 700; color: #333; }
-    .info-row .value { color: #9B9B9B; font-weight: 600; }
-  </style>
-</head>
-<body>
-  <div id="app">
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <title>POOKSHIN - 마이페이지</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="navbar.css" />
+    <link rel="stylesheet" href="minIcon-round.css" />
+    <style>
+      /* override home.css fixed height so page scrolls */
+      #app {
+        background-color: #f8f4ec;
+        height: auto !important;
+        min-height: 932px;
+        overflow-y: auto !important;
+        overflow-x: hidden;
+      }
+      @media (max-width: 480px) {
+        #app {
+          width: 100% !important;
+          max-width: 430px !important;
+          min-height: 100dvh !important;
+          height: auto !important;
+          box-shadow: none !important;
+        }
+      }
 
-    <div class="my-header">
-       <span class="my-title">MY WA-ANG</span>
-       <span class="min-icon" style="font-size:24px; color:#333;">&#xEF40;</span>
+      /* ─── TOPBAR (header y:71, h:29 → total area = 100px) ─── */
+      .my-topbar {
+        position: relative;
+        width: 100%;
+        height: 100px;
+        padding-top: 44px; /* status bar */
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .my-topbar-back {
+        position: absolute;
+        left: 16px;
+        top: 74px;
+        font-family: "Min Icon VF", sans-serif;
+        font-size: 24px;
+        color: #000;
+        text-decoration: none;
+        font-feature-settings: "ss09" 1;
+        font-variation-settings:
+          "rond" 3,
+          "edpt" 1;
+        line-height: 1;
+      }
+      .my-topbar-title {
+        position: absolute;
+        top: 74px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 16px;
+        font-weight: 700;
+        color: #000;
+        letter-spacing: -0.32px;
+        line-height: 1.8;
+      }
+      .my-topbar-bell {
+        position: absolute;
+        right: 16px;
+        top: 74px;
+        font-family: "Min Icon VF", sans-serif;
+        font-size: 24px;
+        color: #000;
+        font-feature-settings: "ss09" 1;
+        font-variation-settings:
+          "rond" 3,
+          "edpt" 1;
+        line-height: 1;
+        cursor: pointer;
+      }
+
+      /* ─── HERO section01 (y:112, h:230 → margin-top:12px from topbar end at 100) ─── */
+      .my-hero {
+        position: relative;
+        width: 100%;
+        height: 230px;
+        margin-top: 12px;
+        overflow: visible;
+        flex-shrink: 0;
+      }
+      /* "MY WA-ANG" – section01-tit: x:43, y:11 within hero */
+      .hero-label {
+        position: absolute;
+        left: 43px;
+        top: 11px;
+        font-size: 20px;
+        font-weight: 900;
+        color: #000;
+        letter-spacing: -0.4px;
+        z-index: 5;
+      }
+      /* white strip – Rectangle 3468533: y:135 within hero, h:95 */
+      .hero-white-strip {
+        position: absolute;
+        left: 0;
+        top: 135px;
+        width: 414px;
+        height: 95px;
+        background: white;
+        border-radius: 0 50px 0 0;
+        z-index: 2; /* Over badge */
+      }
+
+      /* mascot – section01-image: x:40, y:0, w:172, h:217 */
+      .hero-mascot {
+        position: absolute;
+        left: 40px;
+        top: 0;
+        width: 172px;
+        height: 217px;
+        z-index: 3;
+        pointer-events: none;
+      }
+      .hero-mascot img {
+        position: absolute;
+        width: 198.54%;
+        height: 104.79%;
+        left: -53.71%;
+        top: 0;
+        object-fit: contain;
+      }
+      /* name badge – section01-top: x:232, y:64, w:139, h:90 */
+      .hero-badge {
+        position: absolute;
+        left: 232px;
+        top: 64px;
+        width: 139px;
+        height: 90px;
+        z-index: 1; /* Under white strip */
+      }
+      .hero-badge img {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      /* name text – section01-title inside badge: x:17, y:27 relative to badge */
+      .hero-name {
+        position: absolute;
+        left: 249px;
+        top: 91px; /* 232+17, 64+27 */
+        font-size: 20px;
+        font-weight: 700;
+        color: white;
+        letter-spacing: -0.4px;
+        z-index: 1; /* Under white strip */
+        line-height: 1.8;
+      }
+
+      /* status text – section01-txt: x:235, y:168 within hero */
+      .hero-status-wrap {
+        position: absolute;
+        left: 235px;
+        top: 168px;
+        width: 146px;
+        height: 29px;
+        z-index: 4;
+      }
+      .hero-status-text {
+        display: inline-block;
+        position: relative;
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+        letter-spacing: -0.32px;
+        line-height: 1.8;
+      }
+      /* yellow underline: y:17 within status = bottom underlay */
+      .hero-status-text::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 5px;
+        width: 100%;
+        height: 7px;
+        background: #ffcb30;
+        z-index: -1;
+      }
+
+      /* ─── 내 취향 데이터 보기 (y:346, margin-top:4px from hero end 342) ─── */
+      .taste-link-row {
+        margin-top: 4px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 16px;
+      }
+      .taste-link-row a {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        text-decoration: none;
+        color: #9b9b9b;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: -0.32px;
+      }
+
+      /* ─── 최근 포키한 빵 section02 (y:411, h:73, margin-top:37px from taste-link end 374) ─── */
+      .poki-card {
+        margin-top: 37px;
+        margin-left: 16px;
+        margin-right: 16px;
+        background: white;
+        height: 73px;
+        display: flex;
+        align-items: center;
+        padding: 0 27px;
+        box-sizing: border-box;
+      }
+      .poki-card-inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+      }
+      .poki-card-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: #000;
+        letter-spacing: -0.32px;
+        flex-shrink: 0;
+      }
+      .poki-tags {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .poki-tag {
+        background: #ffa74a;
+        color: white;
+        font-size: 14px;
+        padding: 2px 8px;
+        border-radius: 8px;
+        letter-spacing: -0.28px;
+      }
+
+      /* ─── 리뷰하기 (y:484, right at poki-card bottom → margin-top:0) ─── */
+      .review-link-row {
+        margin-top: 0;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: 16px;
+      }
+      .review-link-row a {
+        display: flex;
+        align-items: center;
+        gap: 2px;
+        text-decoration: none;
+        color: #9b9b9b;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: -0.32px;
+      }
+
+      /* ─── Stats card (y:539, h:125, margin-top:27px from review-link end 512) ─── */
+      .stats-card {
+        margin-top: 27px;
+        margin-left: 16px;
+        margin-right: 16px;
+        background: white;
+        border-radius: 20px;
+        height: 125px;
+        display: flex;
+        align-items: center;
+      }
+      .stat-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+        height: 100%; /* Take full height of the card */
+      }
+      .stat-item + .stat-item::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 1px;
+        height: 81px;
+        background: #f2f2f2;
+      }
+      .stat-icon {
+        font-family: "Min Icon VF", sans-serif;
+        font-size: 24px;
+        color: #fb7459;
+        font-feature-settings: "ss09" 1;
+        font-variation-settings:
+          "rond" 3,
+          "edpt" 1;
+        line-height: 1;
+      }
+      .stat-label {
+        font-size: 13px;
+        color: #000;
+        font-weight: 500;
+        letter-spacing: -0.26px;
+      }
+
+      /* ─── 내 정보 (card y:706, h:303, margin-top:42px from stats end 664) ─── */
+      .info-wrap {
+        margin-top: 42px;
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+      /* "내 정보" label: y:721 page = 15px from card top (706+15=721) */
+      .info-section-label {
+        padding: 15px 0 0 31px; /* 31px = left:47 - margin:16 */
+        font-size: 14px;
+        color: #8b8b8b;
+        letter-spacing: -0.28px;
+        background: white;
+        border-radius: 10px 10px 0 0;
+        margin: 0;
+      }
+      .info-card {
+        background: white;
+        border-radius: 0 0 10px 10px;
+        padding: 0 31px;
+      }
+      /* First row at y:780, card at y:706 → 74px from card top
+       label area (15+21=36px) → gap before first row: 74-36=38px */
+      .info-rows-group {
+        padding-top: 38px;
+      }
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 49px; /* each row is 49px apart: 829-780=49 */
+        border-bottom: 1px solid #f2f2f2;
+      }
+      .info-row:last-child {
+        border-bottom: none;
+        padding-bottom: 33px;
+        height: 82px;
+      }
+      .info-label {
+        font-size: 16px;
+        color: #000;
+        letter-spacing: -0.32px;
+      }
+      .info-value {
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+        letter-spacing: -0.32px;
+        text-decoration: none;
+      }
+
+      /* ─── Bottom spacer before nav ─── */
+      .bottom-spacer {
+        height: 130px;
+      } /* Increased to ensure nav bar doesn't overlap */
+
+      /* Make navbar sticky so it floats properly */
+      .menu-bar {
+        position: sticky !important;
+        bottom: 25px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- TOPBAR -->
+      <div class="my-topbar">
+        <a href="home.html" class="my-topbar-back">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M15 18L9 12L15 6"
+              stroke="#000"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
+        <span class="my-topbar-title">마이페이지</span>
+        <span class="my-topbar-bell">&#xEF40;</span>
+      </div>
+
+      <!-- HERO (section01) -->
+      <div class="my-hero">
+        <span class="hero-label">MY WA-ANG</span>
+        <div class="hero-white-strip"></div>
+        <div class="hero-mascot">
+          <img src="images/mascot-mypage.png" alt="와앙이" />
+        </div>
+        <div class="hero-badge">
+          <img src="images/mypage-name-bg.svg" alt="" />
+        </div>
+        <div class="hero-name">와앙이1234</div>
+        <div class="hero-status-wrap">
+          <span class="hero-status-text">요즘은 바삭한게 좋아 -!</span>
+        </div>
+      </div>
+
+      <!-- 내 취향 데이터 보기 (y:346, gap 4px) -->
+      <div class="taste-link-row">
+        <a href="taste-data.html">
+          내 취향 데이터 보기
+          <span class="min-icon" style="font-size: 19px; color: #9b9b9b"
+            >&#xE8C3;</span
+          >
+        </a>
+      </div>
+
+      <!-- 최근 포키한 빵 section02 (y:411, gap 37px) -->
+      <div class="poki-card">
+        <div class="poki-card-inner">
+          <span class="poki-card-title">최근 포키한 빵</span>
+          <div class="poki-tags">
+            <span class="poki-tag">#크루아상</span>
+            <span class="poki-tag">#소금빵</span>
+            <span class="poki-tag">#크림빵</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 리뷰하기 (y:484, gap 0px) -->
+      <div class="review-link-row">
+        <a href="review-write.html">
+          리뷰하기
+          <span class="min-icon" style="font-size: 19px; color: #9b9b9b"
+            >&#xE8C3;</span
+          >
+        </a>
+      </div>
+
+      <!-- Stats card (y:539, gap 27px) -->
+      <div class="stats-card">
+        <a href="map.html" class="stat-item">
+          <span class="stat-icon">&#xE09C;</span>
+          <span class="stat-label">찜한 빵</span>
+        </a>
+        <a href="map.html" class="stat-item">
+          <span class="stat-icon">&#xF020;</span>
+          <span class="stat-label">찜한 가게</span>
+        </a>
+        <a href="review.html" class="stat-item">
+          <span class="stat-icon">&#xF007;</span>
+          <span class="stat-label">내 리뷰</span>
+        </a>
+      </div>
+
+      <!-- 내 정보 (y:706, gap 42px) -->
+      <div class="info-wrap">
+        <p class="info-section-label">내 정보</p>
+        <div class="info-card">
+          <div class="info-rows-group">
+            <div class="info-row">
+              <span class="info-label">닉네임</span>
+              <span class="info-value">와앙이1234</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">생년월일</span>
+              <span class="info-value">1999. 05. 13</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">이메일주소</span>
+              <span class="info-value">sien99999@gmail.com</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">위치설정</span>
+              <a href="location-setting.html" class="info-value">성수동 2가</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 27px gap before nav -->
+      <div class="bottom-spacer"></div>
+
+      <!-- Tab Bar (y:1036) -->
+      <nav class="menu-bar">
+        <a href="home.html" class="menu-item">
+          <span class="min-icon">&#xE110;</span>
+          <span>HOME</span>
+        </a>
+        <a href="map.html" class="menu-item">
+          <span class="min-icon">&#xEFA0;</span>
+          <span>MAP</span>
+        </a>
+        <a href="my.html" class="menu-item active">
+          <span class="min-icon">&#xEF20;</span>
+          <span>MY PAGE</span>
+        </a>
+        <a href="setting.html" class="menu-item">
+          <span class="min-icon">&#xE0B0;</span>
+          <span>SETTING</span>
+        </a>
+      </nav>
     </div>
-
-    <!-- Profile Section (1016:1661) -->
-    <div class="profile-card">
-       <div class="profile-avatar">
-          <img src="images/decoration-1.svg" alt="" />
-       </div>
-       <div class="profile-info">
-       <h2>와앙이1234</h2>
-          <p>sien99999@gmail.com</p>
-       </div>
-       <a href="profile-edit.html" class="profile-edit-btn">프로필 수정</a>
-    </div>
-
-    <!-- Taste Summary (1016:1664) -->
-    <div class="taste-summary-banner">
-       <div class="taste-text">
-       디저트는 <span class="highlight">바삭하게</span> 좋아 -!
-       </div>
-       <a href="taste-data.html" style="text-decoration:none;">
-          <span class="min-icon" style="font-size:20px; color:#C3C3C3;">&#xE150;</span>
-       </a>
-    </div>
-
-    <!-- Stats Section (1016:1685) -->
-    <div class="quick-stats">
-       <a href="bookmark-bread.html" class="stat-item" style="text-decoration:none; color:inherit;">
-          <span class="min-icon" style="color:#FB7459; font-size:24px;">&#xEF20;</span>
-          <span class="count">12</span>
-          <span class="label">찜한 빵</span>
-       </a>
-       <a href="bookmark-shop.html" class="stat-item" style="text-decoration:none; color:inherit;">
-          <span class="min-icon" style="color:#FF9F46; font-size:24px;">&#xEFA0;</span>
-          <span class="count">5</span>
-          <span class="label">찜한 가게</span>
-       </a>
-       <a href="my-reviews.html" class="stat-item" style="text-decoration:none; color:inherit;">
-          <span class="min-icon" style="color:#BBD884; font-size:24px;">&#xE110;</span>
-          <span class="count">8</span>
-          <span class="label">내 리뷰</span>
-       </a>
-    </div>
-
-    <!-- User Info (1016:1666) -->
-    <div class="info-list">
-       <div class="info-row">
-          <span class="label">닉네임</span>
-          <span class="value">와앙이1234</span>
-       </div>
-       <div class="info-row">
-          <span class="label">생년월일</span>
-          <span class="value">1999. 05. 13</span>
-       </div>
-       <div class="info-row">
-          <span class="label">이메일주소</span>
-          <span class="value">sien99999@gmail.com</span>
-       </div>
-       <div class="info-row">
-          <span class="label">위치설정</span>
-          <span class="value">성수동 2가</span>
-       </div>
-    </div>
-
-    <!-- Tab Bar (Bottom Navigation) -->
-    <nav class="menu-bar">
-      <a href="home.html" class="menu-item">
-        <span class="min-icon">&#xE110;</span>
-        <span>HOME</span>
-      </a>
-      <a href="map.html" class="menu-item">
-        <span class="min-icon">&#xEFA0;</span>
-        <span>MAP</span>
-      </a>
-      <a href="my.html" class="menu-item active">
-        <span class="min-icon">&#xEF20;</span>
-        <span>MY PAGE</span>
-      </a>
-      <a href="setting.html" class="menu-item">
-        <span class="min-icon">&#xE0B0;</span>
-        <span>SETTING</span>
-      </a>
-    </nav>
-
-  </div>
-</body>
+  </body>
 </html>

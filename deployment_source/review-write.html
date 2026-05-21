@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=430, user-scalable=no" />
+  <meta name="theme-color" content="#F8F4EC" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
+  <link rel="apple-touch-icon" href="/assets/icon-hWEU-vOK.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>POOKSHIN - 리뷰 하기</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="https://poposnail61.github.io/web/css/minIcon-round.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      margin: 0;
+      background: #EFEFEF;
+      font-family: 'Pretendard Variable', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+    }
+
+    #app {
+      width: 430px;
+      min-height: 932px;
+      background: #F8F4EC;
+      position: relative;
+      overflow-x: hidden;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    @media (max-width: 480px) {
+      body {
+        align-items: flex-start !important;
+        background: #F8F4EC !important;
+      }
+      #app {
+        width: 100% !important;
+        max-width: 430px !important;
+        min-height: 100dvh !important;
+        box-shadow: none !important;
+      }
+    }
+
+    .mi {
+      font-family: 'Min Icon VF', 'Round Bold', sans-serif;
+      font-feature-settings: 'ss09' 1;
+      font-style: normal;
+      line-height: normal;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── 헤더 ── */
+    .review-header {
+      height: 122px;
+      position: relative;
+    }
+    .btn-close-x {
+      position: absolute;
+      left: 16px;
+      top: 74px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+    }
+    .header-title {
+      position: absolute;
+      left: 50%;
+      top: 78px;
+      transform: translateX(-50%);
+      font-size: 16px;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: -0.32px;
+    }
+
+    /* ── 최근 포키한 빵 ── */
+    .recent-poki-section {
+      padding: 8px 43px 38px;
+      display: flex;
+      align-items: center;
+      gap: 36px;
+    }
+    .recent-poki-label {
+      font-size: 16px;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: -0.32px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .poki-chip-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+    }
+    .poki-chip {
+      background: #FFA74A;
+      border-radius: 8px;
+      padding: 2px 8px;
+      font-size: 14px;
+      font-weight: 400;
+      color: white;
+      letter-spacing: -0.28px;
+      line-height: 1.8;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .poki-chip:not(.active) {
+      opacity: 0.5;
+    }
+    .poki-chip.active {
+      opacity: 1;
+    }
+
+    /* ── 리뷰 입력 카드 ── */
+    .review-input-card {
+      margin: 0 16px 20px;
+      background: white;
+      border-radius: 10px;
+      padding: 22px 27px 28px;
+    }
+
+    /* 빵 태그 + 어땠나요 */
+    .card-header-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+    .bread-tag {
+      background: #FFA74A;
+      border-radius: 8px;
+      padding: 2px 8px;
+      font-size: 14px;
+      font-weight: 400;
+      color: white;
+      letter-spacing: -0.28px;
+      line-height: 1.8;
+    }
+    .card-question {
+      font-size: 16px;
+      font-weight: 600;
+      color: #000;
+      letter-spacing: -0.32px;
+    }
+
+    /* 별점 */
+    .star-row {
+      display: flex;
+      justify-content: center;
+      gap: 9px;
+      margin-bottom: 46px;
+    }
+    .star-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+    .star-btn .mi {
+      font-size: 34px;
+      color: #F2F2F2;
+      transition: color 0.15s;
+    }
+    .star-btn.active .mi {
+      color: #FFCB30;
+    }
+
+    /* 식감 세그먼트 */
+    .taste-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+    .taste-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .taste-label-left {
+      font-size: 14px;
+      color: #000;
+      letter-spacing: -0.28px;
+      line-height: 1.8;
+      width: 26px;
+      text-align: right;
+      flex-shrink: 0;
+      margin-right: 11px;
+    }
+    .taste-segments {
+      display: flex;
+      gap: 6px;
+    }
+    .seg {
+      width: 36px;
+      height: 7px;
+      background: #F2F2F2;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .seg.on {
+      background: #FA534C;
+    }
+    .taste-label-right {
+      font-size: 14px;
+      color: #000;
+      letter-spacing: -0.28px;
+      line-height: 1.8;
+      width: 26px;
+      text-align: left;
+      flex-shrink: 0;
+      margin-left: 13px;
+    }
+
+    /* ── 한줄 리뷰 섹션 ── */
+    .text-review-card {
+      margin: 0 16px 23px;
+      background: white;
+      border-radius: 10px;
+      padding: 14px 22px 38px;
+    }
+    .text-review-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 24px;
+    }
+    .text-review-label {
+      font-size: 16px;
+      font-weight: 700;
+      color: #000;
+      letter-spacing: -0.32px;
+    }
+    .text-review-optional {
+      font-size: 16px;
+      font-weight: 400;
+      color: #9B9B9B;
+      letter-spacing: -0.32px;
+    }
+    .camera-box {
+      width: 59px;
+      height: 52px;
+      background: #F2F2F2;
+      border: 1px solid #9B9B9B;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-bottom: 13px;
+      flex-shrink: 0;
+    }
+    .review-textarea {
+      width: 100%;
+      height: 78px;
+      background: #F2F2F2;
+      border: 1px solid #9B9B9B;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-family: 'Pretendard Variable', sans-serif;
+      color: #333;
+      letter-spacing: -0.30px;
+      resize: none;
+      outline: none;
+      display: block;
+    }
+    .review-textarea::placeholder {
+      color: #9B9B9B;
+      font-size: 15px;
+    }
+
+    /* ── CTA 버튼 ── */
+    .btn-submit {
+      display: block;
+      width: 354px;
+      margin: 0 auto 40px;
+      padding: 20px 60px;
+      background: #FF9F46;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.36px;
+      text-align: center;
+      cursor: pointer;
+      font-family: 'Pretendard Variable', sans-serif;
+      transition: opacity 0.2s;
+    }
+    .btn-submit:active { opacity: 0.85; }
+
+    /* ── 완료 팝업 모달 ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+    .modal-card {
+      background: #F8F4EC;
+      border-radius: 20px;
+      width: 398px;
+      height: 379px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      padding: 0 22px;
+      position: relative;
+    }
+    .modal-check-circle {
+      width: 61.5px;
+      height: 61.5px;
+      background: #FF9F46;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .modal-title {
+      font-size: 32px;
+      font-weight: 700;
+      color: #000;
+      text-align: center;
+      line-height: 1.375;
+      letter-spacing: -0.64px;
+      margin-bottom: 36px;
+      white-space: nowrap;
+    }
+    .modal-confirm-btn {
+      width: 354px;
+      padding: 20px 0;
+      background: #FF9F46;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      font-family: 'Pretendard Variable', sans-serif;
+      letter-spacing: -0.36px;
+      transition: opacity 0.2s;
+    }
+    .modal-confirm-btn:active { opacity: 0.85; }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- 헤더 -->
+  <div class="review-header">
+    <a href="my.html" class="btn-close-x">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M15 18L9 12L15 6" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <span class="header-title">리뷰 하기</span>
+  </div>
+
+  <!-- 최근 포키한 빵 -->
+  <div class="recent-poki-section">
+    <span class="recent-poki-label">최근 포키한 빵</span>
+    <div class="poki-chip-row">
+      <span class="poki-chip active" onclick="selectBread(this, '크루아상')">#크루아상</span>
+      <span class="poki-chip" onclick="selectBread(this, '소금빵')">#소금빵</span>
+      <span class="poki-chip" onclick="selectBread(this, '크림빵')">#크림빵</span>
+    </div>
+  </div>
+
+  <!-- 리뷰 입력 카드 -->
+  <div class="review-input-card">
+    <!-- 빵 태그 + 어땠나요 -->
+    <div class="card-header-row">
+      <span class="bread-tag" id="selected-bread-tag">#크루아상</span>
+      <span class="card-question">어땠나요?</span>
+    </div>
+
+    <!-- 별점 (4개 선택 상태) -->
+    <div class="star-row" id="star-row">
+      <button class="star-btn active" onclick="setStars(1)"><i class="mi">&#xE0A0;</i></button>
+      <button class="star-btn active" onclick="setStars(2)"><i class="mi">&#xE0A0;</i></button>
+      <button class="star-btn active" onclick="setStars(3)"><i class="mi">&#xE0A0;</i></button>
+      <button class="star-btn active" onclick="setStars(4)"><i class="mi">&#xE0A0;</i></button>
+      <button class="star-btn"        onclick="setStars(5)"><i class="mi">&#xE0A0;</i></button>
+    </div>
+
+    <!-- 식감 세그먼트 (5개 바, 클릭 선택 가능) -->
+    <div class="taste-grid">
+      <!-- 바삭 → 쫄깃 (4번째 활성) -->
+      <div class="taste-row">
+        <span class="taste-label-left">바삭</span>
+        <div class="taste-segments" data-row="0">
+          <div class="seg" onclick="setSeg(this)"></div>
+          <div class="seg" onclick="setSeg(this)"></div>
+          <div class="seg" onclick="setSeg(this)"></div>
+          <div class="seg on" onclick="setSeg(this)"></div>
+          <div class="seg" onclick="setSeg(this)"></div>
+        </div>
+        <span class="taste-label-right">쫄깃</span>
+      </div>
+      <!-- 촉촉 → 꾸덕 (2번째 활성) -->
+      <div class="taste-row">
+        <span class="taste-label-left">촉촉</span>
+        <div class="taste-segments" data-row="1">
+          <div class="seg" onclick="setSeg(this)"></div>
+          <div class="seg on" onclick="setSeg(this)"></div>
+          <div class="seg" onclick="setSeg(this)"></div>
+          <div class="seg" onclick="setSeg(this)"></div>
+          <div class="seg" onclick="setSeg(this)"></div>
+        </div>
+        <span class="taste-label-right">꾸덕</span>
+      </div>
+      <!-- 버터 → 담백 (4번째 활성) -->
+      <div class="taste-row">
+        <span class="taste-label-left">버터</span>
+        <div class="taste-segments" data-row="2">
+          <div class="seg" onclick="setSeg(this)"></div>
+          <div class="seg" onclick="setSeg(this)"></div>
+          <div class="seg" onclick="setSeg(this)"></div>
+          <div class="seg on" onclick="setSeg(this)"></div>
+          <div class="seg" onclick="setSeg(this)"></div>
+        </div>
+        <span class="taste-label-right">담백</span>
+      </div>
+      <!-- 당도 (3번째 활성) -->
+      <div class="taste-row">
+        <span class="taste-label-left">당도</span>
+        <div class="taste-segments" data-row="3">
+          <div class="seg" onclick="setSeg(this)"></div>
+          <div class="seg" onclick="setSeg(this)"></div>
+          <div class="seg on" onclick="setSeg(this)"></div>
+          <div class="seg" onclick="setSeg(this)"></div>
+          <div class="seg" onclick="setSeg(this)"></div>
+        </div>
+        <span class="taste-label-right" style="color:transparent;">_</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 한줄 리뷰 섹션 -->
+  <div class="text-review-card">
+    <div class="text-review-header">
+      <span class="text-review-label">한줄 리뷰</span>
+      <span class="text-review-optional">(선택)</span>
+    </div>
+    <!-- 카메라 박스 -->
+    <div class="camera-box" onclick="alert('카메라/갤러리 선택')">
+      <i class="mi" style="font-size:31.2px; color:#9B9B9B;">&#xE090;</i>
+    </div>
+    <!-- 텍스트 입력 -->
+    <textarea class="review-textarea" placeholder="빵이 바삭하고 버터향의 풍미가 깊어서 좋았어요 :)"></textarea>
+  </div>
+
+  <!-- CTA 버튼 -->
+  <button class="btn-submit" onclick="showModal()">리뷰 등록하기</button>
+
+</div><!-- /#app -->
+
+<!-- 리뉴 등록 완료 팝업 -->
+<div class="modal-overlay" id="complete-modal">
+  <div class="modal-card">
+    <!-- 오렌지 체크 원 -->
+    <div class="modal-check-circle">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none">
+        <path d="M5 12L10 17L19 7" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <!-- 타이틀 -->
+    <p class="modal-title">리뷰 등록 완료 !</p>
+    <!-- 확인 버튼 -->
+    <button class="modal-confirm-btn" onclick="closeModal()">확인</button>
+  </div>
+</div>
+
+<script>
+  /* 별점 선택 */
+  function setStars(n) {
+    const btns = document.querySelectorAll('#star-row .star-btn');
+    btns.forEach((btn, i) => {
+      btn.classList.toggle('active', i < n);
+    });
+  }
+
+  /* 식감 세그먼트 선택 */
+  function setSeg(el) {
+    const parent = el.parentElement;
+    const segs = parent.querySelectorAll('.seg');
+    const idx = Array.from(segs).indexOf(el);
+    segs.forEach((s, i) => {
+      s.classList.toggle('on', i === idx);
+    });
+  }
+
+  /* 최근 포키한 빵 선택 */
+  function selectBread(el, name) {
+    document.querySelectorAll('.poki-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('selected-bread-tag').textContent = '#' + name;
+  }
+
+  /* 모달 열기/닫기 */
+  function showModal() {
+    document.getElementById('complete-modal').classList.add('open');
+  }
+  function closeModal() {
+    document.getElementById('complete-modal').classList.remove('open');
+    location.href = 'review-write.html';
+  }
+</script>
+</body>
+</html>

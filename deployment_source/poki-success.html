@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=430, user-scalable=no" />
+    <meta name="theme-color" content="#F8F4EC" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
+  <link rel="apple-touch-icon" href="/assets/icon-hWEU-vOK.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>POOKSHIN - 포키 완료!</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <style>
+    body {
+      margin: 0;
+      background-color: #EFEFEF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      font-family: 'Pretendard Variable', sans-serif;
+    }
+    #app {
+      width: 100%;
+      max-width: 430px;
+      max-height: 100dvh;
+      aspect-ratio: 430 / 932;
+      background-color: #F8F4EC;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .success-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 24px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    @media (max-width: 480px) {
+      body {
+        align-items: center !important;
+        background-color: #EFEFEF !important;
+      }
+      #app {
+        width: 100% !important;
+        max-width: 430px !important;
+        max-height: 100dvh !important;
+        aspect-ratio: 430 / 932 !important;
+        box-shadow: none !important;
+        height: auto !important;
+      }
+      .success-container {
+        width: 100% !important;
+        height: 100% !important;
+      }
+    }
+    .check-circle {
+      width: 120px;
+      height: 120px;
+      background-color: #FF9F46;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 20px rgba(255, 159, 70, 0.3);
+      animation: scaleUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes scaleUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    
+    .success-title { font-size: 32px; font-weight: 800; color: #000; margin-bottom: 12px; }
+    .success-desc { font-size: 18px; color: #9B9B9B; margin-bottom: 80px; }
+    
+    .btn-map {
+      width: 100%;
+      height: 60px;
+      background-color: #FF9F46;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 20px;
+      font-weight: 800;
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .btn-home {
+      width: 100%;
+      height: 60px;
+      background-color: white;
+      color: #9B9B9B;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      text-decoration: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+  <link rel="stylesheet" crossorigin href="/assets/home-DsQNiKwc.css">
+</head>
+<body>
+  <div id="app">
+    <div class="success-container">
+      <div class="check-circle">
+        <span class="min-icon" style="color:white; font-size:60px;">&#xE110;</span>
+      </div>
+      <h1 class="success-title">포키 완료 !</h1>
+      <p class="success-desc">맛있는 빵이 기다리고 있어요 :)</p>
+      
+      <a href="map.html" class="btn-map">길 찾기</a>
+      <a href="home.html" class="btn-home">홈으로 돌아가기</a>
+    </div>
+
+
+  </div>
+</body>
+</html>

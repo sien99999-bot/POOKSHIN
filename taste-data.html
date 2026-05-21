@@ -1,153 +1,536 @@
-﻿﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=430, user-scalable=no" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=430, user-scalable=no" />
     <meta name="theme-color" content="#F8F4EC" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
-  <link rel="apple-touch-icon" href="icon.png" />
-  <link rel="manifest" href="manifest.webmanifest" />
-  <title>POOKSHIN - Taste Data</title>
-  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="home.css" />
-  <style>
-    #app { background-color: #F8F4EC; height: auto; min-height: 932px; overflow-y: auto; }
-    
-    .taste-header {
-      padding: 60px 24px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      background: #F8F4EC;
-      z-index: 100;
-    }
-    .taste-header h1 { font-size: 20px; font-weight: 800; }
-    
-    .section-title { padding: 0 24px; font-size: 24px; font-weight: 800; color: #333; margin: 30px 0 16px; }
-    .section-title .highlight { color: #FF9F46; }
-    
-    .chart-card {
-      margin: 0 16px;
-      background: white;
-      border-radius: 24px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .donut-chart {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      background: conic-gradient(#FF9F46 0% 82%, #F2F2F2 82% 100%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      position: relative;
-      margin-bottom: 20px;
-    }
-    .donut-chart::after {
-      content: '82%';
-      position: absolute;
-      width: 130px;
-      height: 130px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 36px;
-      font-weight: 900;
-      color: #FB7459;
-    }
-    
-    .preference-text { font-size: 16px; font-weight: 700; color: #333; text-align: center; line-height: 1.6; }
-    
-    .graph-area {
-      width: 100%;
-      height: 150px;
-      margin-top: 30px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      padding: 0 10px;
-    }
-    .graph-bar { width: 40px; background: #FF9F46; border-radius: 8px 8px 0 0; transition: height 0.5s ease; position: relative; }
-    .graph-bar.dim { background: #EFEFEF; }
-    .graph-label { position: absolute; bottom: -24px; left: 50%; transform: translateX(-50%); font-size: 12px; color: #9B9B9B; white-space: nowrap; }
-    
-    .best-menu-area {
-      padding: 24px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
-    }
-    .menu-thumb {
-      aspect-ratio: 1;
-      background: #EFEFEF;
-      border-radius: 12px;
-      overflow: hidden;
-      margin-bottom: 8px;
-    }
-    .menu-thumb img { width: 100%; height: 100%; object-fit: cover; }
-    .menu-name { font-size: 13px; font-weight: 700; text-align: center; }
-  </style>
-</head>
-<body>
-  <div id="app">
+    <title>POOKSHIN - 내 취향 데이터</title>
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="minIcon-round.css" />
+    <style>
+      :root {
+        --primary: #FF9F46;
+        --accent-coral: #FB7459;
+        --accent-yellow: #FFDA46;
+        --bg-warm: #F8F4EC;
+        --bg-yellow-soft: #FFF7DF;
+        --black: #000000;
+        --gray-sub: #9B9B9B;
+        --gray-fill: #F2F2F2;
+      }
+      body {
+        margin: 0;
+        background-color: var(--bg-warm);
+        font-family: 'Interop', 'Pretendard Variable', sans-serif;
+        display: flex;
+        justify-content: center;
+        overflow-y: auto;
+      }
+      #app {
+        width: 100%;
+        max-width: 430px;
+        min-height: 100dvh;
+        height: auto !important;
+        background-color: var(--bg-warm);
+        position: relative;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        padding-bottom: 50px;
+      }
+      
+      /* Header */
+      .header {
+        position: relative;
+        height: 55px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 16px;
+      }
+      .header-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--black);
+      }
+      .header-close {
+        position: absolute;
+        right: 16px;
+        color: var(--black);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
 
-    <div class="taste-header">
-       <a href="my.html" style="text-decoration:none;"><span class="min-icon" style="font-size:24px; color:#333;">&#xE150;</span></a>
-       <h1>나의 취향 분석</h1>
-       <span class="min-icon" style="font-size:24px; color:#333;">&#xEF40;</span>
-    </div>
+      /* Hero */
+      .hero {
+        position: relative;
+        width: 100%;
+        height: 230px;
+        margin-top: 12px;
+        overflow: visible;
+        flex-shrink: 0;
+      }
+      .hero-white-strip {
+        position: absolute;
+        left: 0;
+        top: 135px;
+        width: 100%;
+        height: 95px;
+        background: white;
+        border-radius: 0 50px 0 0;
+        z-index: 2; /* Over badge */
+      }
+      .hero-mascot {
+        position: absolute;
+        left: 40px;
+        top: 0;
+        width: 172px;
+        height: 217px;
+        z-index: 3;
+        pointer-events: none;
+      }
+      .hero-mascot img {
+        position: absolute;
+        width: 198.54%;
+        height: 104.79%;
+        left: -53.71%;
+        top: 0;
+        object-fit: contain;
+      }
+      /* name badge – section01-top: x:232, y:64, w:139, h:90 */
+      .hero-badge {
+        position: absolute;
+        left: 232px;
+        top: 64px;
+        width: 139px;
+        height: 90px;
+        z-index: 1; /* Under white strip */
+      }
+      .hero-badge img {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      /* name text – section01-title inside badge: x:17, y:27 relative to badge */
+      .hero-name {
+        position: absolute;
+        left: 249px;
+        top: 91px; /* 232+17, 64+27 */
+        font-size: 20px;
+        font-weight: 700;
+        color: white;
+        letter-spacing: -0.4px;
+        z-index: 1; /* Under white strip */
+        line-height: 1.8;
+      }
+      /* status text – section01-txt: x:235, y:168 within hero */
+      .hero-status-wrap {
+        position: absolute;
+        left: 235px;
+        top: 168px;
+        width: 146px;
+        height: 29px;
+        z-index: 4;
+      }
+      .hero-status-text {
+        display: inline-block;
+        position: relative;
+        font-size: 16px;
+        font-weight: 600;
+        color: #000;
+        letter-spacing: -0.32px;
+        line-height: 1.8;
+      }
+      /* yellow underline: y:17 within status = bottom underlay */
+      .hero-status-text::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 5px;
+        width: 100%;
+        height: 7px;
+        background: #ffcb30;
+        z-index: -1;
+      }
+      /* tags placed below status text, absolutely positioned to align */
+      .hero-tags {
+        position: absolute;
+        left: 210px;
+        top: 202px;
+        display: flex;
+        gap: 6px;
+        z-index: 4;
+      }
+      .tag {
+        background-color: #FFA74A;
+        color: white;
+        font-size: 14px;
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
 
-    <h2 class="section-title">와앙이의 <span class="highlight">식감 취향</span></h2>
-    
-    <div class="chart-card">
-       <div class="donut-chart"></div>
-       <p class="preference-text">
-          겉바속촉을 좋아하는 당신!<br>
-          쫄깃담백한 건 조금 아쉬워하네요.
-       </p>
-       
-       <div class="graph-area">
-          <div class="graph-bar dim" style="height: 40%;"><span class="graph-label">4주전</span></div>
-          <div class="graph-bar dim" style="height: 55%;"><span class="graph-label">3주전</span></div>
-          <div class="graph-bar dim" style="height: 45%;"><span class="graph-label">2주전</span></div>
-          <div class="graph-bar" style="height: 82%;"><span class="graph-label">이번주</span></div>
-       </div>
-    </div>
+      /* Section Titles */
+      .section-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 40px 16px 20px;
+        color: var(--black);
+      }
 
-    <h2 class="section-title">취향 저격 <span class="highlight">추천 메뉴</span></h2>
-    
-    <div class="best-menu-area">
-       <div class="menu-item">
-          <div class="menu-thumb"><img src="images/main-croissant.png" alt="" /></div>
-          <div class="menu-name">크루아상</div>
-       </div>
-       <div class="menu-item">
-          <div class="menu-thumb"><img src="images/bread-icon.svg" alt="" /></div>
-          <div class="menu-name">소금빵</div>
-       </div>
-       <div class="menu-item">
-          <div class="menu-thumb"><img src="images/bread-icon.svg" alt="" /></div>
-          <div class="menu-name">마들렌</div>
-       </div>
-    </div>
+      /* DNA Summary */
+      .card {
+        background: white;
+        border-radius: 20px;
+        margin: 0 16px;
+        padding: 24px;
+      }
+      .word-cloud {
+        position: relative;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        color: var(--accent-coral);
+        padding: 10px 0;
+      }
+      .word {
+        white-space: nowrap;
+        margin: 0 4px;
+      }
+      .word.large {
+        font-size: 24px;
+        font-weight: 700;
+      }
+      .word.small {
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .divider {
+        height: 1px;
+        background: url('data:image/svg+xml;utf8,<svg width="100%" height="1" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="0" x2="100%" y2="0" stroke="%23E5E5E5" stroke-dasharray="4 4" /></svg>');
+        margin: 20px 0;
+      }
+      .dna-desc {
+        font-size: 16px;
+        line-height: 1.5;
+        font-weight: 600;
+        color: var(--black);
+        display: flex;
+        gap: 10px;
+      }
+      .dna-desc-title {
+        flex-shrink: 0;
+      }
 
-    <div style="height: 100px;"></div>
-    <div class="mascot-decoration" style="position: fixed; bottom: 40px; right: -20px; opacity: 0.1; z-index: 0; pointer-events: none;">
-       <img src="images/decoration-1.svg" width="200" alt="" />
+      /* Radar Chart */
+      .radar-container {
+        position: relative;
+        height: 240px;
+        margin: 0 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .radar-bg {
+        width: 240px;
+        height: 240px;
+      }
+      .radar-labels span {
+        position: absolute;
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--black);
+      }
+      .banner {
+        background-color: var(--bg-yellow-soft);
+        border-radius: 20px;
+        margin: 16px 16px 0;
+        padding: 16px;
+        font-size: 16px;
+        color: var(--black);
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .banner img {
+        width: 24px;
+        height: 24px;
+      }
+
+      /* Trend */
+      .trend-header {
+        display: flex;
+        margin: 0 16px;
+        gap: 20px;
+      }
+      .donut-wrap {
+        width: 140px;
+        height: 140px;
+        position: relative;
+      }
+      .donut-wrap svg {
+        transform: rotate(-90deg);
+        width: 100%;
+        height: 100%;
+      }
+      .donut-text {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 44px;
+        font-weight: 700;
+        color: var(--accent-coral);
+      }
+      .trend-text {
+        flex: 1;
+        background: white;
+        border-radius: 20px;
+        padding: 24px 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .trend-text h3 {
+        font-size: 24px;
+        color: var(--black);
+        margin: 0 0 10px;
+        position: relative;
+        display: inline-block;
+      }
+      .trend-text h3::after {
+        content: '';
+        position: absolute;
+        bottom: 2px;
+        left: 0;
+        width: 100%;
+        height: 7px;
+        background-color: var(--accent-yellow);
+        z-index: -1;
+      }
+      .trend-text p {
+        font-size: 15px;
+        color: var(--black);
+        margin: 0;
+        line-height: 1.5;
+        font-weight: 500;
+      }
+      .trend-graph {
+        margin: 20px 16px 0;
+        background: white;
+        border-radius: 20px;
+        padding: 24px 0 16px;
+      }
+      .graph-svg {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .x-axis {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        font-size: 14px;
+        color: var(--gray-sub);
+        padding: 0 24px;
+      }
+
+      /* Comment */
+      .comment-section {
+        position: relative;
+        margin-top: 40px;
+        height: 250px;
+        display: flex;
+      }
+      .comment-card {
+        background: white;
+        border-radius: 0 20px 20px 0;
+        padding: 28px 20px;
+        width: 270px;
+        height: 100%;
+        box-sizing: border-box;
+      }
+      .comment-card h3 {
+        font-size: 20px;
+        margin: 0 0 16px;
+        text-align: center;
+      }
+      .comment-card p {
+        font-size: 15px;
+        line-height: 1.6;
+        margin: 0;
+      }
+      .comment-mascot {
+        position: absolute;
+        right: -10px;
+        bottom: 0;
+        width: 172px;
+        height: 172px;
+        object-fit: contain;
+      }
+
+      /* Recommend */
+      .recommend-scroll {
+        display: flex;
+        gap: 16px;
+        padding: 0 16px;
+        overflow-x: auto;
+        background-color: var(--bg-yellow-soft);
+        padding-top: 32px;
+        padding-bottom: 32px;
+        border-radius: 20px 20px 0 0;
+        margin: 16px 16px 0;
+      }
+      .recommend-scroll::-webkit-scrollbar {
+        display: none;
+      }
+      .rec-card {
+        width: 148px;
+        flex-shrink: 0;
+      }
+      .rec-img {
+        width: 100%;
+        height: 102px;
+        border-radius: 10px;
+        object-fit: cover;
+        background: #D9D9D9;
+      }
+      .rec-title {
+        font-size: 15px;
+        text-align: center;
+        margin-top: 10px;
+        font-weight: 500;
+        color: var(--black);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="header">
+        <div class="header-title">내 취향 데이터</div>
+        <a href="my.html" class="header-close">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 6L6 18M6 6L18 18" stroke="#111111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="hero">
+        <div class="hero-white-strip"></div>
+        <div class="hero-mascot">
+          <img src="images/mascot-mypage.png" alt="와앙이" />
+        </div>
+        <div class="hero-badge">
+          <img src="images/mypage-name-bg.svg" alt="" />
+        </div>
+        <div class="hero-name">와앙이1234</div>
+        <div class="hero-status-wrap">
+          <span class="hero-status-text">요즘은 바삭한게 좋아 -!</span>
+        </div>
+        <div class="hero-tags">
+          <span class="tag">#크루아상</span>
+          <span class="tag">#소금빵</span>
+          <span class="tag">#크림빵</span>
+        </div>
+      </div>
+
+      <div class="section-title">DNA 요약</div>
+      <div class="card">
+        <div class="word-cloud">
+          <div><span class="word large">바삭파</span> <span class="word small">성수동활동형</span></div>
+          <div><span class="word small">리뷰확신형</span> <span class="word large">크루아상매니아</span></div>
+          <div><span class="word large">푹신베이커리</span> <span class="word small">겉바속촉</span></div>
+          <div><span class="word small">담백파</span> <span class="word large">디저트좋아</span></div>
+          <div><span class="word small" style="margin-left: -50px;">조용한분위기</span></div>
+        </div>
+        <div class="divider"></div>
+        <div class="dna-desc">
+          <span class="dna-desc-title">당신은...</span>
+          <span>
+            <strong>바삭파 크루아상매니아,</strong><br/>
+            디저트 좋아하는 조용한 성수동빵순이 🥐
+          </span>
+        </div>
+      </div>
+
+      <div class="section-title">취향 밸런스</div>
+      <div class="radar-container">
+        <img src="images/radar-chart.svg" alt="취향 밸런스 차트" class="radar-bg" />
+        <div class="radar-labels">
+          <span style="top: -25px; left: 105px;">바삭</span>
+          <span style="top: 60px; right: 0;">버터</span>
+          <span style="bottom: 60px; right: 0;">촉촉</span>
+          <span style="bottom: -25px; left: 105px;">쫄깃</span>
+          <span style="bottom: 60px; left: 0;">담백</span>
+          <span style="top: 60px; left: 0;">꾸덕</span>
+        </div>
+      </div>
+      <div class="banner">
+        <img src="images/yellow-arrow.svg" alt="" />
+        겉바속촉을 좋아하는 너! 쫄깃담백한건 조금 싫어할지도?
+      </div>
+
+      <div class="section-title">내 취향 트렌드</div>
+      <div class="trend-header">
+        <div class="donut-wrap">
+          <svg viewBox="0 0 120 120">
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#F8F4EC" stroke-width="10" />
+            <circle cx="60" cy="60" r="50" fill="none" stroke="#FB7459" stroke-width="10" stroke-dasharray="314" stroke-dashoffset="56" stroke-linecap="round" />
+          </svg>
+          <div class="donut-text">82%</div>
+        </div>
+        <div class="trend-text">
+          <div><h3>#바삭</h3></div>
+          <p>바삭함을 가장 좋아해요.<br/>바삭 취향이 가장 크게<br/>증가했어요.</p>
+        </div>
+      </div>
+      
+      <div class="trend-graph">
+        <img src="images/trend-graph.svg" alt="트렌드 그래프" class="graph-svg" />
+        <div class="x-axis">
+          <span>4주전</span>
+          <span>3주전</span>
+          <span>2주전</span>
+          <span>1주전</span>
+        </div>
+      </div>
+      <div class="banner">
+        <img src="images/rising-arrow.svg" alt="" />
+        지난 4주간 바삭 취향이 &nbsp;<strong style="color: #FFA74A; font-size: 18px;">12% 상승</strong>&nbsp; 했어요 !
+      </div>
+
+      <div class="comment-section">
+        <div class="comment-card">
+          <h3>와앙이의 코멘트</h3>
+          <p>
+            넌 겉바속촉 정통파야! 바삭 82%는 첫 한입 소리까지 중요하게 여긴다는 뜻이야. 버터 73%는 풍미 진한 유럽식 빵을 좋아한다는 신호!<br/>
+            <strong style="color: #FFA74A;">에피 바게트나 덴마크 페이스트리</strong>를 다음에 추천해줄게!
+          </p>
+        </div>
+        <img src="images/mascot-excited.png" alt="와앙이" class="comment-mascot" />
+      </div>
+
+      <div class="section-title">추천 빵</div>
+      <div class="recommend-scroll">
+        <div class="rec-card">
+          <img src="images/bread-garlic.png" alt="갈릭 휘낭시에" class="rec-img" />
+          <div class="rec-title">갈릭 휘낭시에</div>
+        </div>
+        <div class="rec-card">
+          <img src="images/bread-epi.png" alt="에피 바게트" class="rec-img" />
+          <div class="rec-title">에피 바게트</div>
+        </div>
+        <div class="rec-card">
+          <img src="images/bread-salt.png" alt="소금빵" class="rec-img" />
+          <div class="rec-title">소금빵</div>
+        </div>
+      </div>
     </div>
-  </div>
-</body>
+  </body>
 </html>

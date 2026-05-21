@@ -1,164 +1,188 @@
 /* 기본 Reset 및 변수 설정 */
-@import url('https://poposnail61.github.io/web/css/minIcon-round.css');
+@import url("https://poposnail61.github.io/web/css/minIcon-round.css");
 
 .min-icon {
-    font-family: 'Min Icon VF', sans-serif;
-    font-weight: 700; /* Bold */
-    font-style: normal;
-    font-feature-settings: "ss09" 1;
-    font-variation-settings: "rond" 3, "edpt" 1;
-    display: inline-block;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: normal;
-    word-wrap: normal;
-    white-space: nowrap;
-    direction: ltr;
-    -webkit-font-smoothing: antialiased;
+  font-family: "Min Icon VF", sans-serif;
+  font-weight: 700; /* Bold */
+  font-style: normal;
+  font-feature-settings: "ss09" 1;
+  font-variation-settings:
+    "rond" 3,
+    "edpt" 1;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
 }
 
 :root {
-    --primary-orange: #FF9F46;
-    --secondary-yellow: #FFDA46;
-    --accent-red: #FB7459;
-    --bg-color: #F8F4EC;
-    --text-color: #333333;
-    --gray-light: #F2F2F2;
-    --gray-medium: #C3C3C3;
-    --gray-dark: #9B9B9B;
-    
-    --font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
-    --app-max-width: 430px; /* iPhone 14 Pro 기준 */
+  --primary-orange: #ff9f46;
+  --secondary-yellow: #ffda46;
+  --accent-red: #fb7459;
+  --bg-color: #f8f4ec;
+  --text-color: #333333;
+  --gray-light: #f2f2f2;
+  --gray-medium: #c3c3c3;
+  --gray-dark: #9b9b9b;
+
+  --font-family:
+    "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
+    "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", sans-serif;
+  --app-max-width: 430px; /* iPhone 14 Pro 기준 */
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: #EFEFEF; /* 모바일 앱 래퍼 외부 배경 */
-    font-family: var(--font-family);
-    color: var(--text-color);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  background-color: #efefef; /* 모바일 앱 래퍼 외부 배경 */
+  font-family: var(--font-family);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* 모바일 래퍼 컨테이너 */
 #app {
-    max-width: var(--app-max-width);
-    min-height: 100vh;
-    margin: 0 auto;
-    background-color: var(--bg-color); /* 모바일 앱 기본 배경색 */
-    position: relative;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
+  max-width: var(--app-max-width);
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: var(--bg-color); /* 모바일 앱 기본 배경색 */
+  position: relative;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
 }
 
 /* 전역 링크 스타일 초기화 */
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 /* 이미지 기본 스타일 */
-img { max-width: 100%; display: block; }
+img {
+  max-width: 100%;
+  display: block;
+}
 
 /* 메인 콘텐츠 영역 */
 #main-content {
-    flex: 1;
-    overflow-y: auto;
-    position: relative;
-    /* 하단 네비게이션이 있을 경우 padding-bottom 추가 필요 */
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  /* 하단 네비게이션이 있을 경우 padding-bottom 추가 필요 */
 }
 
 /* 하단 네비게이션 (임시 스타일) */
 #bottom-nav {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 80px;
-    background-color: #FFFFFF;
-    border-top-left-radius: 30px;
-    border-top-right-radius: 30px;
-    box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
-    display: none; /* 초기 온보딩 화면 등에서는 숨김 */
-    z-index: 100;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 80px;
+  background-color: #ffffff;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+  display: none; /* 초기 온보딩 화면 등에서는 숨김 */
+  z-index: 100;
 }
 
 .nav-placeholder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    color: var(--gray-medium);
-    font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: var(--gray-medium);
+  font-size: 14px;
 }
 
 /* 모달 시스템 */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 430px;
-    height: 932px;
-    background: rgba(0, 0, 0, 0.4);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 430px;
+  height: 932px;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
 }
 
 .modal-content {
-    width: 398px;
-    height: 379px;
-    background: #F8F4EC;
-    border-radius: 20px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  width: 398px;
+  height: 379px;
+  background: #f8f4ec;
+  border-radius: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 }
 
 .modal-title {
-    font-family: 'Interop', sans-serif;
-    font-weight: 700;
-    font-size: 24px;
-    text-align: center;
-    color: #000;
-    line-height: 1.5;
-    margin-top: 24px;
+  font-family: "Interop", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  text-align: center;
+  color: #000;
+  line-height: 1.5;
+  margin-top: 24px;
 }
 
 .modal-icon-circle {
-    width: 61.5px;
-    height: 61.5px;
-    background: #FF9F46;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 61.5px;
+  height: 61.5px;
+  background: #ff9f46;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .modal-btn-confirm {
-    position: absolute;
-    bottom: 20px;
-    width: 354px;
-    height: 67px;
-    background: #FF9F46;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #FFF;
-    font-weight: 700;
-    font-size: 18px;
-    cursor: pointer;
-    border: none;
+  position: absolute;
+  bottom: 20px;
+  width: 354px;
+  height: 67px;
+  background: #ff9f46;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  border: none;
+}
+
+/* Mobile Layout Safe Area Override */
+@media (max-width: 480px) {
+  body {
+    align-items: flex-start !important;
+    background-color: var(--bg-color, #f8f4ec) !important;
+  }
+  #app {
+    width: 100% !important;
+    max-width: 430px !important;
+    min-height: 100dvh !important;
+    height: auto !important;
+    box-shadow: none !important;
+  }
 }
