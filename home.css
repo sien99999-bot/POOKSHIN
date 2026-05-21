@@ -412,20 +412,21 @@ body {
   margin-top: 4px;
 }
 
-/* Mobile Layout Safe Area Override */
+/* Mobile Layout Safe Area Override — only for home page */
 @media (max-width: 480px) {
-  body {
+  body.home-body {
     align-items: flex-start !important;
     justify-content: center !important;
     background-color: var(--bg-warm) !important;
-    overflow: hidden;
+    overflow: hidden !important;
+    height: 100dvh !important; /* lock body to viewport so 932px #app is clipped, not scrolled */
   }
-  #app {
+  body.home-body #app {
     width: 430px !important;
     height: 932px !important;
     box-shadow: none !important;
     transform-origin: top center;
-    transform: scale(min(1, min(100dvh / 932, 100dvw / 430)));
+    transform: scale(min(1, min(100dvh / 932px, 100dvw / 430px)));
   }
 }
 

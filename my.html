@@ -24,12 +24,14 @@
       #app {
         background-color: #f8f4ec;
         height: auto !important;
-        min-height: 932px;
-        overflow-x: hidden;
+        min-height: 100dvh;
+        overflow: visible !important; /* override home.css overflow:hidden — allow body scroll */
+        padding-bottom: 130px; /* clear fixed menu bar */
       }
       @media (max-width: 480px) {
         body {
           background-color: #f8f4ec !important;
+          overflow-y: auto !important;
         }
         #app {
           width: 100% !important;
