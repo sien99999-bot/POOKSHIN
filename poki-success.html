@@ -16,7 +16,7 @@
   <style>
     body { background-color: #F8F4EC; }
     .success-container {
-      width: 430px;
+      width: 100%; max-width: 430px;
       height: 934px;
       display: flex;
       flex-direction: column;
@@ -40,8 +40,8 @@
     }
     @keyframes scaleUp { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     
-    .success-title { font-size: 32px; font-weight: 800; color: #000; margin-bottom: 12px; }
-    .success-desc { font-size: 18px; color: #9B9B9B; margin-bottom: 80px; }
+    .success-title { font-size: clamp(calc(32px * 0.8), calc(32 * 100vw / 430), 32px); font-weight: 800; color: #000; margin-bottom: 12px; }
+    .success-desc { font-size: clamp(calc(18px * 0.8), calc(18 * 100vw / 430), 18px); color: #9B9B9B; margin-bottom: 80px; }
     
     .btn-map {
       width: 100%;
@@ -50,7 +50,7 @@
       color: white;
       border: none;
       border-radius: 12px;
-      font-size: 20px;
+      font-size: clamp(calc(20px * 0.8), calc(20 * 100vw / 430), 20px);
       font-weight: 800;
       text-decoration: none;
       display: flex;
@@ -65,7 +65,7 @@
       color: #9B9B9B;
       border: 1px solid #eee;
       border-radius: 12px;
-      font-size: 18px;
+      font-size: clamp(calc(18px * 0.8), calc(18 * 100vw / 430), 18px);
       font-weight: 700;
       text-decoration: none;
       display: flex;
@@ -78,7 +78,7 @@
   <div id="app">
     <div class="success-container">
       <div class="check-circle">
-        <span class="min-icon" style="color:white; font-size:60px;">&#xE110;</span>
+        <span class="min-icon" style="color:white; font-size: clamp(calc(60px * 0.8), calc(60 * 100vw / 430), 60px);">&#xE110;</span>
       </div>
       <h1 class="success-title">포키 완료 !</h1>
       <p class="success-desc">맛있는 빵이 기다리고 있어요 :)</p>

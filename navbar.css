@@ -36,7 +36,7 @@
 }
 
 .menu-item .min-icon {
-  font-size: 28.8px;
+  font-size: clamp(calc(28.8px * 0.8), calc(28.8 * 100vw / 430), 28.8px);
   transition: transform 0.2s ease;
 }
 
@@ -48,7 +48,7 @@
 .menu-item span:not(.min-icon) {
   position: absolute;
   bottom: 12px;
-  font-size: 14px;
+  font-size: clamp(calc(14px * 0.8), calc(14 * 100vw / 430), 14px);
   font-weight: 700;
   letter-spacing: -0.28px;
   display: none;

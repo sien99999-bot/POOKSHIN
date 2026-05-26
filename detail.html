@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=430, user-scalable=no" />
-    <meta name="theme-color" content="#F8F4EC" />
+  <meta name="viewport" content="width=430, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#F8F4EC" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -16,14 +16,14 @@
   <style>
     /* 기본 리셋 */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #F8F4EC; font-family: 'Pretendard Variable', sans-serif; width: 430px; margin: 0 auto; -webkit-font-smoothing: antialiased; overflow: hidden; height: 100vh; }
-    #app { width: 430px; height: 100vh; background: #F8F4EC; overflow: hidden; position: relative; }
+    body { background: #F8F4EC; font-family: 'Pretendard Variable', sans-serif; width: 100%; margin: 0 auto; -webkit-font-smoothing: antialiased; overflow: hidden; height: 100vh; }
+    #app { width: 100%; max-width: 430px; height: 100vh; background: #F8F4EC; overflow: hidden; position: relative; margin: 0 auto; }
     .mi { font-family: 'Min Icon VF', 'Round Bold', sans-serif; font-feature-settings: 'ss09' 1; font-style: normal; line-height: normal; }
 
 
     /* ── 히어로 섹션 ── */
     .hero-section {
-      position: relative; width: 430px; height: 587px; /* Figma bottom-card 기준 시작 높이 */
+      position: relative; width: 100%; height: 587px; /* Figma bottom-card 기준 시작 높이 */
       /* overflow: hidden 제거하여 초록색 배경이 밖으로 넘칠 수 있도록 허용 */
     }
     /* z-index 레이어 맵:
@@ -35,7 +35,7 @@
        20: btn-close
     */
     .btn-close {
-      position: absolute; top: 18px; right: 20px; z-index: 20;
+      position: absolute; top: max(18px, env(safe-area-inset-top)); right: 20px; z-index: 20;
       text-decoration: none;
       display: flex; align-items: center; justify-content: center;
       width: 32px; height: 32px;
@@ -43,7 +43,7 @@
     /* CROISSANT 타이틀 — 피그마: top=101px, 중앙 정렬 */
     .hero-title {
       position: absolute; top: 101px; left: 50%; transform: translateX(-50%);
-      font-weight: 800; font-size: 60px; color: #FF9F46;
+      font-weight: 800; font-size: clamp(calc(60px * 0.8), calc(60 * 100vw / 430), 60px); color: #FF9F46;
       letter-spacing: -1.2px; text-transform: uppercase;
       z-index: 10; white-space: nowrap; pointer-events: none;
     }
@@ -58,7 +58,7 @@
     }
     /* ── 이미지 슬라이더 (새로운 State Machine 방식) ── */
     .hero-slider {
-      position: absolute; top: 0; left: 0; width: 430px; height: 100%;
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       z-index: 5;
       overflow: hidden;
     }
@@ -84,21 +84,21 @@
 
     /* State 0: Center (활성 메인 이미지) */
     .pos-0 {
-      left: 54px; top: 198px;
+      left: calc(50% - 161.5px); top: 198px;
       width: 323px; height: 361px;
       z-index: 3;
       filter: drop-shadow(0 8px 20px rgba(0,0,0,0.12));
     }
     /* State 1: Right (오른쪽 사이드 이미지) */
     .pos-1 {
-      left: 402px; top: 245px; 
+      left: calc(50% + 187px); top: 245px; 
       width: 200px; height: 223px;
       z-index: 1;
       filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));
     }
     /* State 2: Left (왼쪽 사이드 이미지) */
     .pos-2 {
-      left: -171px; top: 245px; 
+      left: calc(50% - 386px); top: 245px; 
       width: 200px; height: 223px;
       z-index: 1;
       filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));
@@ -117,7 +117,7 @@
     .slide-dot.active { background: white; width: 18px; border-radius: 3px; }
     /* 닫기 버튼 연도 */
     .btn-close {
-      position: absolute; top: 18px; right: 20px;
+      position: absolute; top: max(18px, env(safe-area-inset-top)); right: 20px;
       z-index: 20;
       text-decoration: none;
       display: flex; align-items: center; justify-content: center;
@@ -126,14 +126,14 @@
     /* 히어로 타이틀 */
     .hero-title {
       position: absolute; top: 101px; left: 50%; transform: translateX(-50%);
-      font-weight: 800; font-size: 60px; color: #FF9F46;
+      font-weight: 800; font-size: clamp(calc(60px * 0.8), calc(60 * 100vw / 430), 60px); color: #FF9F46;
       letter-spacing: -1.2px; text-transform: uppercase;
       z-index: 10; white-space: nowrap;
     }
     /* 녹색 바닥 면 */
     .green-band {
       position: absolute; bottom: 0; left: 0;
-      width: 430px; height: 256px;
+      width: 100%; max-width: 430px; height: 256px;
       background: #BBD884; z-index: 1;
     }
     /* 힉 조형 (greeen-band 위) */
@@ -177,14 +177,14 @@
     .swipe-hint {
       position: absolute; bottom: 38px; left: 50%; transform: translateX(-50%);
       white-space: nowrap; z-index: 12;
-      font-size: 13px; color: white; font-weight: 300;
+      font-size: clamp(calc(13px * 0.8), calc(13 * 100vw / 430), 13px); color: white; font-weight: 300;
       display: flex; align-items: center; gap: 4px; letter-spacing: -0.26px;
     }
     /* 도보 배지 */
     .walk-badge-detail {
       position: absolute; left: 50%; transform: translateX(-50%); bottom: 210px;
       border: 1px solid #FFDA46; border-radius: 8px; padding: 1px 8px;
-      font-size: 13px; color: #FFDA46; z-index: 12; font-weight: 500; white-space: nowrap;
+      font-size: clamp(calc(13px * 0.8), calc(13 * 100vw / 430), 13px); color: #FFDA46; z-index: 12; font-weight: 500; white-space: nowrap;
     }
     /* 슬라이드 인디케이터 도트 */
     .slide-dots {
@@ -204,14 +204,14 @@
     }
 
     /* 섹션 제목 */
-    .sec-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.8; margin-bottom: 16px; }
+    .sec-title { font-weight: 700; font-size: clamp(calc(20px * 0.8), calc(20 * 100vw / 430), 20px); color: #000; letter-spacing: -0.4px; line-height: 1.8; margin-bottom: 16px; }
 
     /* 하단 바텀시트 래퍼 (손으로 끌어올리는 형태) */
     .bottom-card-wrapper {
       position: absolute;
       top: 587px;
       left: 0;
-      width: 430px;
+      width: 100%;
       height: 100vh;
       z-index: 20;
       transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -235,6 +235,7 @@
     .scroll-content { 
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
       overflow-y: hidden; /* 위로 다 올라가기 전까지 내부 스크롤 방지 */
+      overflow-x: hidden; /* 가로 스크롤 완전 방지 */
       -ms-overflow-style: none; /* IE, Edge 스크롤바 숨김 */
       scrollbar-width: none; /* Firefox 스크롤바 숨김 */
     }
@@ -265,24 +266,41 @@
     }
     .card-handle-bar {
       width: 36px; height: 4px; border-radius: 2px;
-      background: rgba(0,0,0,0.15); margin-top: 12px;
+      background: rgba(0,0,0,0.15); margin-top: max(12px, env(safe-area-inset-top));
     }
 
     /* 베이커 노트 */
-    .bakers-note { text-align: center; padding: 64px 16px 48px; }
+    .bakers-note { text-align: center; padding-top: max(64px, env(safe-area-inset-top)); padding-bottom: 48px; padding-left: 16px; padding-right: 16px; }
     .bakers-note-title {
-      font-weight: 800; font-size: 32px; color: #000;
+      font-weight: 800; font-size: clamp(calc(32px * 0.8), calc(32 * 100vw / 430), 32px); color: #000;
       letter-spacing: -0.64px; line-height: 1.71; margin-bottom: 24px;
       display: flex; align-items: center; justify-content: center; gap: 10px;
     }
     .bakers-note-title img { width: 22px; height: 42px; object-fit: contain; }
-    .note-body { font-weight: 500; font-size: 19px; color: #000; letter-spacing: -0.38px; line-height: 1.5; }
+    .note-body { font-weight: 500; font-size: clamp(calc(19px * 0.8), calc(19 * 100vw / 430), 19px); color: #000; letter-spacing: -0.38px; line-height: 1.5; }
 
     /* 도넛 차트 (section02) */
     .charts-section { position: relative; width: 100%; height: 204px; margin-top: 64px; }
-    .charts-bg { position: absolute; right: 0; top: 0; width: 386px; height: 204px; z-index: 0; }
-    .charts-bg img { width: 100%; height: 100%; object-fit: contain; }
-    .charts-row { position: relative; z-index: 1; display: flex; align-items: center; justify-content: flex-end; gap: 40px; padding: 25px 45px 25px 0; height: 100%; }
+    .charts-bg {
+      position: absolute; right: 0; top: 0;
+      width: 90%; max-width: 386px;
+      aspect-ratio: 386 / 204;
+      z-index: 0;
+    }
+    .charts-bg img { width: 100%; height: 100%; object-fit: contain; object-position: right; display: block; }
+    
+    .donut-absolute {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      top: 50%;
+      z-index: 1;
+    }
+    .shop-pos {
+      left: 21.24%; /* 82 / 386 */
+    }
+    .bread-pos {
+      left: 69.43%; /* 268 / 386 */
+    }
     
     .donut-wrap { position: relative; display: flex; align-items: center; justify-content: center; width: 125px; height: 125px; flex-shrink: 0; }
     .donut-wrap.bread { width: 160px; height: 160px; }
@@ -304,10 +322,10 @@
     .shop.animate .donut-fill-circle { stroke-dashoffset: calc(314 * (1 - 0.78)); }
     .bread.animate .donut-fill-circle { stroke-dashoffset: calc(408 * (1 - 0.82)); }
 
-    .donut-label-shop { font-weight: 600; font-size: 13px; color: #C3C3C3; letter-spacing: -0.26px; line-height: 1.2; margin-bottom: 8px; }
-    .donut-pct-shop { font-weight: 700; font-size: 34px; color: #FFDA46; letter-spacing: -0.68px; line-height: 1.2; }
-    .donut-label-bread { font-weight: 600; font-size: 17px; color: #C3C3C3; letter-spacing: -0.34px; line-height: 1.2; margin-bottom: 10px; }
-    .donut-pct-bread { font-weight: 700; font-size: 42px; color: #FB7459; letter-spacing: -0.84px; line-height: 1.2; }
+    .donut-label-shop { font-weight: 600; font-size: clamp(calc(13px * 0.8), calc(13 * 100vw / 430), 13px); color: #C3C3C3; letter-spacing: -0.26px; line-height: 1.2; margin-bottom: 8px; }
+    .donut-pct-shop { font-weight: 700; font-size: clamp(calc(34px * 0.8), calc(34 * 100vw / 430), 34px); color: #FFDA46; letter-spacing: -0.68px; line-height: 1.2; }
+    .donut-label-bread { font-weight: 600; font-size: clamp(calc(17px * 0.8), calc(17 * 100vw / 430), 17px); color: #C3C3C3; letter-spacing: -0.34px; line-height: 1.2; margin-bottom: 10px; }
+    .donut-pct-bread { font-weight: 700; font-size: clamp(calc(42px * 0.8), calc(42 * 100vw / 430), 42px); color: #FB7459; letter-spacing: -0.84px; line-height: 1.2; }
     
     .donut-pct-shop, .donut-pct-bread {
       transition: opacity 0.3s ease;
@@ -319,79 +337,82 @@
 
     /* 갓 구운 시간 배너 (section03) */
     .fresh-banner-wrap { padding: 64px 0 0; }
-    .fresh-banner { width: 381px; background: #FFF7DF; border-radius: 0 20px 20px 0; display: flex; flex-direction: column; padding: 24px 22px 23px 38px; }
+    .fresh-banner { width: 88.6%; max-width: 381px; background: #FFF7DF; border-radius: 0 20px 20px 0; display: flex; flex-direction: column; padding: 24px 22px 23px 38px; box-sizing: border-box; }
     .fresh-top { display: flex; align-items: center; gap: 3px; margin-bottom: 12px; }
-    .fresh-alarm-icon { font-size: 31.2px; color: #000; }
-    .fresh-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.8; }
+    .fresh-alarm-icon { font-size: clamp(calc(31.2px * 0.8), calc(31.2 * 100vw / 430), 31.2px); color: #000; }
+    .fresh-title { font-weight: 700; font-size: clamp(calc(20px * 0.8), calc(20 * 100vw / 430), 20px); color: #000; letter-spacing: -0.4px; line-height: 1.8; }
     .fresh-bottom { display: flex; align-items: center; gap: 23px; }
-    .fresh-time { font-weight: 700; font-size: 32px; color: #FB7459; letter-spacing: -0.64px; }
-    .fresh-desc { font-weight: 500; font-size: 16px; color: #000; letter-spacing: -0.32px; line-height: 1.5; }
+    .fresh-time { font-weight: 700; font-size: clamp(calc(32px * 0.8), calc(32 * 100vw / 430), 32px); color: #FB7459; letter-spacing: -0.64px; }
+    .fresh-desc { font-weight: 500; font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px); color: #000; letter-spacing: -0.32px; line-height: 1.5; }
 
     /* 베이커리 정보 (section05) */
-    .bakery-section { position: relative; width: 100%; height: 348px; margin-top: 64px; }
-    .bakery-bg { position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 0; }
-    .bakery-bg img { width: 100%; height: 100%; object-fit: contain; }
-    .bakery-contents { position: relative; z-index: 1; padding: 16px; width: 100%; box-sizing: border-box; }
-    .bakery-header-row { display: flex; align-items: center; margin-bottom: 18px; }
-    .bakery-name { font-weight: 700; font-size: 28px; color: #000; letter-spacing: -0.56px; line-height: 1.5; width: 164px; }
-    .bakery-badge-wrap { display: flex; align-items: center; gap: 15px; }
-    .bakery-badge { border: 1px solid #FFDA46; border-radius: 8px; padding: 1px 8px; font-size: 13px; color: #FFDA46; font-weight: 400; }
-    .bakery-dist { font-size: 13px; color: #9B9B9B; font-weight: 400; }
-    .bakery-tags { display: flex; gap: 8px; margin-bottom: 22px; flex-wrap: nowrap; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
-    .bakery-tags::-webkit-scrollbar { display: none; }
-    .bakery-tag { background: #F2F2F2; border-radius: 8px; padding: 2px 10px; font-weight: 600; font-size: 14px; color: #9B9B9B; text-align: center; white-space: nowrap; flex-shrink: 0; }
-    .bakery-desc { font-weight: 500; font-size: 16px; color: #000; letter-spacing: -0.32px; line-height: 1.5; margin-bottom: 24px; }
-    .bakery-photo-circle { position: absolute; left: 246px; top: 177px; width: 152px; height: 152px; border-radius: 50%; overflow: hidden; z-index: 2; }
+    .bakery-section { position: relative; width: 100%; min-height: 348px; margin-top: 64px; display: flex; flex-direction: column; }
+    .bakery-bg { position: absolute; left: 0; top: 0; width: 100%; height: 348px; z-index: 0; }
+    .bakery-bg img { width: 100%; height: 100%; object-fit: fill; }
+    .bakery-contents { position: relative; z-index: 1; padding: 16px; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 22px; }
+    .bakery-top { display: flex; flex-direction: column; gap: 18px; }
+    .bakery-header-row { display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-bottom: 0; }
+    .bakery-name { font-weight: 700; font-size: clamp(calc(28px * 0.8), calc(28 * 100vw / 430), 28px); color: #000; letter-spacing: -0.56px; line-height: 1.5; margin: 0; white-space: nowrap; }
+    .bakery-badge-wrap { display: flex; align-items: center; gap: 8px; }
+    .bakery-badge { border: 1px solid #FFDA46; border-radius: 8px; padding: 1px 8px; font-size: clamp(calc(13px * 0.8), calc(13 * 100vw / 430), 13px); color: #FFDA46; font-weight: 400; white-space: nowrap; line-height: 1.5; }
+    .bakery-dist { font-size: clamp(calc(13px * 0.8), calc(13 * 100vw / 430), 13px); color: #9B9B9B; font-weight: 400; white-space: nowrap; line-height: 1.5; }
+    .bakery-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 0; }
+    .bakery-tag { background: #F2F2F2; border-radius: 8px; padding: 2px 8px; font-weight: 600; font-size: clamp(calc(14px * 0.8), calc(14 * 100vw / 430), 14px); color: #9B9B9B; text-align: center; white-space: nowrap; flex-shrink: 0; line-height: 1.5; }
+    .bakery-desc { font-weight: 500; font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px); color: #000; letter-spacing: -0.32px; line-height: 1.5; margin: 0; }
+    .bakery-photo-circle { position: absolute; right: 32px; top: 177px; width: 152px; height: 152px; max-width: 35vw; max-height: 35vw; border-radius: 50%; overflow: hidden; z-index: 2; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
     .bakery-photo-circle img { width: 100%; height: 100%; object-fit: cover; }
-    .other-menu-btn { display: inline-flex; align-items: center; gap: 2px; border: 1px solid #8B8B8B; border-radius: 8px; padding: 1px 8px; font-size: 15px; color: #8B8B8B; text-decoration: none; width: max-content; }
+    .other-menu-btn { display: inline-flex; align-items: center; gap: 2px; border: 1px solid #8B8B8B; border-radius: 8px; padding: 1px 8px; font-size: clamp(calc(15px * 0.8), calc(15 * 100vw / 430), 15px); color: #8B8B8B; text-decoration: none; width: max-content; position: relative; z-index: 3; }
 
     /* 정보 카드 */
     .info-cards-row { display: flex; gap: 8px; padding: 64px 16px 0; }
     .info-card { flex: 1; height: 127px; background: white; border-radius: 20px; padding: 20px 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.03); }
-    .info-card-title { font-weight: 600; font-size: 16px; color: #000; letter-spacing: -0.32px; margin-bottom: 12px; }
-    .info-card-row { display: flex; gap: 12px; font-size: 16px; color: #9B9B9B; letter-spacing: -0.32px; margin-bottom: 6px; }
+    .info-card-title { font-weight: 600; font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px); color: #000; letter-spacing: -0.32px; margin-bottom: 12px; }
+    .info-card-row { display: flex; gap: 12px; font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px); color: #9B9B9B; letter-spacing: -0.32px; margin-bottom: 6px; }
     .info-card-row span:first-child { font-weight: 500; }
-    .info-card-addr { font-weight: 500; font-size: 16px; color: #9B9B9B; letter-spacing: -0.32px; line-height: 1.5; }
+    .info-card-addr { font-weight: 500; font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px); color: #9B9B9B; letter-spacing: -0.32px; line-height: 1.5; }
 
     /* 추천 조합 (section07) */
     .combo-section { padding: 64px 16px 0; }
-    .combo-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.8; text-align: left; margin-bottom: 12px; margin-left: 21px; }
-    .combo-box { background: #FFF7DF; border-radius: 20px; padding: 28px 24px 34px 44px; display: flex; flex-direction: column; gap: 40px; }
+    .combo-title { font-weight: 700; font-size: clamp(calc(20px * 0.8), calc(20 * 100vw / 430), 20px); color: #000; letter-spacing: -0.4px; line-height: 1.8; text-align: left; margin-bottom: 12px; margin-left: 21px; }
+    .combo-box { background: #FFF7DF; border-radius: 20px; padding: 28px 24px 34px clamp(16px, 10vw, 44px); display: flex; flex-direction: column; gap: 40px; }
     .combo-item { display: flex; align-items: center; gap: 35px; }
     .combo-emoji { width: 36px; height: 36px; flex-shrink: 0; }
     .combo-text { flex: 1; text-align: left; }
-    .combo-name { font-weight: 700; font-size: 16px; color: #000; letter-spacing: -0.32px; line-height: 1.8; }
-    .combo-desc { font-size: 13px; color: #9B9B9B; letter-spacing: -0.26px; line-height: 1.8; }
+    .combo-name { font-weight: 700; font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px); color: #000; letter-spacing: -0.32px; line-height: 1.8; }
+    .combo-desc { font-size: clamp(calc(13px * 0.8), calc(13 * 100vw / 430), 13px); color: #9B9B9B; letter-spacing: -0.26px; line-height: 1.8; }
 
     /* 식감 데이터 (section08) */
     .taste-section { padding: 64px 0 0; }
-    .taste-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.8; text-align: left; margin-bottom: 12px; margin-left: 35px; }
-    .taste-box { background: #FFF; border-radius: 0 20px 20px 0; padding: 15px 19px 19px 47px; width: 350px; display: flex; flex-direction: column; gap: 12px; }
+    .taste-title { font-weight: 700; font-size: clamp(calc(20px * 0.8), calc(20 * 100vw / 430), 20px); color: #000; letter-spacing: -0.4px; line-height: 1.8; text-align: left; margin-bottom: 12px; margin-left: 35px; }
+    .taste-box { background: #FFF; border-radius: 0 20px 20px 0; padding: 15px 19px 19px 21px; width: 81%; max-width: 350px; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box; }
     .taste-row { display: flex; align-items: center; gap: 12px; height: 29px; }
-    .taste-label { font-weight: 700; font-size: 16px; color: #000; letter-spacing: -0.32px; flex-shrink: 0; width: 28px; }
+    .taste-label { font-weight: 700; font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px); color: #000; letter-spacing: -0.32px; flex-shrink: 0; width: 32px; }
     .taste-dots { display: flex; gap: 6px; flex: 1; justify-content: center; }
     .dot { width: 36px; height: 7px; background: #F2F2F2; border-radius: 8px; transition: background 0.5s ease, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     .dot.on { background: #F2F2F2; } /* 초기에는 회색 */
     .taste-section.animate .dot.on { background: #FB7459; transform: scale(1.1); }
-    /* 각 줄마다 순차적으로 나타나도록 지연 시간 추가 */
-    .taste-section.animate .taste-row:nth-child(1) .dot.on { transition-delay: 0.1s; }
-    .taste-section.animate .taste-row:nth-child(2) .dot.on { transition-delay: 0.3s; }
-    .taste-section.animate .taste-row:nth-child(3) .dot.on { transition-delay: 0.5s; }
+
+    /* 각 행의 빨간 도트가 위에서부터 순서대로 나타남 */
+    .taste-section.animate .taste-row:nth-child(1) .dot.on { transition-delay: 0.0s; }
+    .taste-section.animate .taste-row:nth-child(2) .dot.on { transition-delay: 0.2s; }
+    .taste-section.animate .taste-row:nth-child(3) .dot.on { transition-delay: 0.4s; }
+    .taste-section.animate .taste-row:nth-child(4) .dot.on { transition-delay: 0.6s; }
     .taste-label-right { text-align: right; }
 
     /* 와앙이의 한마디 (section09) */
-    .mascot-banner { margin-top: 20px; position: relative; height: 340px; display: flex; align-items: flex-start; overflow: visible; }
+    .mascot-banner { margin-top: max(20px, env(safe-area-inset-top)); position: relative; height: 340px; display: flex; align-items: flex-start; overflow: visible; }
     .mascot-img-wrap { width: 300px; height: 340px; z-index: 1; position: absolute; left: -47px; top: 0; }
     .mascot-img-wrap img { width: 100%; height: 100%; object-fit: contain; }
     .mascot-text-box { background: white; border-radius: 20px 0 0 20px; padding: 33px 21px 40px; width: 224px; height: 182px; position: absolute; right: 0; top: 70px; z-index: 0; display: flex; flex-direction: column; gap: 10px; text-align: center; justify-content: center; box-sizing: border-box; }
-    .mascot-speech-title { font-weight: 700; font-size: 20px; color: #000; letter-spacing: -0.4px; line-height: 1.5; margin-bottom: 0; }
-    .mascot-speech-text { font-weight: 400; font-size: 15px; color: #000; letter-spacing: -0.3px; line-height: 1.5; margin-bottom: 0; }
+    .mascot-speech-title { font-weight: 700; font-size: clamp(calc(20px * 0.8), calc(20 * 100vw / 430), 20px); color: #000; letter-spacing: -0.4px; line-height: 1.5; margin-bottom: 0; }
+    .mascot-speech-text { font-weight: 400; font-size: clamp(calc(15px * 0.8), calc(15 * 100vw / 430), 15px); color: #000; letter-spacing: -0.3px; line-height: 1.5; margin-bottom: 0; }
 
     /* 성분 구성 (section10) */
     .ingredient-section { padding: 20px 16px 120px; }
-    .ingredient-row { display: flex; gap: 27px; justify-content: center; margin-top: 16px; }
+    .ingredient-section .sec-title { margin-left: 19px; }
+    .ingredient-row { display: flex; gap: 27px; justify-content: center; margin-top: max(16px, env(safe-area-inset-top)); }
     .ingredient-circle { width: 96px; height: 96px; border-radius: 50%; border: 2px solid #FB7459; background: white; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
-    .ingredient-name { font-weight: 500; font-size: 20px; color: #FB7459; opacity: 0.8; letter-spacing: -0.4px; }
+    .ingredient-name { font-weight: 500; font-size: clamp(calc(20px * 0.8), calc(20 * 100vw / 430), 20px); color: #FB7459; opacity: 0.8; letter-spacing: -0.4px; }
 
   </style>
 </head>
@@ -422,9 +443,9 @@
     <div class="top-image-icon" aria-hidden="true">
       <img src="images/top-icon-bread1.svg" alt="" style="position:absolute;left:0;top:0;width:53px;height:78px;" />
       <img src="images/top-icon-bread2.svg" alt="" style="position:absolute;left:4px;top:4px;width:29px;height:71px;" />
-      <img src="images/top-icon-bread3.svg" alt="" style="position:absolute;left:7px;top:12px;width:22px;height:55px;" />
-      <img src="images/top-icon-almond1.svg" alt="" style="position:absolute;left:18px;top:12px;width:39px;height:66px;" />
-      <img src="images/top-icon-almond2.svg" alt="" style="position:absolute;left:22px;top:21px;width:30px;height:49px;" />
+      <img src="images/top-icon-bread3.svg" alt="" style="position:absolute;left:7px;top: max(12px, env(safe-area-inset-top));width:22px;height:55px;" />
+      <img src="images/top-icon-almond1.svg" alt="" style="position:absolute;left:18px;top: max(12px, env(safe-area-inset-top));width:39px;height:66px;" />
+      <img src="images/top-icon-almond2.svg" alt="" style="position:absolute;left:22px;top: max(21px, env(safe-area-inset-top));width:30px;height:49px;" />
     </div>
     <div class="slide-dots" id="slideDots">
       <div class="slide-dot active" onclick="goSlide(0)"></div>
@@ -461,28 +482,32 @@
     <div class="charts-section">
       <div class="charts-bg">
         <img src="images/section02-background-new.svg" alt="" aria-hidden="true" />
-      </div>
-      <div class="charts-row">
+        
         <!-- 가게 78% -->
-        <div class="donut-wrap shop">
-          <svg viewBox="0 0 125 125">
-            <circle class="donut-bg-circle" cx="62.5" cy="62.5" r="50"></circle>
-            <circle class="donut-fill-circle" cx="62.5" cy="62.5" r="50"></circle>
-          </svg>
-          <div class="donut-text-col">
-            <span class="donut-label-shop">가게</span>
-            <span class="donut-pct-shop">78%</span>
+        <div class="donut-absolute shop-pos">
+          <div class="donut-wrap shop">
+            <svg viewBox="0 0 125 125">
+              <circle class="donut-bg-circle" cx="62.5" cy="62.5" r="50"></circle>
+              <circle class="donut-fill-circle" cx="62.5" cy="62.5" r="50"></circle>
+            </svg>
+            <div class="donut-text-col">
+              <span class="donut-label-shop">가게</span>
+              <span class="donut-pct-shop">78%</span>
+            </div>
           </div>
         </div>
+        
         <!-- 빵 82% -->
-        <div class="donut-wrap bread">
-          <svg viewBox="0 0 160 160">
-            <circle class="donut-bg-circle" cx="80" cy="80" r="65"></circle>
-            <circle class="donut-fill-circle" cx="80" cy="80" r="65"></circle>
-          </svg>
-          <div class="donut-text-col">
-            <span class="donut-label-bread">빵</span>
-            <span class="donut-pct-bread">82%</span>
+        <div class="donut-absolute bread-pos">
+          <div class="donut-wrap bread">
+            <svg viewBox="0 0 160 160">
+              <circle class="donut-bg-circle" cx="80" cy="80" r="65"></circle>
+              <circle class="donut-fill-circle" cx="80" cy="80" r="65"></circle>
+            </svg>
+            <div class="donut-text-col">
+              <span class="donut-label-bread">빵</span>
+              <span class="donut-pct-bread">82%</span>
+            </div>
           </div>
         </div>
       </div>
@@ -508,18 +533,20 @@
         <img src="images/section05-background.svg" alt="" aria-hidden="true" />
       </div>
       <div class="bakery-contents">
-        <div class="bakery-header-row">
-          <h2 class="bakery-name">푹신 베이커리</h2>
-          <div class="bakery-badge-wrap">
-            <span class="bakery-badge">도보 4분</span>
-            <span class="bakery-dist">(300M)</span>
+        <div class="bakery-top">
+          <div class="bakery-header-row">
+            <h2 class="bakery-name">푹신 베이커리</h2>
+            <div class="bakery-badge-wrap">
+              <span class="bakery-badge">도보 4분</span>
+              <span class="bakery-dist">(300M)</span>
+            </div>
           </div>
-        </div>
-        <div class="bakery-tags">
-          <span class="bakery-tag">#요즘핫플</span>
-          <span class="bakery-tag">#정성가득</span>
-          <span class="bakery-tag">#크루아상맛집</span>
-          <span class="bakery-tag">#겉바속촉</span>
+          <div class="bakery-tags">
+            <span class="bakery-tag">#요즘핫플</span>
+            <span class="bakery-tag">#정성가득</span>
+            <span class="bakery-tag">#크루아상맛집</span>
+            <span class="bakery-tag">#겉바속촉</span>
+          </div>
         </div>
         <p class="bakery-desc">
           푹신 베이커리는 바삭하고 결이 살아있는<br>
@@ -619,7 +646,7 @@
           <span class="taste-label taste-label-right">담백</span>
         </div>
         <!-- 당도 -->
-        <div class="taste-row" style="width: 243px;">
+        <div class="taste-row">
           <span class="taste-label">당도</span>
           <div class="taste-dots">
             <span class="dot"></span>
@@ -628,6 +655,7 @@
             <span class="dot"></span>
             <span class="dot"></span>
           </div>
+          <span class="taste-label taste-label-right"></span>
         </div>
       </div>
     </div>

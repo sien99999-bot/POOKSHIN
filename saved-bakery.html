@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <title>POOKSHIN - 찜한 가게</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+  <link rel="stylesheet" href="home.css" />
+  <link rel="stylesheet" href="minIcon-round.css" />
+  <style>
+    body { margin: 0; background-color: #efefef; display: flex; justify-content: center; font-family: 'Pretendard Variable', sans-serif; }
+    #app { width: 430px; min-height: 100vh; background-color: #f8f4ec; position: relative; overflow-y: auto; overflow-x: hidden; padding-bottom: 50px; }
+    .topbar { padding-top: max(44px, env(safe-area-inset-top)); padding-bottom: 16px; padding-left: 16px; padding-right: 16px; display: flex; align-items: center; background: #f8f4ec; position: sticky; top: 0; z-index: 100; }
+    .topbar a { text-decoration: none; color: #000; display: flex; align-items: center; }
+    .topbar-title { flex: 1; text-align: center; font-weight: 700; font-size: 16px; margin-right: 24px; letter-spacing: -0.32px; }
+    @media (max-width: 480px) { #app { width: 100vw; } }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="topbar">
+      <a href="my.html">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="topbar-title">찜한 가게</div>
+    </div>
+    <div style="padding: 16px; display: flex; flex-direction: column; gap: 16px;">
+      
+      <div style="background: white; border-radius: 20px; padding: 16px; display: flex; gap: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+        <div style="width: 80px; height: 80px; border-radius: 50%; background: #d9d9d9; overflow: hidden; flex-shrink: 0;">
+           <img src="images/map-bakery-01.png" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'"/>
+        </div>
+        <div style="flex: 1;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 700; font-size: 16px; color: #000;">베이크하우스</span>
+            <span class="min-icon" style="color: #fb7459; font-size: 18px;">&#xF020;</span>
+          </div>
+          <div style="font-size: 13px; color: #cacaca; margin-top: 4px;">성동구 서울숲2길 10</div>
+          <div style="display: flex; gap: 4px; margin-top: 8px;">
+            <span style="background: #f2f2f2; color: #9b9b9b; padding: 2px 6px; border-radius: 6px; font-size: 11px;">#촉촉</span>
+            <span style="background: #f2f2f2; color: #9b9b9b; padding: 2px 6px; border-radius: 6px; font-size: 11px;">#담백</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="background: white; border-radius: 20px; padding: 16px; display: flex; gap: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+        <div style="width: 80px; height: 80px; border-radius: 50%; background: #d9d9d9; overflow: hidden; flex-shrink: 0;">
+           <img src="images/map-bakery-02.png" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'"/>
+        </div>
+        <div style="flex: 1;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 700; font-size: 16px; color: #000;">크로플상점</span>
+            <span class="min-icon" style="color: #fb7459; font-size: 18px;">&#xF020;</span>
+          </div>
+          <div style="font-size: 13px; color: #cacaca; margin-top: 4px;">성동구 서울숲2길 20</div>
+          <div style="display: flex; gap: 4px; margin-top: 8px;">
+            <span style="background: #f2f2f2; color: #9b9b9b; padding: 2px 6px; border-radius: 6px; font-size: 11px;">#바삭</span>
+            <span style="background: #f2f2f2; color: #9b9b9b; padding: 2px 6px; border-radius: 6px; font-size: 11px;">#달달</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

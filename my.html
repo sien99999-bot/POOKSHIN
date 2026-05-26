@@ -2,7 +2,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=430, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
     <meta name="theme-color" content="#F8F4EC" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -40,53 +40,39 @@
         }
       }
 
-      /* ─── TOPBAR (header y:71, h:29 → total area = 100px) ─── */
+      /* ─── TOPBAR ─── */
       .my-topbar {
         position: relative;
         width: 100%;
-        height: 100px;
-        padding-top: 44px; /* status bar */
+        height: auto;
+        padding-top: calc(env(safe-area-inset-top) + 10px); padding-bottom: 10px; padding-left: 16px; padding-right: 16px; /* status bar + padding */
         box-sizing: border-box;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
       }
       .my-topbar-back {
-        position: absolute;
-        left: 16px;
-        top: 74px;
         font-family: "Min Icon VF", sans-serif;
-        font-size: 24px;
+        font-size: clamp(calc(24px * 0.8), calc(24 * 100vw / 430), 24px);
         color: #000;
         text-decoration: none;
         font-feature-settings: "ss09" 1;
-        font-variation-settings:
-          "rond" 3,
-          "edpt" 1;
+        font-variation-settings: "rond" 3, "edpt" 1;
         line-height: 1;
       }
       .my-topbar-title {
-        position: absolute;
-        top: 74px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 16px;
+        font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
         font-weight: 700;
         color: #000;
         letter-spacing: -0.32px;
         line-height: 1.8;
       }
       .my-topbar-bell {
-        position: absolute;
-        right: 16px;
-        top: 74px;
         font-family: "Min Icon VF", sans-serif;
-        font-size: 24px;
+        font-size: clamp(calc(24px * 0.8), calc(24 * 100vw / 430), 24px);
         color: #000;
         font-feature-settings: "ss09" 1;
-        font-variation-settings:
-          "rond" 3,
-          "edpt" 1;
+        font-variation-settings: "rond" 3, "edpt" 1;
         line-height: 1;
         cursor: pointer;
       }
@@ -95,8 +81,8 @@
       .my-hero {
         position: relative;
         width: 100%;
-        height: 230px;
-        margin-top: 12px;
+        height: 190px; /* Reduced from 230px */
+        margin-top: max(12px, env(safe-area-inset-top));
         overflow: visible;
         flex-shrink: 0;
       }
@@ -104,20 +90,20 @@
       .hero-label {
         position: absolute;
         left: 43px;
-        top: 11px;
-        font-size: 20px;
+        top: 5px; /* Reduced from 11px */
+        font-size: clamp(calc(20px * 0.8), calc(20 * 100vw / 430), 20px);
         font-weight: 900;
         color: #000;
         letter-spacing: -0.4px;
         z-index: 5;
       }
-      /* white strip – Rectangle 3468533: y:135 within hero, h:95 */
+      /* white strip */
       .hero-white-strip {
         position: absolute;
         left: 0;
-        top: 135px;
-        width: 414px;
-        height: 95px;
+        top: 105px; /* Reduced from 135px */
+        width: 96%;
+        height: 85px; /* Reduced from 95px */
         background: white;
         border-radius: 0 50px 0 0;
         z-index: 2; /* Over badge */
@@ -127,9 +113,9 @@
       .hero-mascot {
         position: absolute;
         left: 40px;
-        top: 0;
-        width: 172px;
-        height: 217px;
+        top: -10px; /* Shift up to fit */
+        width: 150px; /* Reduced from 172px */
+        height: 190px; /* Reduced from 217px */
         z-index: 3;
         pointer-events: none;
       }
@@ -144,10 +130,10 @@
       /* name badge – section01-top: x:232, y:64, w:139, h:90 */
       .hero-badge {
         position: absolute;
-        left: 232px;
-        top: 64px;
-        width: 139px;
-        height: 90px;
+        left: 212px;
+        top: max(44px, env(safe-area-inset-top)); /* Reduced from 64px */
+        width: 129px;
+        height: 80px;
         z-index: 1; /* Under white strip */
       }
       .hero-badge img {
@@ -158,9 +144,9 @@
       /* name text – section01-title inside badge: x:17, y:27 relative to badge */
       .hero-name {
         position: absolute;
-        left: 249px;
-        top: 91px; /* 232+17, 64+27 */
-        font-size: 20px;
+        left: 229px;
+        top: 71px; /* 212+17, 44+27 */
+        font-size: clamp(calc(18px * 0.8), calc(18 * 100vw / 430), 18px); /* Reduced size */
         font-weight: 700;
         color: white;
         letter-spacing: -0.4px;
@@ -171,8 +157,8 @@
       /* status text – section01-txt: x:235, y:168 within hero */
       .hero-status-wrap {
         position: absolute;
-        left: 235px;
-        top: 168px;
+        left: 215px; /* Shift left slightly */
+        top: 138px; /* Reduced from 168px */
         width: 146px;
         height: 29px;
         z-index: 4;
@@ -180,7 +166,7 @@
       .hero-status-text {
         display: inline-block;
         position: relative;
-        font-size: 16px;
+        font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
         font-weight: 600;
         color: #000;
         letter-spacing: -0.32px;
@@ -213,17 +199,18 @@
         gap: 2px;
         text-decoration: none;
         color: #9b9b9b;
-        font-size: 16px;
+        font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
         font-weight: 500;
         letter-spacing: -0.32px;
       }
 
       /* ─── 최근 포키한 빵 section02 (y:411, h:73, margin-top:37px from taste-link end 374) ─── */
       .poki-card {
-        margin-top: 37px;
+        margin-top: max(37px, env(safe-area-inset-top));
         margin-left: 16px;
         margin-right: 16px;
         background: white;
+        border-radius: 20px;
         height: 73px;
         display: flex;
         align-items: center;
@@ -237,7 +224,7 @@
         width: 100%;
       }
       .poki-card-title {
-        font-size: 16px;
+        font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
         font-weight: 700;
         color: #000;
         letter-spacing: -0.32px;
@@ -251,7 +238,7 @@
       .poki-tag {
         background: #ffa74a;
         color: white;
-        font-size: 14px;
+        font-size: clamp(calc(14px * 0.8), calc(14 * 100vw / 430), 14px);
         padding: 2px 8px;
         border-radius: 8px;
         letter-spacing: -0.28px;
@@ -272,14 +259,14 @@
         gap: 2px;
         text-decoration: none;
         color: #9b9b9b;
-        font-size: 16px;
+        font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
         font-weight: 500;
         letter-spacing: -0.32px;
       }
 
       /* ─── Stats card (y:539, h:125, margin-top:27px from review-link end 512) ─── */
       .stats-card {
-        margin-top: 27px;
+        margin-top: max(27px, env(safe-area-inset-top));
         margin-left: 16px;
         margin-right: 16px;
         background: white;
@@ -312,7 +299,7 @@
       }
       .stat-icon {
         font-family: "Min Icon VF", sans-serif;
-        font-size: 24px;
+        font-size: clamp(calc(24px * 0.8), calc(24 * 100vw / 430), 24px);
         color: #fb7459;
         font-feature-settings: "ss09" 1;
         font-variation-settings:
@@ -321,7 +308,7 @@
         line-height: 1;
       }
       .stat-label {
-        font-size: 13px;
+        font-size: clamp(calc(13px * 0.8), calc(13 * 100vw / 430), 13px);
         color: #000;
         font-weight: 500;
         letter-spacing: -0.26px;
@@ -329,14 +316,14 @@
 
       /* ─── 내 정보 (card y:706, h:303, margin-top:42px from stats end 664) ─── */
       .info-wrap {
-        margin-top: 42px;
+        margin-top: max(42px, env(safe-area-inset-top));
         margin-left: 16px;
         margin-right: 16px;
       }
       /* "내 정보" label: y:721 page = 15px from card top (706+15=721) */
       .info-section-label {
         padding: 15px 0 0 31px; /* 31px = left:47 - margin:16 */
-        font-size: 14px;
+        font-size: clamp(calc(14px * 0.8), calc(14 * 100vw / 430), 14px);
         color: #8b8b8b;
         letter-spacing: -0.28px;
         background: white;
@@ -351,7 +338,7 @@
       /* First row at y:780, card at y:706 → 74px from card top
        label area (15+21=36px) → gap before first row: 74-36=38px */
       .info-rows-group {
-        padding-top: 38px;
+        padding-top: max(38px, env(safe-area-inset-top));
       }
       .info-row {
         display: flex;
@@ -366,12 +353,12 @@
         height: 82px;
       }
       .info-label {
-        font-size: 16px;
+        font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
         color: #000;
         letter-spacing: -0.32px;
       }
       .info-value {
-        font-size: 16px;
+        font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
         font-weight: 600;
         color: #000;
         letter-spacing: -0.32px;
@@ -407,7 +394,9 @@
           </svg>
         </a>
         <span class="my-topbar-title">마이페이지</span>
-        <span class="my-topbar-bell">&#xEF40;</span>
+        <a href="notification.html" style="text-decoration:none; color:inherit; display:flex;">
+          <span class="my-topbar-bell">&#xEF40;</span>
+        </a>
       </div>
 
       <!-- HERO (section01) -->
@@ -430,7 +419,7 @@
       <div class="taste-link-row">
         <a href="taste-data.html">
           내 취향 데이터 보기
-          <span class="min-icon" style="font-size: 19px; color: #9b9b9b"
+          <span class="min-icon" style="font-size: clamp(calc(19px * 0.8), calc(19 * 100vw / 430), 19px); color: #9b9b9b"
             >&#xE8C3;</span
           >
         </a>
@@ -452,7 +441,7 @@
       <div class="review-link-row">
         <a href="review-write.html">
           리뷰하기
-          <span class="min-icon" style="font-size: 19px; color: #9b9b9b"
+          <span class="min-icon" style="font-size: clamp(calc(19px * 0.8), calc(19 * 100vw / 430), 19px); color: #9b9b9b"
             >&#xE8C3;</span
           >
         </a>
@@ -460,15 +449,15 @@
 
       <!-- Stats card (y:539, gap 27px) -->
       <div class="stats-card">
-        <a href="map.html" class="stat-item">
+        <a href="saved-bread.html" class="stat-item">
           <span class="stat-icon">&#xE09C;</span>
           <span class="stat-label">찜한 빵</span>
         </a>
-        <a href="map.html" class="stat-item">
+        <a href="saved-bakery.html" class="stat-item">
           <span class="stat-icon">&#xF020;</span>
           <span class="stat-label">찜한 가게</span>
         </a>
-        <a href="review.html" class="stat-item">
+        <a href="my-reviews.html" class="stat-item">
           <span class="stat-icon">&#xF007;</span>
           <span class="stat-label">내 리뷰</span>
         </a>

@@ -1,14 +1,12 @@
-/* home.css - Fixed Pixel Layout (430x932) */
+/* home.css - Responsive Soft Layout */
 @import url("https://poposnail61.github.io/web/css/minIcon-round.css");
 
 .min-icon {
   font-family: "Min Icon VF", sans-serif;
-  font-weight: 700; /* Bold */
+  font-weight: 700;
   font-style: normal;
   font-feature-settings: "ss09" 1;
-  font-variation-settings:
-    "rond" 3,
-    "edpt" 1;
+  font-variation-settings: "rond" 3, "edpt" 1;
   display: inline-block;
   line-height: 1;
   text-transform: none;
@@ -44,30 +42,34 @@ body {
 }
 
 #app {
-  width: 430px;
-  height: 932px; /* Fixed Height as requested */
+  width: 100%;
+  max-width: 430px; /* PC/태블릿에서 최대 크기 제한 */
+  min-height: 100dvh;
   background-color: var(--bg-warm);
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
   margin: 0 auto;
   font-family: var(--font-main);
   -webkit-font-smoothing: antialiased;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding-top: env(safe-area-inset-top);
+  box-sizing: border-box;
 }
 
-/* 6.2 Header (y:0, h:105) - Shifted up to overlap with status bar */
+/* 6.2 Header */
 .header-section {
-  position: absolute;
-  top: 0;
+  position: relative;
   width: 100%;
-  height: 75px;
+  padding: 20px 18px 0; /* 상단 여백을 조금 더 유연하게 조절 */
   background-color: transparent;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 18px 0;
   box-sizing: border-box;
   z-index: 900;
+  flex-shrink: 0;
 }
 
 .location-box {
@@ -79,22 +81,23 @@ body {
   padding: 6px 10px;
   border-radius: 9px;
   font-weight: 700;
-  font-size: 16px;
+  font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
   letter-spacing: -0.32px;
 }
 
-/* 6.3 Headline (y:125, h:105) - Shifted up */
+/* 6.3 Headline */
 .headline-section {
-  position: absolute;
-  top: 80px;
+  position: relative;
   width: 100%;
   padding: 0 17px;
+  margin-top: max(25px, env(safe-area-inset-top));
   box-sizing: border-box;
   z-index: 800;
+  flex-shrink: 0;
 }
 
 .headline-title {
-  font-size: 24px;
+  font-size: clamp(calc(24px * 0.8), calc(24 * 100vw / 430), 24px);
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: -0.48px;
@@ -126,34 +129,38 @@ body {
   margin-left: 5px;
 }
 
-/* 6.4 Hero Area (y:210, h:255) - Shifted up */
+/* 6.4 Hero Area */
 .hero-area {
-  position: absolute;
-  top: 165px;
+  position: relative;
   width: 100%;
-  height: 400px;
+  aspect-ratio: 430 / 340; /* Original precise Figma aspect ratio */
   background-color: transparent;
   z-index: 700;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-shrink: 0;
+  margin-top: max(20px, env(safe-area-inset-top));
 }
 
 .hills-background {
   z-index: 710;
   background-image: url("images/background-image.svg");
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: cover;
+  background-position: top center;
   width: 100%;
-  height: 400px;
+  height: calc(100% - 120px); /* Restored original alignment */
   position: absolute;
-  top: 25px;
+  top: 120px;
   left: 0;
 }
 
 .main-hero-card {
-  position: absolute;
-  top: 1px; /* y:211 */
-  left: 65px;
-  width: 301px;
-  height: 340px; /* Precise Figma height */
+  position: relative;
+  width: 70%; /* 301/430 is exactly 70% */
+  max-width: 301px;
+  aspect-ratio: 301 / 340;
   overflow: hidden;
   mask-image: url("images/hero-mask.svg");
   mask-size: 100% 100%;
@@ -168,43 +175,71 @@ body {
   object-fit: cover;
 }
 
-/* 6.1 Content Card (y:465) - Shifted up */
-.content-card-overlay {
-  position: absolute;
-  top: 415px;
+/* 6.1 Bottom Content Area */
+.bottom-content-area {
+  position: relative;
   width: 100%;
-  bottom: 0;
-  background-image: url("images/bottom-background.svg");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px calc(60px + env(safe-area-inset-bottom, 20px));
+  box-sizing: border-box;
   z-index: 850;
-  pointer-events: none;
+  margin-top: -70px; 
+  gap: 12px;
 }
 
-/* 6.5 Menu Info (y:512) - Shifted up */
-.menu-info-layer {
+/* 배경 이미지 영역 */
+.bottom-content-area::before {
+  content: "";
   position: absolute;
-  top: 465px;
-  left: 35px;
-  right: 35px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("images/bottom-background.svg");
+  background-size: 100% 100%; /* 곡선이 찌그러지지 않게 박스에 맞춤 */
+  background-position: top center;
+  background-repeat: no-repeat;
+  z-index: -1;
+}
+
+.bottom-content-area::after {
+  content: "";
+  position: absolute;
+  top: 150px;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  background-color: white;
+  z-index: -2;
+}
+
+/* 6.5 Menu Info */
+.menu-info-layer {
+  position: relative;
+  width: 100%;
   z-index: 900;
 }
 
 .title-row {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   width: 100%;
+  flex-wrap: wrap; /* 모바일에서 텍스트가 겹칠 경우 자동 줄바꿈 */
+  gap: 8px;
 }
 
 .title-left {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .product-name {
-  font-size: 32px;
+  font-size: clamp(calc(28px * 0.8), calc(28 * 100vw / 430), 28px); /* 미세 축소하여 모바일 가독성 확보 */
   font-weight: 700;
   letter-spacing: -0.64px;
   line-height: 1.2;
@@ -214,17 +249,16 @@ body {
 .badges-group {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .badge-yellow-outline {
   border: 1px solid var(--accent-yellow);
   color: var(--accent-yellow);
-  padding: 2px 8px;
+  padding: 2px 6px;
   border-radius: 8px;
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: -0.26px;
+  font-size: clamp(calc(12px * 0.8), calc(12 * 100vw / 430), 12px);
+  white-space: nowrap;
 }
 
 .badge-coral-text {
@@ -232,55 +266,51 @@ body {
   align-items: center;
   gap: 4px;
   color: var(--accent-coral);
-  font-size: 14px;
+  font-size: clamp(calc(13px * 0.8), calc(13 * 100vw / 430), 13px);
   font-weight: 400;
-  letter-spacing: -0.28px;
-}
-
-.time-bar {
   text-decoration: none;
-  cursor: pointer;
+  white-space: nowrap;
 }
 
 .link-details-box {
   display: flex;
   align-items: center;
   color: var(--gray-sub);
-  font-size: 14px;
-  font-weight: 400;
+  font-size: clamp(calc(13px * 0.8), calc(13 * 100vw / 430), 13px);
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .tag-list {
   display: flex;
-  gap: 12px;
-  margin-top: 6px; /* Figma: 54 - 48 = 6px */
+  gap: 8px;
+  margin-top: max(10px, env(safe-area-inset-top));
+  flex-wrap: wrap; /* 태그가 화면 밖으로 넘치지 않게 설정 */
 }
 
 .tag-item {
   background-color: var(--gray-fill);
   color: var(--gray-sub);
-  padding: 2px 8px;
+  padding: 3px 8px;
   border-radius: 8px;
-  font-size: 14px;
+  font-size: clamp(calc(13px * 0.8), calc(13 * 100vw / 430), 13px);
   font-weight: 600;
 }
 
-/* 6.6 Pricing - Shifted up */
+/* 6.6 Pricing */
 .pricing-layer {
-  position: absolute;
-  top: 535px;
-  left: 35px;
-  right: 35px;
+  position: relative;
+  width: 100%;
   z-index: 900;
 }
 
 .description-text {
-  font-size: 16px;
+  font-size: clamp(calc(15px * 0.8), calc(15 * 100vw / 430), 15px);
   font-weight: 500;
   line-height: 1.5;
   color: var(--black);
-  margin-bottom: 18px; /* Figma gap: 115 - 97 = 18px */
+  margin-top: 0;
+  margin-bottom: 14px;
 }
 
 .price-row {
@@ -290,15 +320,14 @@ body {
 }
 
 .price-value {
-  font-size: 20px;
+  font-size: clamp(calc(20px * 0.8), calc(20 * 100vw / 430), 20px);
   font-weight: 700;
-  letter-spacing: -0.4px;
 }
 
 .rating-group {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
 }
 
 .rating-item {
@@ -306,12 +335,7 @@ body {
   align-items: center;
   gap: 4px;
   color: var(--black);
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.rating-item svg {
-  fill: var(--accent-yellow); /* #FFDA46 */
+  font-size: clamp(calc(15px * 0.8), calc(15 * 100vw / 430), 15px);
 }
 
 .btn-review-outline {
@@ -320,43 +344,29 @@ body {
   gap: 4px;
   border: 1px solid var(--gray-sub);
   color: var(--gray-sub);
-  padding: 2px 10px;
+  padding: 2px 8px;
   border-radius: 8px;
-  font-size: 13px;
-  font-weight: 400;
+  font-size: clamp(calc(12px * 0.8), calc(12 * 100vw / 430), 12px);
   text-decoration: none;
-  letter-spacing: -0.26px;
-  transition: all 0.2s ease;
 }
 
-.btn-review-outline:hover {
-  background-color: var(--gray-fill);
-}
-
-.btn-review-outline svg {
-  color: var(--gray-sub);
-}
-
-/* 6.7 Buttons (y:739) - Shifted up */
+/* 6.7 Buttons */
 .footer-buttons-row {
-  position: absolute;
-  bottom: 194px;
-  left: 35px;
-  right: 35px;
+  position: relative;
+  width: 100%;
   display: flex;
-  gap: 27px; /* Figma: 196 - 169 = 27px */
+  gap: 16px; /* 모바일 대응으로 간격 최적화 */
+  margin-top: max(15px, env(safe-area-inset-top)); /* 버튼만 조금 더 내리기 */
   z-index: 910;
 }
 
 .btn-base {
   flex: 1;
-  height: 54px;
+  height: 50px;
   border: none;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
   font-weight: 700;
-  cursor: pointer;
-  letter-spacing: -0.36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -372,15 +382,13 @@ body {
   color: white;
 }
 
-/* 5.3 Tab Bar — home.css only adds visual tweaks; positioning is handled by navbar.css */
-
+/* Tab Bar Menu Items */
 .menu-item {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-decoration: none;
   color: var(--gray-label);
-  transition: all 0.2s ease;
 }
 
 .menu-item.active {
@@ -388,38 +396,47 @@ body {
 }
 
 .menu-item span:not(.min-icon) {
-  font-size: 14px;
+  font-size: clamp(calc(12px * 0.8), calc(12 * 100vw / 430), 12px);
   font-weight: 700;
-  letter-spacing: -0.28px;
   margin-top: 4px;
 }
 
-/* Mobile Layout Safe Area Override — only for home page */
+/* 완벽한 모바일 반응형 미디어 쿼리 정의 */
 @media (max-width: 480px) {
   body.home-body {
     align-items: flex-start !important;
     justify-content: flex-start !important;
     background-color: var(--bg-warm) !important;
-    overflow: hidden !important;
-    height: 100dvh !important;
+    overflow-x: hidden !important; /* 혹시 모를 가로 스크롤 원천 차단 */
   }
+  
   body.home-body #app {
-    width: 430px !important;
-    height: 932px !important;
+    width: 100% !important;
+    max-width: 100% !important; 
+    height: 100dvh !important; /* 높이를 화면에 딱 맞게 고정 */
+    overflow-y: hidden !important; /* 내부 콘텐츠가 넘쳐서 생기는 세로 스크롤 방지 */
     box-shadow: none !important;
-    transform-origin: top left;
-    /* Scale only by height so the canvas shrinks vertically to fit — width fills screen via viewport meta */
-    transform: scale(min(1, 100dvh / 932px));
   }
-  /* On home page, keep menu bar fixed at viewport bottom (not inside the scaled canvas) */
+
+  /* 모바일 화면이 아주 작을 때를 대비해 하단 영역 높이 제한 */
+  .bottom-content-area {
+    padding-top: 35px !important; /* 마이너스 마진 때문에 겹치는 걸 방지하며 위로 당기기 */
+    justify-content: flex-start !important; /* 내부 요소들이 화면 밖으로 밀려나가지 않게 차곡차곡 쌓기 */
+  }
+
+  /* 곡선 배경이 모바일 화면 밖으로 튀어나가지 않게 조절 */
+  .bottom-content-area::before {
+    min-height: auto !important; 
+    background-size: 100% 100% !important;
+  }
+  
+  /* 하단 바 고정 위치 유연성 확보 */
   body.home-body .menu-bar {
     position: fixed !important;
-    bottom: 25px !important;
+    bottom: 16px !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
     width: calc(100% - 32px) !important;
-    max-width: 398px !important;
+    box-sizing: border-box;
   }
 }
-
-

@@ -16,9 +16,9 @@
   <style>
     .modal-page { min-height: 100vh; background: rgba(0,0,0,.18); display: flex; align-items: flex-end; }
     .sheet { width: 100%; background: #fff; border-radius: 28px 28px 0 0; padding: 28px 24px 36px; box-sizing: border-box; text-align: center; }
-    h1 { margin: 0 0 12px; font-size: 26px; font-weight: 800; }
+    h1 { margin: 0 0 12px; font-size: clamp(calc(26px * 0.8), calc(26 * 100vw / 430), 26px); font-weight: 800; }
     p { color: #9B9B9B; line-height: 1.5; }
-    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: max(24px, env(safe-area-inset-top)); }
     .btn { height: 54px; border-radius: 12px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 800; }
     .cancel { background: #F2F2F2; color: #9B9B9B; }
     .danger { background: #FB7459; color: #fff; }

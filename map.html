@@ -2,7 +2,7 @@
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=430, user-scalable=no" />
+    <meta name="viewport" content="width=430, viewport-fit=cover, user-scalable=no" />
     <meta name="theme-color" content="#F5F7F8" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -69,7 +69,7 @@
       /* 1. 상단 바 (Header) */
       .map-header {
         position: absolute;
-        top: 71px;
+        top: calc(max(12px, env(safe-area-inset-top)) + 15px);
         left: 16px;
         right: 16px;
         height: 24px;
@@ -185,10 +185,10 @@
       /* 3. 하단 베이커리 리스트 (Bottom Sheet - Figma 1154:776 & 784 정밀 반영) */
       .bakery-list-container {
         position: absolute;
-        top: 431px;
+        top: 360px;
         left: 16px;
         width: 398px;
-        height: calc(100% - 431px);
+        height: calc(100% - 360px);
         background: #f8f4ec;
         border-radius: 40px 40px 0 0;
         z-index: 900;
@@ -226,7 +226,7 @@
         overflow-y: auto;
         padding-left: 0;
         padding-right: 0;
-        padding-bottom: 120px;
+        padding-bottom: 160px;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -402,9 +402,11 @@
           >
           <span>성수동 2가</span>
         </div>
-        <span class="min-icon" style="font-size: 24px; color: #000"
-          >&#xEF40;</span
-        >
+        <a href="notification.html" style="text-decoration:none; color:inherit; display:flex;">
+          <span class="min-icon" style="font-size: 24px; color: #000"
+            >&#xEF40;</span
+          >
+        </a>
       </div>
 
       <!-- 2. Map Area -->
@@ -416,7 +418,7 @@
         <div class="bakery-marker" style="top: 100px; left: 80px"></div>
         <div class="bakery-marker" style="top: 180px; left: 300px"></div>
         <div class="bakery-marker" style="top: 320px; left: 120px"></div>
-        <div class="bakery-marker" style="top: 40px; left: 380px"></div>
+        <div class="bakery-marker" style="top: max(40px, env(safe-area-inset-top)); left: 380px"></div>
 
         <!-- 현위치 버튼 -->
         <div class="btn-now">
@@ -439,7 +441,7 @@
           <div class="bakery-map-card">
             <div class="card-bg"></div>
             <div class="card-img-circle">
-              <img src="images/bakery-photo1.png" alt="" />
+              <img src="images/map-bakery-01.png" alt="" />
             </div>
             <div class="card-contents">
               <div class="card-info-box">
@@ -500,7 +502,7 @@
           <div class="bakery-map-card">
             <div class="card-bg"></div>
             <div class="card-img-circle">
-              <img src="images/bakery-photo2.png" alt="" />
+              <img src="images/map-bakery-02.png" alt="" />
             </div>
             <div class="card-contents">
               <div class="card-info-box">
@@ -561,7 +563,7 @@
           <div class="bakery-map-card">
             <div class="card-bg"></div>
             <div class="card-img-circle">
-              <img src="images/bakery-photo3.png" alt="" />
+              <img src="images/map-bakery-03.png" alt="" />
             </div>
             <div class="card-contents">
               <div class="card-info-box">

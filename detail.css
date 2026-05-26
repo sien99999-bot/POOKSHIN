@@ -14,7 +14,7 @@
 }
 
 #app.detail-page {
-  width: 430px;
+  width: 100%; max-width: 430px;
   height: 3268px; /* Total height from design.md */
   background-color: var(--white);
   position: relative;
@@ -35,7 +35,7 @@
   top: 101px;
   left: 36px; /* Adjusted to center-ish as per metadata x: 51 but looks offset */
   width: 100%;
-  font-size: 60px;
+  font-size: clamp(calc(60px * 0.8), calc(60 * 100vw / 430), 60px);
   font-weight: 800;
   color: var(--primary);
   text-transform: uppercase;
@@ -46,7 +46,7 @@
 .green-band-bg {
   position: absolute;
   top: 458px;
-  width: 430px;
+  width: 100%; max-width: 430px;
   height: 256px;
   background-color: var(--accent-green);
   z-index: 1;
@@ -77,7 +77,7 @@
   width: 100%;
   text-align: center;
   color: white;
-  font-size: 13px;
+  font-size: clamp(calc(13px * 0.8), calc(13 * 100vw / 430), 13px);
   font-weight: 300;
   z-index: 10;
 }
@@ -94,14 +94,14 @@
 
 .note-title {
   font-family: "Pretendard", sans-serif;
-  font-size: 32px;
+  font-size: clamp(calc(32px * 0.8), calc(32 * 100vw / 430), 32px);
   font-weight: 800;
   letter-spacing: -0.64px;
   margin-bottom: 30px;
 }
 
 .note-body {
-  font-size: 19px;
+  font-size: clamp(calc(19px * 0.8), calc(19 * 100vw / 430), 19px);
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: -0.38px;
@@ -241,7 +241,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
+  font-size: clamp(calc(18px * 0.8), calc(18 * 100vw / 430), 18px);
   font-weight: 800;
   text-decoration: none;
   z-index: 1000;

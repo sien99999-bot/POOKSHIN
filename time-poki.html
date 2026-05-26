@@ -1,200 +1,122 @@
-﻿﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
-    <meta name="theme-color" content="#F8F4EC" />
+  <meta name="viewport" content="width=430, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#F8F4EC" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
-  <link rel="apple-touch-icon" href="icon.png" />
-  <link rel="manifest" href="manifest.webmanifest" /><title>POOKSHIN - Time Poki</title>
+  <title>POOKSHIN - 갓 나온 빵 알림</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
   <link rel="stylesheet" href="home.css" />
+  <link rel="stylesheet" href="minIcon-round.css" />
   <style>
     body {
-      background: #EFEFEF;
+      margin: 0;
+      background-color: #efefef;
+      font-family: 'Interop', 'Pretendard Variable', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
 
     #app {
-      background: rgba(0, 0, 0, 0.28);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-    }
-
-    .time-poki-sheet {
-      width: 100%;
-      min-height: 430px;
-      background: #FFF7DF;
-      border-radius: 28px 28px 0 0;
-      padding: 18px 24px 34px;
-      box-sizing: border-box;
-      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.12);
-    }
-
-    .sheet-handle {
-      width: 42px;
-      height: 5px;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.12);
-      margin: 0 auto 26px;
-    }
-
-    .time-poki-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
-    }
-
-    .time-poki-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 0;
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.44px;
-      color: #000;
-    }
-
-    .close-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #FFFFFF;
-      color: #3A3A3A;
-      text-decoration: none;
+      width: 430px;
+      height: 932px;
+      position: relative;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.4); /* 딤 오버레이 */
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 20px;
-      font-weight: 800;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    @media (max-width: 480px) {
+      body {
+        align-items: flex-start !important;
+        background-color: #000000 !important;
+      }
+      #app {
+        width: 100% !important;
+        max-width: 430px !important;
+        height: 100dvh !important;
+        box-shadow: none !important;
+      }
     }
 
-    .fresh-time-card {
-      background: #FFFFFF;
+    /* 팝업 카드 (#F8F4EC, rounded 20px) */
+    .popup-card {
+      width: 398px;
+      background: #F8F4EC;
       border-radius: 20px;
-      padding: 24px;
-      text-align: center;
-      margin-bottom: 16px;
-    }
-
-    .fresh-label {
-      margin: 0 0 8px;
-      color: #9B9B9B;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: -0.3px;
-    }
-
-    .fresh-time {
-      margin: 0;
-      color: #FB7459;
-      font-size: 44px;
-      font-weight: 900;
-      letter-spacing: -0.88px;
-      line-height: 1.2;
-    }
-
-    .fresh-desc {
-      margin: 12px 0 0;
-      color: #000;
-      font-size: 17px;
-      font-weight: 600;
-      line-height: 1.5;
-      letter-spacing: -0.34px;
-    }
-
-    .fresh-detail-list {
-      display: grid;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-
-    .fresh-detail-item {
+      padding: 55px 22px 30px; /* 아이콘/타이틀/버튼 간격 조절 */
+      box-sizing: border-box;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      background: rgba(255, 255, 255, 0.72);
-      border-radius: 14px;
-      padding: 14px 16px;
-      font-size: 15px;
-      font-weight: 700;
-      color: #3A3A3A;
+      position: relative;
     }
 
-    .fresh-detail-value {
+    /* 상단 알람 아이콘 */
+    .alarm-icon {
+      font-family: 'Min Icon VF', sans-serif;
+      font-size: 31.2px;
       color: #FF9F46;
-      font-weight: 800;
+      font-feature-settings: 'ss09' 1;
+      font-variation-settings: 'rond' 3, 'edpt' 1;
+      margin-bottom: 24px;
+      line-height: 1;
     }
 
-    .time-poki-actions {
-      display: flex;
-      gap: 12px;
+    /* 타이틀 */
+    .popup-title {
+      font-family: 'Interop', 'Pretendard Variable', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      color: #000000;
+      text-align: center;
+      letter-spacing: -0.48px;
+      line-height: 1.5;
+      margin: 0 0 32px;
     }
 
-    .time-poki-btn {
-      flex: 1;
+    /* 확인 버튼 */
+    .btn-confirm {
+      width: 354px;
       height: 54px;
-      border-radius: 12px;
+      background: #FF9F46;
+      border-radius: 10px;
+      border: none;
       display: flex;
       align-items: center;
       justify-content: center;
       text-decoration: none;
-      font-size: 17px;
-      font-weight: 800;
-      letter-spacing: -0.34px;
-    }
-
-    .time-poki-btn.secondary {
-      background: #FFFFFF;
-      color: #9B9B9B;
-    }
-
-    .time-poki-btn.primary {
-      background: #FF9F46;
+      
+      font-family: 'Interop', 'Pretendard Variable', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
       color: #FFFFFF;
+      letter-spacing: -0.36px;
+      cursor: pointer;
     }
+
   </style>
 </head>
 <body>
   <div id="app">
-    <section class="time-poki-sheet" role="dialog" aria-modal="true" aria-labelledby="time-poki-title">
-      <div class="sheet-handle"></div>
-
-      <div class="time-poki-header">
-        <h1 class="time-poki-title" id="time-poki-title">
-          <span class="min-icon" style="font-size: 28px;">&#xEF60;</span>
-          갓 구운 시간
-        </h1>
-        <a href="home.html" class="close-btn" aria-label="Close">×</a>
-      </div>
-
-      <div class="fresh-time-card">
-        <p class="fresh-label">성수동 베이커리의 크루아상</p>
-        <p class="fresh-time">30분 전</p>
-        <p class="fresh-desc">아직 따뜻함이 남아있어요.<br>지금 포키하면 가장 맛있게 만날 수 있어요.</p>
-      </div>
-
-      <div class="fresh-detail-list">
-        <div class="fresh-detail-item">
-          <span>오늘 나온 시간</span>
-          <span class="fresh-detail-value">오전 10:30</span>
-        </div>
-        <div class="fresh-detail-item">
-          <span>추천 픽업 시간</span>
-          <span class="fresh-detail-value">지금부터 20분</span>
-        </div>
-      </div>
-
-      <div class="time-poki-actions">
-        <a href="home.html" class="time-poki-btn secondary">닫기</a>
-        <a href="poki-success.html" class="time-poki-btn primary">POKI</a>
-      </div>
-    </section>
+    <!-- 갓 나온 빵 알림 팝업 -->
+    <div class="popup-card">
+      <div class="alarm-icon">&#xEF60;</div>
+      <h2 class="popup-title">
+        갓 나온지 30분 된 빵이에요!<br>
+        달려가서 '포키' 하세요!
+      </h2>
+      <a href="home.html" class="btn-confirm">확인</a>
+    </div>
   </div>
 </body>
 </html>

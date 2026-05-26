@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <meta name="theme-color" content="#F8F4EC" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <title>POOKSHIN - 알림</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://poposnail61.github.io/web/css/minIcon-round.css"
+    />
+    <link rel="stylesheet" href="home.css" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        margin: 0; background: #efefef; font-family: "Pretendard Variable", sans-serif; -webkit-font-smoothing: antialiased;
+        display: flex; align-items: center; justify-content: center; min-height: 100dvh;
+      }
+      #app {
+        width: 100%; max-width: 430px; min-height: 100vh; height: 100%;
+        background: #f8f4ec; position: relative; overflow-x: hidden; box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); padding-bottom: 30px;
+      }
+      @media (max-width: 480px) {
+        body { align-items: flex-start !important; background: #f8f4ec !important; }
+        #app { width: 100% !important; max-width: 430px !important; min-height: 100dvh !important; box-shadow: none !important; }
+      }
+      .mi {
+        font-family: "Min Icon VF", "Round Bold", sans-serif;
+        font-feature-settings: "ss09" 1; font-style: normal; line-height: normal; display: inline-flex; align-items: center; justify-content: center;
+      }
+
+      /* ── 헤더 ── */
+      .topbar {
+        padding-top: calc(env(safe-area-inset-top) + 10px); padding-bottom: 10px; padding-left: 16px; padding-right: 16px; display: flex; align-items: center; background: #f8f4ec; position: sticky; top: 0; z-index: 100;
+      }
+      .topbar a { text-decoration: none; color: #000; display: flex; align-items: center; }
+      .topbar-title { flex: 1; text-align: center; font-weight: 700; font-size: clamp(16px, calc(16 * 100vw / 430), 18px); margin-right: 24px; letter-spacing: -0.32px; }
+
+      /* ── 알림 목록 ── */
+      .noti-list {
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .noti-card {
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        display: flex;
+        gap: 16px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        align-items: flex-start;
+      }
+      .noti-card.unread {
+        background: #fff8f0;
+        border: 1px solid rgba(255, 167, 74, 0.3);
+      }
+      .noti-icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #f8f4ec;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .noti-card.unread .noti-icon-box {
+        background: #ffebd3;
+      }
+      .noti-icon {
+        font-size: 24px;
+        color: #ffa74a;
+      }
+      .noti-content {
+        flex: 1;
+      }
+      .noti-message {
+        font-size: clamp(14px, calc(15 * 100vw / 430), 15px);
+        font-weight: 600;
+        color: #000;
+        line-height: 1.4;
+        letter-spacing: -0.3px;
+        margin-bottom: 6px;
+      }
+      .noti-subtext {
+        font-size: clamp(13px, calc(13 * 100vw / 430), 13px);
+        font-weight: 400;
+        color: #9b9b9b;
+        line-height: 1.4;
+      }
+      .noti-time {
+        font-size: 12px;
+        color: #cacaca;
+        margin-top: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 헤더 -->
+      <div class="topbar">
+        <a href="home.html">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M15 18L9 12L15 6" stroke="#333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+        <div class="topbar-title">알림</div>
+      </div>
+
+      <!-- 알림 목록 -->
+      <div class="noti-list">
+        
+        <!-- 안 읽은 알림 -->
+        <div class="noti-card unread">
+          <div class="noti-icon-box">
+            <i class="mi noti-icon">&#xE0B0;</i> <!-- 매장 아이콘 -->
+          </div>
+          <div class="noti-content">
+            <p class="noti-message">[베이크하우스] 새로운 빵이 구워졌어요!</p>
+            <p class="noti-subtext">와앙이님이 찜한 빵집에 신메뉴가 등록되었습니다. 지금 바로 확인해보세요.</p>
+            <p class="noti-time">1시간 전</p>
+          </div>
+        </div>
+
+        <div class="noti-card unread">
+          <div class="noti-icon-box">
+            <i class="mi noti-icon">&#xE0A0;</i> <!-- 하트 아이콘 -->
+          </div>
+          <div class="noti-content">
+            <p class="noti-message">최근 포키한 크루아상은 어땠나요?</p>
+            <p class="noti-subtext">맛있는 빵을 드셨다면 리뷰를 남겨주세요. 와앙이님의 리뷰가 큰 도움이 됩니다.</p>
+            <p class="noti-time">3시간 전</p>
+          </div>
+        </div>
+
+        <!-- 읽은 알림 -->
+        <div class="noti-card">
+          <div class="noti-icon-box">
+            <i class="mi noti-icon" style="color: #9b9b9b;">&#xEF40;</i> <!-- 종 아이콘 -->
+          </div>
+          <div class="noti-content">
+            <p class="noti-message">알림 설정이 완료되었습니다.</p>
+            <p class="noti-subtext">이제 관심있는 빵집의 갓 구운 빵 소식을 가장 먼저 받아볼 수 있습니다.</p>
+            <p class="noti-time">2일 전</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </body>
+</html>

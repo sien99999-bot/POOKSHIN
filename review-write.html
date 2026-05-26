@@ -42,8 +42,8 @@
       }
 
       #app {
-        width: 430px;
-        min-height: 932px;
+        width: 100%; max-width: 430px;
+        min-height: 100vh; height: 100%;
         background: #f8f4ec;
         position: relative;
         overflow-x: hidden;
@@ -75,12 +75,13 @@
       /* ── 헤더 ── */
       .review-header {
         height: 122px;
-        position: relative;
+        display: grid;
+        grid-template-columns: 32px 1fr 32px; /* Close button, Center Title, Dummy Right */
+        align-items: flex-end;
+        padding: 0 16px 20px;
+        box-sizing: border-box;
       }
       .btn-close-x {
-        position: absolute;
-        left: 16px;
-        top: 74px;
         width: 32px;
         height: 32px;
         display: flex;
@@ -89,25 +90,24 @@
         text-decoration: none;
       }
       .header-title {
-        position: absolute;
-        left: 50%;
-        top: 78px;
-        transform: translateX(-50%);
-        font-size: 16px;
+        font-size: clamp(calc(16px * 0.7), calc(16 * 100vw / 430), 16px);
         font-weight: 700;
         color: #000;
         letter-spacing: -0.32px;
+        text-align: center;
       }
 
       /* ── 최근 포키한 빵 ── */
       .recent-poki-section {
-        padding: 8px 43px 38px;
+        padding: 8px 16px 38px; /* Reduced side padding to 16px */
         display: flex;
         align-items: center;
-        gap: 36px;
+        justify-content: center; /* Centering the section */
+        gap: 16px; /* Reduced gap from 36px to 16px */
+        flex-wrap: wrap; /* Allow wrapping if screen is very small */
       }
       .recent-poki-label {
-        font-size: 16px;
+        font-size: clamp(calc(16px * 0.7), calc(16 * 100vw / 430), 16px);
         font-weight: 700;
         color: #000;
         letter-spacing: -0.32px;
@@ -117,14 +117,13 @@
       .poki-chip-row {
         display: flex;
         gap: 8px;
-        flex-wrap: nowrap;
-        overflow-x: auto;
+        flex-wrap: wrap; /* Changed from nowrap to wrap */
       }
       .poki-chip {
         background: #ffa74a;
         border-radius: 8px;
         padding: 2px 8px;
-        font-size: 14px;
+        font-size: clamp(calc(14px * 0.7), calc(14 * 100vw / 430), 14px);
         font-weight: 400;
         color: white;
         letter-spacing: -0.28px;
@@ -159,14 +158,14 @@
         background: #ffa74a;
         border-radius: 8px;
         padding: 2px 8px;
-        font-size: 14px;
+        font-size: clamp(calc(14px * 0.7), calc(14 * 100vw / 430), 14px);
         font-weight: 400;
         color: white;
         letter-spacing: -0.28px;
         line-height: 1.8;
       }
       .card-question {
-        font-size: 16px;
+        font-size: clamp(calc(16px * 0.7), calc(16 * 100vw / 430), 16px);
         font-weight: 600;
         color: #000;
         letter-spacing: -0.32px;
@@ -187,7 +186,7 @@
         line-height: 1;
       }
       .star-btn .mi {
-        font-size: 34px;
+        font-size: clamp(calc(34px * 0.7), calc(34 * 100vw / 430), 34px);
         color: #f2f2f2;
         transition: color 0.15s;
       }
@@ -207,7 +206,7 @@
         justify-content: center;
       }
       .taste-label-left {
-        font-size: 14px;
+        font-size: clamp(calc(14px * 0.7), calc(14 * 100vw / 430), 14px);
         color: #000;
         letter-spacing: -0.28px;
         line-height: 1.8;
@@ -232,7 +231,7 @@
         background: #fa534c;
       }
       .taste-label-right {
-        font-size: 14px;
+        font-size: clamp(calc(14px * 0.7), calc(14 * 100vw / 430), 14px);
         color: #000;
         letter-spacing: -0.28px;
         line-height: 1.8;
@@ -256,13 +255,13 @@
         margin-bottom: 24px;
       }
       .text-review-label {
-        font-size: 16px;
+        font-size: clamp(calc(16px * 0.7), calc(16 * 100vw / 430), 16px);
         font-weight: 700;
         color: #000;
         letter-spacing: -0.32px;
       }
       .text-review-optional {
-        font-size: 16px;
+        font-size: clamp(calc(16px * 0.7), calc(16 * 100vw / 430), 16px);
         font-weight: 400;
         color: #9b9b9b;
         letter-spacing: -0.32px;
@@ -287,7 +286,7 @@
         border: 1px solid #9b9b9b;
         border-radius: 10px;
         padding: 12px 14px;
-        font-size: 15px;
+        font-size: clamp(calc(15px * 0.7), calc(15 * 100vw / 430), 15px);
         font-family: "Pretendard Variable", sans-serif;
         color: #333;
         letter-spacing: -0.3px;
@@ -297,19 +296,19 @@
       }
       .review-textarea::placeholder {
         color: #9b9b9b;
-        font-size: 15px;
+        font-size: clamp(calc(15px * 0.7), calc(15 * 100vw / 430), 15px);
       }
 
       /* ── CTA 버튼 ── */
       .btn-submit {
         display: block;
-        width: 354px;
+        width: 100%; max-width: 354px;
         margin: 0 auto 40px;
         padding: 20px 60px;
         background: #ff9f46;
         border: none;
         border-radius: 10px;
-        font-size: 18px;
+        font-size: clamp(calc(18px * 0.7), calc(18 * 100vw / 430), 18px);
         font-weight: 700;
         color: white;
         letter-spacing: -0.36px;
@@ -338,7 +337,7 @@
       .modal-card {
         background: #f8f4ec;
         border-radius: 20px;
-        width: 398px;
+        width: 90%; max-width: 398px;
         height: 379px;
         display: flex;
         flex-direction: column;
@@ -359,7 +358,7 @@
         margin-bottom: 24px;
       }
       .modal-title {
-        font-size: 32px;
+        font-size: clamp(calc(32px * 0.7), calc(32 * 100vw / 430), 32px);
         font-weight: 700;
         color: #000;
         text-align: center;
@@ -369,12 +368,12 @@
         white-space: nowrap;
       }
       .modal-confirm-btn {
-        width: 354px;
+        width: 100%; max-width: 354px;
         padding: 20px 0;
         background: #ff9f46;
         border: none;
         border-radius: 10px;
-        font-size: 18px;
+        font-size: clamp(calc(18px * 0.7), calc(18 * 100vw / 430), 18px);
         font-weight: 700;
         color: white;
         cursor: pointer;
@@ -403,6 +402,7 @@
           </svg>
         </a>
         <span class="header-title">리뷰 하기</span>
+        <div></div>
       </div>
 
       <!-- 최근 포키한 빵 -->
@@ -509,7 +509,7 @@
         </div>
         <!-- 카메라 박스 -->
         <div class="camera-box" onclick="alert('카메라/갤러리 선택')">
-          <i class="mi" style="font-size: 31.2px; color: #9b9b9b">&#xE090;</i>
+          <i class="mi" style="font-size: clamp(calc(31.2px * 0.7), calc(31.2 * 100vw / 430), 31.2px); color: #9b9b9b">&#xE090;</i>
         </div>
         <!-- 텍스트 입력 -->
         <textarea

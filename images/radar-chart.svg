@@ -1,25 +1,8 @@
-<svg width="240" height="240" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <style>
-      .bg-hex { fill: none; stroke: #C3C3C3; stroke-width: 1.5; }
-      .axis { stroke: #C3C3C3; stroke-width: 1.5; }
-      .data-hex { fill: rgba(251,116,89,0.5); stroke: none; }
-    </style>
-  </defs>
-  
-  <!-- Outer Hexagon (R=80) -->
-  <polygon class="bg-hex" points="120,40 189.28,80 189.28,160 120,200 50.72,160 50.72,80"/>
-  <!-- Inner Hexagon (R=40) -->
-  <polygon class="bg-hex" points="120,80 154.64,100 154.64,140 120,160 85.36,140 85.36,100"/>
-  
-  <!-- Axes -->
-  <line class="axis" x1="120" y1="120" x2="120" y2="40"/>
-  <line class="axis" x1="120" y1="120" x2="189.28" y2="80"/>
-  <line class="axis" x1="120" y1="120" x2="189.28" y2="160"/>
-  <line class="axis" x1="120" y1="120" x2="120" y2="200"/>
-  <line class="axis" x1="120" y1="120" x2="50.72" y2="160"/>
-  <line class="axis" x1="120" y1="120" x2="50.72" y2="80"/>
-  
-  <!-- Data Polygon matched to user image -->
-  <polygon class="data-hex" points="120,48 178.8,86 168.5,148 120,148 85.36,140 78.4,96"/>
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 230 230" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 9048">
+<path id="Polygon 1" d="M214.093 57.7881V172.211L115 229.423L15.9072 172.211V57.7881L115 0.576172L214.093 57.7881Z" fill="var(--fill-0, #F2F2F2)" stroke="var(--stroke-0, #9B9B9B)"/>
+<path id="Polygon 2" d="M188.979 72.2881V157.711L115 200.423L41.0215 157.711V72.2881L115 29.5762L188.979 72.2881Z" fill="var(--fill-0, #F2F2F2)" stroke="var(--stroke-0, #9B9B9B)"/>
+<path id="Polygon 3" d="M163.863 86.7881V143.211L115 171.423L66.1367 143.211V86.7881L115 58.5762L163.863 86.7881Z" fill="var(--fill-0, #F2F2F2)" stroke="var(--stroke-0, #9B9B9B)"/>
+<path id="Vector 180" d="M51.5 79L112.5 0L205.5 72L196.5 164L112.5 177.5L66 143L51.5 79Z" fill="var(--fill-0, #FFA74A)" fill-opacity="0.7"/>
+</g>
 </svg>

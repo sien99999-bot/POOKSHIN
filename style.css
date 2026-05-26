@@ -34,7 +34,7 @@
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
     "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", sans-serif;
-  --app-max-width: 430px; /* iPhone 14 Pro 기준 */
+  --app-max-width: 100%; max-width: 430px; /* iPhone 14 Pro 기준 */
 }
 
 * {
@@ -104,7 +104,7 @@ img {
   align-items: center;
   height: 100%;
   color: var(--gray-medium);
-  font-size: 14px;
+  font-size: clamp(calc(14px * 0.8), calc(14 * 100vw / 430), 14px);
 }
 
 /* 모달 시스템 */
@@ -112,8 +112,8 @@ img {
   position: fixed;
   top: 0;
   left: 0;
-  width: 430px;
-  height: 932px;
+  width: 100%; max-width: 430px;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.4);
   display: none;
   justify-content: center;
@@ -138,11 +138,11 @@ img {
 .modal-title {
   font-family: "Interop", sans-serif;
   font-weight: 700;
-  font-size: 24px;
+  font-size: clamp(calc(24px * 0.8), calc(24 * 100vw / 430), 24px);
   text-align: center;
   color: #000;
   line-height: 1.5;
-  margin-top: 24px;
+  margin-top: max(24px, env(safe-area-inset-top));
 }
 
 .modal-icon-circle {
@@ -167,7 +167,7 @@ img {
   align-items: center;
   color: #fff;
   font-weight: 700;
-  font-size: 18px;
+  font-size: clamp(calc(18px * 0.8), calc(18 * 100vw / 430), 18px);
   cursor: pointer;
   border: none;
 }
