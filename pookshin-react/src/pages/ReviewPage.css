@@ -1,0 +1,50 @@
+#app {
+  width: 100%; max-width: 480px; min-height: 100dvh;
+  background: #F8F4EC; position: relative; margin: 0 auto;
+  display: flex; flex-direction: column; align-items: center;
+  padding-bottom: 20px;
+}
+.top-nav { width: 100%; height: 60px; display: flex; align-items: center; justify-content: center; position: relative; margin-top: env(safe-area-inset-top, 44px); }
+.btn-back { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); text-decoration: none; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; color: #000; }
+.btn-back .min-icon { font-size: 24px; line-height: 1; }
+.nav-title { font-weight: 700; font-size: 16px; color: #000; letter-spacing: -0.32px; }
+.scroll-area { width: 100%; flex: 1; overflow-y: auto; padding: 20px 16px 40px; display: flex; flex-direction: column; gap: 24px; -webkit-overflow-scrolling: touch; }
+.scroll-area::-webkit-scrollbar { display: none; }
+.summary-box { width: 398px; margin: 0 auto; background: #FFF; border-radius: 20px; padding: 18px 24px; display: flex; align-items: center; gap: 24px; }
+.summary-score { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0; }
+.score-text { font-weight: 700; font-size: 24px; color: #FB7459; letter-spacing: -0.48px; }
+.score-max { font-weight: 600; font-size: 16px; color: #9B9B9B; letter-spacing: -0.32px; }
+.score-stars { display: flex; gap: 6px; }
+.star { font-size: 18px; line-height: 1; }
+.star.yellow { color: #FFCB30; }
+.star.gray { color: #F2F2F2; }
+.summary-bars { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.bar-row { display: flex; align-items: center; gap: 12px; }
+.bar-label { font-weight: 600; font-size: 13px; color: #000; width: 10px; text-align: center; line-height: 1; }
+.bar-track { flex: 1; height: 6px; background: #F2F2F2; border-radius: 3px; position: relative; overflow: hidden; }
+.bar-fill { position: absolute; left: 0; top: 0; height: 100%; background: #FB7459; border-radius: 3px; }
+.sort-links { display: flex; align-items: center; justify-content: flex-end; width: 398px; margin: -4px auto 4px auto; gap: 10px; padding-right: 8px; }
+.sort-item { font-weight: 500; font-size: 14px; color: #9B9B9B; letter-spacing: -0.28px; text-decoration: none; }
+.sort-item.active { font-weight: 700; color: #9B9B9B; }
+.sort-dot { width: 4px; height: 4px; background: #D9D9D9; border-radius: 50%; }
+.review-list { margin: 0 auto; width: 398px; background: #FFF; border-radius: 20px; display: flex; flex-direction: column; }
+.review-item { padding: 24px 20px; border-bottom: 1px solid #EFEFEF; }
+.review-item:last-child { border-bottom: none; }
+.review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.review-author { font-weight: 600; font-size: 16px; color: #000; letter-spacing: -0.32px; }
+.review-date { font-weight: 500; font-size: 13px; color: #9B9B9B; letter-spacing: -0.26px; }
+.review-content { display: flex; justify-content: flex-start; align-items: flex-start; gap: 14px; margin-bottom: 16px; margin-left: 34px; }
+.review-image { width: 94px; height: 94px; border-radius: 10px; flex-shrink: 0; object-fit: cover; background: #D9D9D9; }
+.review-text-wrap { display: flex; flex-direction: column; gap: 5px; align-items: flex-start; }
+.review-stars { display: flex; gap: 6px; }
+.review-stars .star { font-size: 20px; }
+.review-desc { font-weight: 500; font-size: 13px; color: #000; letter-spacing: -0.26px; line-height: 1.5; word-break: keep-all; }
+.taste-profile { display: flex; flex-direction: column; gap: 10px; width: 215px; margin-left: 72px; }
+.taste-row { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.taste-label { font-weight: 500; font-size: 13px; color: #000; letter-spacing: -0.26px; width: 32px; text-align: center; }
+.taste-dots { display: flex; justify-content: center; align-items: center; gap: 4.5px; }
+.taste-dot { width: 27px; height: 5.25px; border-radius: 6px; background: #F2F2F2; }
+.taste-dot.active { background: #FA534C; }
+.btn-more { display: flex; align-items: center; justify-content: flex-end; gap: 4px; width: 398px; margin: 0 auto; padding: 20px 0; text-decoration: none; }
+.btn-more-text { font-weight: 500; font-size: 16px; color: #9B9B9B; letter-spacing: -0.32px; }
+.btn-more-icon { font-size: 18px; color: #9B9B9B; }

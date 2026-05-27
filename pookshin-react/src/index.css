@@ -1,0 +1,60 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css");
+@import url("https://poposnail61.github.io/web/css/minIcon-round.css");
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary-orange: #ff9f46;
+  --secondary-yellow: #ffda46;
+  --accent-red: #fb7459;
+  --bg-color: #f8f4ec;
+  --text-color: #333333;
+  --gray-light: #f2f2f2;
+  --gray-medium: #c3c3c3;
+  --gray-dark: #9b9b9b;
+  --font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
+    "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", sans-serif;
+  --app-max-width: 480px;
+}
+
+html {
+  background-color: #efefef;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-color: #efefef;
+  font-family: var(--font-family);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  width: 100%;
+  min-height: 100dvh;
+}
+
+.min-icon {
+  font-family: "Min Icon VF", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-feature-settings: "ss09" 1;
+  font-variation-settings: "rond" 3, "edpt" 1;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+}

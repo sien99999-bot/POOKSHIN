@@ -1,0 +1,19 @@
+#app { width: 100%; max-width: 480px; min-height: 100vh; height: 100%; background: #f8f4ec; position: relative; overflow-x: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.1); padding-bottom: 30px; }
+@media (max-width: 480px) {
+  body { align-items: flex-start !important; background: #f8f4ec !important; }
+  #app { width: 100% !important; max-width: 480px !important; min-height: 100dvh !important; box-shadow: none !important; }
+}
+.mi { font-family: "Min Icon VF","Round Bold",sans-serif; font-feature-settings:"ss09" 1; font-style: normal; line-height: normal; display: inline-flex; align-items: center; justify-content: center; }
+.topbar { padding-top: calc(env(safe-area-inset-top) + 10px); padding-bottom: 10px; padding-left: 16px; padding-right: 16px; display: flex; align-items: center; background: #f8f4ec; position: sticky; top: 0; z-index: 100; }
+.topbar a { text-decoration: none; color: #000; display: flex; align-items: center; }
+.topbar-title { flex: 1; text-align: center; font-weight: 700; font-size: 16px; margin-right: 24px; letter-spacing: -0.32px; }
+.noti-list { padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.noti-card { background: white; border-radius: 20px; padding: 20px; display: flex; gap: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); align-items: flex-start; }
+.noti-card.unread { background: #fff8f0; border: 1px solid rgba(255,167,74,0.3); }
+.noti-icon-box { width: 48px; height: 48px; border-radius: 50%; background: #ffebd3; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.noti-card:not(.unread) .noti-icon-box { background: #f8f4ec; }
+.noti-icon { font-size: 24px; }
+.noti-content { flex: 1; }
+.noti-message { font-size: 15px; font-weight: 600; color: #000; line-height: 1.4; letter-spacing: -0.3px; margin-bottom: 6px; }
+.noti-subtext { font-size: 13px; font-weight: 400; color: #9b9b9b; line-height: 1.4; }
+.noti-time { font-size: 12px; color: #cacaca; margin-top: 8px; }

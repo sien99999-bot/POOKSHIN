@@ -1,0 +1,18 @@
+.page {
+  min-height: 100vh;
+  background: #F8F4EC;
+  padding: 24px;
+  box-sizing: border-box;
+}
+.btn {
+  height: 54px;
+  border-radius: 10px;
+  background: #FF9F46;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 18px;
+}

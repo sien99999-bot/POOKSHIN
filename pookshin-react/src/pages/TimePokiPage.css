@@ -1,0 +1,9 @@
+#app { width: 100%; max-width: 480px; height: 932px; position: relative; overflow: hidden; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(0,0,0,0.1); margin: 0 auto; }
+@media (max-width: 480px) {
+  body { align-items: flex-start !important; background-color: #000 !important; }
+  #app { width: 100% !important; max-width: 480px !important; height: 100dvh !important; box-shadow: none !important; }
+}
+.popup-card { width: 398px; background: #F8F4EC; border-radius: 20px; padding: 55px 22px 30px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
+.alarm-icon { font-family: 'Min Icon VF',sans-serif; font-size: 31.2px; color: #FF9F46; font-feature-settings:'ss09' 1; font-variation-settings:'rond' 3,'edpt' 1; margin-bottom: 24px; line-height: 1; }
+.popup-title { font-weight: 700; font-size: 24px; color: #000; text-align: center; letter-spacing: -0.48px; line-height: 1.5; margin: 0 0 32px; }
+.btn-confirm { width: 354px; height: 54px; background: #FF9F46; border-radius: 10px; border: none; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 700; font-size: 18px; color: #fff; letter-spacing: -0.36px; cursor: pointer; }

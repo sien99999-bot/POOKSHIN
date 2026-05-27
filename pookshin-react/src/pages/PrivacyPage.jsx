@@ -1,0 +1,30 @@
+import { Link } from 'react-router-dom'
+import './SimplePage.css'
+
+export default function PrivacyPage() {
+  return (
+    <div id="app">
+      <main className="page">
+        <div className="page-header">
+          <h1>개인정보 처리방침</h1>
+          <Link to="/setting">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </Link>
+        </div>
+        <section className="card" style={{ fontSize: 14, lineHeight: 1.8 }}>
+          <strong>1. 수집하는 개인정보 항목</strong><br />
+          회사는 회원가입 및 서비스 제공을 위해 아래와 같은 정보를 수집합니다.<br />
+          - 필수항목: 소셜 로그인 식별값, 닉네임, 생년월일, 빵/식감 취향 데이터<br />
+          - 선택항목: 위치 정보(주변 베이커리 추천용)<br /><br />
+          <strong>2. 개인정보의 이용 목적</strong><br />
+          - 개인 맞춤형 빵 및 베이커리 큐레이션 서비스 제공<br />
+          - '갓 구운 빵' 알림 및 POKI(포키) 동선 안내<br /><br />
+          <strong>3. 개인정보 보관 기간</strong><br />
+          회원 탈퇴 시 즉시 파기됨을 원칙으로 합니다.
+        </section>
+      </main>
+    </div>
+  )
+}

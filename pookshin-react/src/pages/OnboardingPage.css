@@ -1,0 +1,141 @@
+/* ── viewport wrapper ── */
+#viewport-wrapper {
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: #F8F4EC;
+  overflow: hidden;
+  padding-top: env(safe-area-inset-top);
+}
+
+#onboarding-app {
+  width: 430px;
+  height: 932px;
+  flex-shrink: 0;
+  margin: 0 auto;
+  position: relative;
+  overflow: visible;
+  background: #F8F4EC;
+  box-shadow: none;
+  transform-origin: top center;
+  font-family: 'Pretendard Variable', sans-serif;
+  color: #333;
+}
+
+/* 화면 전환 */
+.screen {
+  position: absolute;
+  inset: 0;
+  width: 430px;
+  height: 932px;
+  background: #F8F4EC;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+.screen.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 인트로 배경 요소 (Step 1) */
+.intro-bg-bread-left {
+  position: absolute; width: 312px; height: 376px; left: -70px; top: 304px;
+  opacity: 0.4; overflow: hidden; pointer-events: none;
+}
+.intro-bg-bread-left img { position: absolute; width: 585px; height: 511px; left: 0; top: -53px; }
+
+.intro-bg-wheat-right {
+  position: absolute; width: 279px; height: 307px; left: 115px; top: -38px;
+  opacity: 0.4; overflow: hidden; pointer-events: none;
+  transform: rotate(-18.52deg); transform-origin: center;
+}
+.intro-bg-wheat-right img { position: absolute; width: 668px; height: 583px; left: -360px; top: -18px; }
+
+.intro-bg-bread-bottom {
+  position: absolute; width: 293px; height: 289px; left: 146px; bottom: 3px; top: auto;
+  opacity: 0.4; overflow: hidden; pointer-events: none;
+  transform: rotate(-14.8deg); transform-origin: center;
+}
+.intro-bg-bread-bottom img { position: absolute; width: 737px; height: 643px; left: -398px; top: -356px; }
+
+.intro-text-box {
+  position: absolute; right: 24px; top: calc(50% - 190px);
+  text-align: right; font-weight: 600; font-size: 52px;
+  color: #FF9F46; line-height: 1.83; letter-spacing: 2.08px;
+  white-space: nowrap; padding-right: 2px;
+}
+
+/* 마스코트 레이아웃 */
+.mascot-container { position: absolute; overflow: hidden; pointer-events: none; }
+.mascot-happy { width: 287px; height: 320px; left: 24px; bottom: 179px; top: auto; }
+.mascot-happy img { position: absolute; width: 516px; height: 344px; left: -133px; top: 0; }
+
+.mascot-thinking { width: 284px; height: 333px; left: 101px; bottom: 179px; top: auto; }
+.mascot-thinking img { position: absolute; width: 521px; height: 347px; left: -166px; top: 0; }
+
+.mascot-excited { width: 301px; height: 329px; left: 71px; top: 441px; }
+.mascot-excited img { position: absolute; width: 513px; height: 341px; left: -131px; top: 0; }
+
+/* 하이라이트 박스 */
+.highlight-box { position: absolute; background: #FF9F46; }
+.hl-waang { width: 106px; height: 50px; left: 274px; top: 237px; }
+.hl-taste { width: 114px; height: 50px; left: 162px; top: 306px; }
+.hl-pick { width: 145px; height: 50px; left: 198px; top: 289px; }
+
+/* 빵 선택 카드 (Step 3) */
+.bread-card {
+  position: absolute;
+  width: 131.4px;
+  height: 131.4px;
+  background: white;
+  border-radius: 9px;
+  border: 3px solid transparent;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.bread-card.selected { border-color: #FB7459; }
+.bread-card img {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* 취향 칩 (Step 4, 5) */
+.chip {
+  position: absolute;
+  border-radius: 10px;
+  border: 2px solid;
+  padding: 5px 10px;
+  font-family: 'Pretendard Variable', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 22px;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.chip-unsel { background: #EDE0CF; border-color: #B8956A; color: #8B6534; }
+.chip-red   { background: #FFEDEB; border-color: #FB7459; color: #FB7459; }
+.chip-yellow { background: #FFFAE5; border-color: #FFDA46; color: #FFDA46; }
+
+/* 하단 버튼 */
+.btn {
+  position: absolute;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Pretendard Variable', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.36px;
+  line-height: 1.5;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+.btn-orange { background: #FF9F46; color: white; }
+.btn-white  { background: white;   color: #9B9B9B; }

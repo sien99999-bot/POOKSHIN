@@ -1,0 +1,98 @@
+import { Link } from 'react-router-dom'
+import NavBar from '../components/NavBar'
+import '../styles/home.css'
+import '../styles/navbar.css'
+
+export default function HomePage() {
+  return (
+    <div id="app" className="home-body">
+      {/* Header Section */}
+      <div className="header-section">
+        <Link to="/location-setting" className="location-box" style={{ textDecoration: 'none' }}>
+          <span className="min-icon" style={{ fontSize: 'clamp(calc(24px * 0.8), calc(24 * 100vw / 430), 24px)', color: 'white' }}>&#xEFA0;</span>
+          <span>성수동 2가</span>
+        </Link>
+        <Link to="/notification" className="has-notification" style={{ textDecoration: 'none' }}>
+          <span className="min-icon" style={{ fontSize: 'clamp(calc(24px * 0.8), calc(24 * 100vw / 430), 24px)', color: 'var(--primary)' }}>&#xEF40;</span>
+        </Link>
+      </div>
+
+      {/* Headline */}
+      <div className="headline-section">
+        <h1 className="headline-title">
+          <span className="highlight-text">바삭한 한입,</span>
+          <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2025.0002%2024.546'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group'%3e%3cpath%20id='Vector'%20opacity='0.25'%20d='M16.1435%202.49252C15.8792%202.36774%2015.6321%202.25764%2015.3678%202.14998C10.423%200.124077%205.32642%201.02692%204.13485%203.52505C3.67486%204.48906%203.81433%205.65616%204.42601%206.86975L0.244532%2015.6487C-0.342686%2016.8818%200.16379%2018.3474%201.37737%2018.9248L6.26597%2021.2541L12.6838%2024.3126C13.8949%2024.89%2015.3556%2024.3591%2015.9428%2023.1283L20.1243%2014.3494C21.4529%2014.0607%2022.4463%2013.4344%2022.9063%2012.4679C24.1614%209.83764%2021.3281%204.96373%2016.1435%202.49252Z'%20fill='%23543117'/%3e%3cg%20id='Group_2'%3e%3cpath%20id='Vector_2'%20d='M8.06424%2020.2193L3.17565%2017.89C1.96207%2017.3125%201.45559%2015.8445%202.04281%2014.6138L6.22429%205.83487C5.61016%204.62129%205.47314%203.45419%205.93313%202.49018C7.12469%20-0.00794885%2012.2213%20-0.913244%2017.1661%201.11511L8.06424%2020.2193Z'%20fill='%23CC9658'/%3e%3cg%20id='Group_3'%3e%3cpath%20d='M8.06443%2020.2191L14.4822%2023.2775C15.6934%2023.8549%2017.1541%2023.324%2017.7413%2022.0933L21.9228%2013.3144C23.2514%2013.0256%2024.2447%2012.3993%2024.7047%2011.4328C25.9599%208.80012%2023.1241%203.92621%2017.9419%201.455C17.6777%201.33021%2017.4306%201.22011%2017.1663%201.11245L8.06443%2020.2191Z'%20fill='%23C98C4F'/%3e%3cpath%20d='M21.7882%2010.2684C22.7522%208.24739%2020.2541%205.04949%2016.2121%203.12146C12.1701%201.19588%208.11092%201.27172%207.14935%203.29273C6.79702%204.0341%206.90957%204.93205%207.39157%205.86915L3.21743%2014.6285C2.76723%2015.5754%203.1685%2016.7058%204.11294%2017.156L12.931%2021.3595C13.8754%2021.8097%2015.0083%2021.4084%2015.4585%2020.4615L19.6326%2011.7022C20.6652%2011.4869%2021.4359%2011.0098%2021.7882%2010.2684Z'%20fill='%23E7B97B'/%3e%3c/g%3e%3cpath%20d='M8.52188%2019.2578L4.11285%2017.156C3.16596%2016.7058%202.76469%2015.573%203.21734%2014.6286L7.39148%205.86923C6.90947%204.93212%206.79448%204.03417%207.14925%203.29281C8.11082%201.2718%2012.17%201.19595%2016.212%203.12153L8.52188%2019.2578Z'%20fill='%23F6CD95'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e" className="bread-mascot-icon" alt="" />
+          <br />
+          와앙이가 취향대로 딱 골랐어요 :)
+        </h1>
+      </div>
+
+      {/* Hero Area */}
+      <div className="hero-area">
+        <div className="hills-background"></div>
+        <div className="main-hero-card">
+          <img src="/images/hero-croissant.png" alt="Croissant" />
+        </div>
+      </div>
+
+      {/* Bottom Content Area */}
+      <main className="bottom-content-area">
+        <div className="menu-info-layer">
+          <div className="title-row">
+            <div className="title-left">
+              <h2 className="product-name">크루아상</h2>
+              <div className="badges-group">
+                <span className="badge-yellow-outline">도보 4분</span>
+                <Link to="/time-poki" className="badge-coral-text time-bar" aria-label="View fresh baked time">
+                  <span className="min-icon" style={{ fontSize: 'clamp(calc(18px * 0.8), calc(18 * 100vw / 430), 18px)', color: 'inherit', fontWeight: 500, fontFeatureSettings: "'ss09' 0", fontVariationSettings: "'rond' 3, 'edpt' 1" }}>&#xEF60;</span>
+                  30분
+                  <img src="data:image/svg+xml,%3csvg%20width='13'%20height='13'%20viewBox='0%200%2013%2013'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M4.87498%202.16671L9.20831%206.50004L4.87498%2010.8334'%20stroke='%238B8B8B'%20stroke-width='1.125'%20stroke-linecap='round'/%3e%3c/svg%3e" alt="" style={{ width: 13, height: 13, filter: 'invert(61%) sepia(82%) saturate(4041%) hue-rotate(325deg) brightness(101%) contrast(97%)' }} />
+                </Link>
+              </div>
+            </div>
+            <Link to="/detail" className="link-details-box">
+              상세보기
+              <img src="data:image/svg+xml,%3csvg%20width='13'%20height='13'%20viewBox='0%200%2013%2013'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M4.87498%202.16671L9.20831%206.50004L4.87498%2010.8334'%20stroke='%238B8B8B'%20stroke-width='1.125'%20stroke-linecap='round'/%3e%3c/svg%3e" alt="" style={{ width: 13, height: 13 }} />
+            </Link>
+          </div>
+
+          <div className="tag-list">
+            <span className="tag-item">#바삭70%</span>
+            <span className="tag-item">#버터30%</span>
+            <span className="tag-item">#크런치</span>
+            <span className="tag-item">#겉바속촉</span>
+          </div>
+        </div>
+
+        {/* Pricing Area */}
+        <div className="pricing-layer">
+          <p className="description-text">
+            크런치한 겉바속촉!<br />
+            폭신 베이커리의 시그니처 메뉴
+          </p>
+          <div className="price-row">
+            <span className="price-value">5,600원</span>
+            <div className="rating-group">
+              <div className="rating-item">
+                <span className="min-icon" style={{ fontSize: 'clamp(calc(18px * 0.8), calc(18 * 100vw / 430), 18px)', color: 'var(--accent-coral)' }}>&#xE0A0;</span>
+                4.3
+              </div>
+              <Link to="/review" className="btn-review-outline">
+                리뷰보기
+                <img src="data:image/svg+xml,%3csvg%20width='13'%20height='13'%20viewBox='0%200%2013%2013'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M4.87498%202.16671L9.20831%206.50004L4.87498%2010.8334'%20stroke='%238B8B8B'%20stroke-width='1.125'%20stroke-linecap='round'/%3e%3c/svg%3e" alt="" style={{ width: 13, height: 13 }} />
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="footer-buttons-row">
+          <Link to="/home-next" className="btn-base btn-next">NEXT</Link>
+          <Link to="/poki-success" className="btn-base btn-poki">POKI</Link>
+        </div>
+      </main>
+
+      <NavBar />
+    </div>
+  )
+}

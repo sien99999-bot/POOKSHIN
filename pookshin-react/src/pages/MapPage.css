@@ -1,0 +1,49 @@
+/* MapPage */
+#app {
+  width: 100%; max-width: 480px;
+  height: 932px;
+  background-color: #F8F4EC;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+  margin: 0 auto;
+}
+@media (max-width: 480px) {
+  body { align-items: flex-start !important; background-color: #F8F4EC !important; position: fixed !important; overflow: hidden !important; width: 100% !important; height: 100% !important; }
+  #app { width: 100% !important; max-width: 480px !important; height: 100dvh !important; box-shadow: none !important; overflow: hidden !important; }
+}
+.map-header { position: absolute; top: calc(max(12px, env(safe-area-inset-top)) + 15px); left: 16px; right: 16px; height: 24px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
+.map-btn-back { text-decoration: none; display: flex; align-items: center; width: 24px; height: 24px; }
+.map-btn-back img { width: 13px; height: 13px; transform: rotate(180deg); }
+.location-chip-black { background: #000000; padding: 1px 10px; border-radius: 9px; display: flex; align-items: center; gap: 4px; color: white; height: 24px; box-sizing: border-box; }
+.location-chip-black span { font-weight: 700; font-size: 16px; letter-spacing: -0.32px; }
+.map-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('/images/map.png'); background-color: #F8F4EC; background-size: cover; background-position: top center; background-repeat: no-repeat; z-index: 0; }
+.current-location-marker { position: absolute; left: 172px; top: 256px; width: 30px; height: 30px; background: rgba(251, 116, 89, 0.2); border-radius: 50%; display: flex; justify-content: center; align-items: center; z-index: 10; }
+.current-location-marker::after { content: ''; width: 10px; height: 10px; background: #FB7459; border: 2px solid white; border-radius: 50%; box-shadow: 0 0 5px rgba(0,0,0,0.2); }
+.bakery-marker { position: absolute; width: 24px; height: 24px; background: #FF9F46; border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 2px solid white; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 5; }
+.bakery-marker::before { content: '\e110'; font-family: 'Min Icon VF'; color: white; font-size: 14px; }
+.btn-now { position: absolute; right: 18px; top: 330px; width: 30px; height: 30px; background: white; border-radius: 15px; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); cursor: pointer; z-index: 20; }
+.bakery-list-container { position: absolute; top: 360px; left: 16px; width: calc(100% - 32px); bottom: 0; background: #F8F4EC; border-radius: 40px 40px 0 0; z-index: 900; padding: 14px 17px 0; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); touch-action: pan-y; }
+.top-title { width: 100%; height: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; flex-shrink: 0; }
+.dots-indicator { width: 54px; height: 10px; }
+.dots-indicator img { width: 100%; height: 100%; object-fit: contain; }
+.bakery-scroll-area { width: 100%; flex: 1; overflow-y: auto; padding-bottom: 90px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px; align-items: center; -ms-overflow-style: none; scrollbar-width: none; }
+.bakery-scroll-area::-webkit-scrollbar { display: none; }
+.bakery-map-card { position: relative; width: 364px; height: 112px; flex-shrink: 0; box-sizing: border-box; }
+.card-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #ffffff; border-radius: 56px 10px 10px 56px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); z-index: 1; }
+.card-contents { position: relative; z-index: 2; display: flex; align-items: center; height: 100%; padding: 10px 14px 10px 110px; box-sizing: border-box; }
+.card-img-circle { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); width: 90px; height: 90px; border-radius: 50%; overflow: hidden; z-index: 3; border: 3px solid #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.card-img-circle img { width: 100%; height: 100%; object-fit: cover; }
+.card-info-box { width: 240px; height: 90px; display: flex; flex-direction: column; justify-content: space-between; }
+.card-top-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.card-name { font-weight: 700; font-size: 16px; color: #000; letter-spacing: -0.32px; line-height: 1.2; }
+.card-bookmark { font-family: 'Min Icon VF', sans-serif; font-size: 16.8px; color: #9B9B9B; cursor: pointer; font-feature-settings: 'ss09' 1; font-variation-settings: 'rond' 3, 'edpt' 1; }
+.card-bookmark.on { color: #FFCB30; }
+.card-address-row { display: flex; align-items: flex-start; gap: 4px; color: #CACACA; margin-top: 2px; }
+.card-address { font-size: 13px; letter-spacing: -0.26px; line-height: 1.4; word-break: keep-all; max-width: 220px; }
+.card-tag-row { display: flex; gap: 5px; }
+.card-tag { background: #F2F2F2; color: #9B9B9B; font-size: 10px; padding: 2px 8px; border-radius: 8px; font-weight: 400; line-height: 1.5; }
+.card-bottom-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.card-rating { display: flex; align-items: center; gap: 2px; color: #9B9B9B; font-size: 13px; line-height: 1.5; }
+.btn-find-path { background: #FFA74A; color: white; font-size: 13px; font-weight: 600; padding: 2px 17px; border-radius: 8px; text-decoration: none; letter-spacing: -0.26px; line-height: 1.8; }
