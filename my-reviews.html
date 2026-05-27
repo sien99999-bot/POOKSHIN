@@ -1,11 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
   <title>POOKSHIN - 내 리뷰</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-  <link rel="stylesheet" href="home.css" />
   <link rel="stylesheet" href="minIcon-round.css" />
   <style>
     body { margin: 0; background-color: #efefef; display: flex; justify-content: center; font-family: 'Pretendard Variable', sans-serif; }
@@ -14,7 +13,42 @@
     .topbar a { text-decoration: none; color: #000; display: flex; align-items: center; }
     .topbar-title { flex: 1; text-align: center; font-weight: 700; font-size: 16px; margin-right: 24px; letter-spacing: -0.32px; }
     @media (max-width: 480px) { #app { width: 100vw; } }
+
+    .min-icon {
+      font-family: 'Min Icon VF', sans-serif;
+      font-weight: 700;
+      font-style: normal;
+      font-feature-settings: 'ss09' 1;
+      font-variation-settings: 'rond' 3, 'edpt' 1, 'FILL' 1;
+      line-height: 1;
+      speak: never;
+    }
+    .star-yellow { color: #FFCB30; }
+    .star-gray { color: #f2f2f2; }
+
+    .taste-profile {
+      display: flex; flex-direction: column; gap: 12px; width: max-content; margin: 0 auto; padding: 10px 0;
+    }
+    .taste-row {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%;
+    }
+    .taste-label {
+      font-weight: 500; font-size: 13px; color: #000; letter-spacing: -0.26px;
+      width: 32px; text-align: center;
+    }
+    .taste-dots {
+      display: flex; justify-content: center; align-items: center; gap: 6px; padding: 0 12px;
+    }
+    .taste-dot {
+      width: 25px; height: 5px; border-radius: 6px; background: #F2F2F2;
+      transition: all 0.3s ease;
+    }
+    .taste-dot.active {
+      background: #FA534C;
+    }
   </style>
+  <link rel="stylesheet" crossorigin href="home.css">
 </head>
 <body>
   <div id="app">
@@ -26,35 +60,113 @@
     </div>
     <div style="padding: 16px; display: flex; flex-direction: column; gap: 20px;">
       
+      <!-- Review 1 -->
       <div style="background: white; border-radius: 20px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
           <div style="display: flex; align-items: center; gap: 8px;">
             <span style="font-weight: 700; font-size: 15px; letter-spacing: -0.3px;">베이크하우스</span>
             <span style="font-size: 13px; color: #9b9b9b;">1일전</span>
           </div>
-          <div style="display: flex; gap: 2px; color: #FFCB30; font-family: 'Min Icon VF'; font-size: 15px;">
-             <span>&#xE0A0;</span><span>&#xE0A0;</span><span>&#xE0A0;</span><span>&#xE0A0;</span><span>&#xE0A0;</span>
+          <div style="display: flex; gap: 2px; font-size: 16px;">
+             <span class="min-icon star-yellow">&#xE0A0;</span>
+             <span class="min-icon star-yellow">&#xE0A0;</span>
+             <span class="min-icon star-yellow">&#xE0A0;</span>
+             <span class="min-icon star-yellow">&#xE0A0;</span>
+             <span class="min-icon star-yellow">&#xE0A0;</span>
           </div>
         </div>
-        <div style="display: flex; gap: 12px;">
+        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
           <img src="images/review-photo-1.png" style="width: 80px; height: 80px; border-radius: 10px; object-fit: cover; flex-shrink: 0;" onerror="this.style.display='none'"/>
           <p style="font-size: 14px; color: #333; line-height: 1.5; margin: 0; letter-spacing: -0.28px;">
             너무 맛있어요! 바삭하고 속은 촉촉해서 매일 먹고 싶어요. 분위기도 좋습니다.
           </p>
         </div>
-        <div style="margin-top: max(16px, env(safe-area-inset-top)); padding-top: max(16px, env(safe-area-inset-top)); border-top: 1px solid #f2f2f2; display: flex; flex-direction: column; gap: 8px;">
-          <div style="display: flex; align-items: center; justify-content: space-between; width: 200px;">
-            <span style="font-size: 12px; font-weight: 600; color: #000;">식감</span>
-            <div style="display: flex; gap: 4px;">
-              <span style="width: 20px; height: 4px; background: #FA534C; border-radius: 4px;"></span>
-              <span style="width: 20px; height: 4px; background: #f2f2f2; border-radius: 4px;"></span>
+        
+        <div style="padding-top: max(16px, env(safe-area-inset-top)); border-top: 1px solid #f2f2f2;">
+          <div class="taste-profile">
+            <div class="taste-row">
+              <span class="taste-label">바삭</span>
+              <div class="taste-dots">
+                <div class="taste-dot"></div><div class="taste-dot"></div><div class="taste-dot active"></div><div class="taste-dot"></div><div class="taste-dot"></div>
+              </div>
+              <span class="taste-label">쫄깃</span>
+            </div>
+            <div class="taste-row">
+              <span class="taste-label">촉촉</span>
+              <div class="taste-dots">
+                <div class="taste-dot active"></div><div class="taste-dot"></div><div class="taste-dot"></div><div class="taste-dot"></div><div class="taste-dot"></div>
+              </div>
+              <span class="taste-label">꾸덕</span>
+            </div>
+            <div class="taste-row">
+              <span class="taste-label">버터</span>
+              <div class="taste-dots">
+                <div class="taste-dot"></div><div class="taste-dot"></div><div class="taste-dot"></div><div class="taste-dot"></div><div class="taste-dot active"></div>
+              </div>
+              <span class="taste-label">담백</span>
+            </div>
+            <div class="taste-row">
+              <span class="taste-label">당도</span>
+              <div class="taste-dots">
+                <div class="taste-dot"></div><div class="taste-dot"></div><div class="taste-dot"></div><div class="taste-dot active"></div><div class="taste-dot"></div>
+              </div>
+              <span class="taste-label" style="opacity:0;">당도</span>
             </div>
           </div>
-          <div style="display: flex; align-items: center; justify-content: space-between; width: 200px;">
-            <span style="font-size: 12px; font-weight: 600; color: #000;">당도</span>
-            <div style="display: flex; gap: 4px;">
-              <span style="width: 20px; height: 4px; background: #f2f2f2; border-radius: 4px;"></span>
-              <span style="width: 20px; height: 4px; background: #FA534C; border-radius: 4px;"></span>
+        </div>
+      </div>
+
+      <!-- Review 2 -->
+      <div style="background: white; border-radius: 20px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-weight: 700; font-size: 15px; letter-spacing: -0.3px;">크로플상점</span>
+            <span style="font-size: 13px; color: #9b9b9b;">2주전</span>
+          </div>
+          <div style="display: flex; gap: 2px; font-size: 16px;">
+             <span class="min-icon star-yellow">&#xE0A0;</span>
+             <span class="min-icon star-yellow">&#xE0A0;</span>
+             <span class="min-icon star-yellow">&#xE0A0;</span>
+             <span class="min-icon star-yellow">&#xE0A0;</span>
+             <span class="min-icon star-gray">&#xE0A0;</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+          <img src="images/review-photo-2.png" style="width: 80px; height: 80px; border-radius: 10px; object-fit: cover; flex-shrink: 0;" onerror="this.style.display='none'"/>
+          <p style="font-size: 14px; color: #333; line-height: 1.5; margin: 0; letter-spacing: -0.28px;">
+            여기 소금빵 찐 맛집이에요 ㅠㅠ 겉바속촉 제대로입니다. 또 갈게요!
+          </p>
+        </div>
+        
+        <div style="padding-top: max(16px, env(safe-area-inset-top)); border-top: 1px solid #f2f2f2;">
+          <div class="taste-profile">
+            <div class="taste-row">
+              <span class="taste-label">바삭</span>
+              <div class="taste-dots">
+                <div class="taste-dot"></div><div class="taste-dot"></div><div class="taste-dot active"></div><div class="taste-dot"></div><div class="taste-dot"></div>
+              </div>
+              <span class="taste-label">쫄깃</span>
+            </div>
+            <div class="taste-row">
+              <span class="taste-label">촉촉</span>
+              <div class="taste-dots">
+                <div class="taste-dot active"></div><div class="taste-dot"></div><div class="taste-dot"></div><div class="taste-dot"></div><div class="taste-dot"></div>
+              </div>
+              <span class="taste-label">꾸덕</span>
+            </div>
+            <div class="taste-row">
+              <span class="taste-label">버터</span>
+              <div class="taste-dots">
+                <div class="taste-dot"></div><div class="taste-dot"></div><div class="taste-dot active"></div><div class="taste-dot"></div><div class="taste-dot"></div>
+              </div>
+              <span class="taste-label">담백</span>
+            </div>
+            <div class="taste-row">
+              <span class="taste-label">당도</span>
+              <div class="taste-dots">
+                <div class="taste-dot"></div><div class="taste-dot"></div><div class="taste-dot active"></div><div class="taste-dot"></div><div class="taste-dot"></div>
+              </div>
+              <span class="taste-label" style="opacity:0;">당도</span>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -16,10 +16,7 @@
       as="style"
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
-    />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="home.css" />
-    <link rel="stylesheet" href="navbar.css" />
+    />
     <style>
       body {
         background: #efefef;
@@ -202,6 +199,9 @@
         letter-spacing: -0.32px;
       }
     </style>
+    <link rel="stylesheet" crossorigin href="home.css">
+    <link rel="stylesheet" crossorigin href="navbar.css">
+    <link rel="stylesheet" crossorigin href="style.css">
   </head>
   <body>
     <div id="app">
@@ -242,14 +242,14 @@
           <p>sien99999@gmail.com</p>
         </div>
         <a href="profile-edit.html" class="btn-edit">
+          <i class="mi" style="font-size: clamp(calc(15.36px * 0.8), calc(15.36 * 100vw / 430), 15.36px);">&#xE0B4;</i>
           <span>수정하기</span>
-          <i class="mi">&#xE0B4;</i>
         </a>
       </div>
 
       <!-- Setting List -->
       <div class="setting-list">
-        <a href="taste-data.html" class="setting-item">식감 취향 설정</a>
+        <a href="taste-data.html" class="setting-item">식감 취향 수정</a>
 
         <div class="divider"></div>
 
@@ -258,9 +258,19 @@
 
         <div class="divider"></div>
 
+        <div class="setting-item subtitle">시스템 설정</div>
+        <div class="setting-item">
+          다크모드
+          <div class="toggle-switch"></div>
+        </div>
+
+        <div class="divider"></div>
+
         <a href="privacy.html" class="setting-item">개인정보 처리방침</a>
         <a href="terms.html" class="setting-item">서비스 이용약관</a>
         <a href="contact.html" class="setting-item">문의하기</a>
+
+        <div class="divider"></div>
 
         <div class="footer-actions">
           <a href="withdraw.html">회원탈퇴</a>

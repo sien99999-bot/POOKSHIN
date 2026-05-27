@@ -1,31 +1,42 @@
 ﻿<!DOCTYPE html>
-﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
-    <meta name="theme-color" content="#F8F4EC" />
+  <meta name="theme-color" content="#F8F4EC" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
-  <link rel="apple-touch-icon" href="/icon.png" />
-  <link rel="manifest" href="/manifest.webmanifest" />
-  <title>POOKSHIN - Withdraw</title>
-  <link rel="stylesheet" href="home.css" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>POOKSHIN - 회원탈퇴</title>
   <style>
-    .modal-page { min-height: 100vh; background: rgba(0,0,0,.18); display: flex; align-items: flex-end; }
-    .sheet { width: 100%; background: #fff; border-radius: 28px 28px 0 0; padding: 28px 24px 36px; box-sizing: border-box; text-align: center; }
-    h1 { margin: 0 0 12px; font-size: clamp(calc(26px * 0.8), calc(26 * 100vw / 430), 26px); font-weight: 800; }
-    p { color: #9B9B9B; line-height: 1.5; }
-    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: max(24px, env(safe-area-inset-top)); }
-    .btn { height: 54px; border-radius: 12px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 800; }
-    .cancel { background: #F2F2F2; color: #9B9B9B; }
-    .danger { background: #FB7459; color: #fff; }
+    .page { min-height: 100vh; background: #F8F4EC; padding-top: max(72px, env(safe-area-inset-top)); padding-bottom: 120px; padding-left: 24px; padding-right: 24px; box-sizing: border-box; }
+    h1 { font-size: clamp(calc(26px * 0.8), calc(26 * 100vw / 430), 26px); font-weight: 800; margin: 0 0 20px; }
+    .card { background: #fff; border-radius: 24px; padding: 24px; line-height: 1.7; color: #555; }
+    .btn { margin-top: max(24px, env(safe-area-inset-top)); height: 54px; border-radius: 12px; background: #FF9F46; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 800; }
   </style>
+  <link rel="stylesheet" crossorigin href="home.css">
 </head>
 <body>
-  <div id="app"><main class="modal-page"><section class="sheet"><h1>회원탈퇴</h1><p>정말 탈퇴하시겠어요?</p><div class="actions"><a href="/setting.html" class="btn cancel">취소</a><a href="/onboarding.html" class="btn danger">탈퇴</a></div></section></main></div>
+  <div id="app">
+    <main class="page">
+      <h1 style="color: #FB7459;">회원탈퇴</h1>
+      <section class="card" style="text-align: center; margin-bottom: 24px;">
+        <div style="font-size: 40px; margin-bottom: 20px;">😢</div>
+        <h3 style="margin-top:0;">정말 떠나시겠어요?</h3>
+        <p style="font-size: 14px; color: #666;">
+          탈퇴하시면 지금껏 와앙이와 함께 모아온<br>
+          <strong>소중한 취향 데이터와 포키 내역</strong>이<br>
+          모두 사라지며 복구할 수 없습니다.
+        </p>
+      </section>
+      <div style="display: flex; gap: 10px;">
+        <a href="setting.html" class="btn" style="flex: 1; background: #C3C3C3; margin-top: 0;">취소</a>
+        <a href="splash.html" class="btn" style="flex: 1; background: #FB7459; margin-top: 0;">탈퇴하기</a>
+      </div>
+    </main>
+  </div>
 </body>
 </html>
-//tests

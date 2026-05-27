@@ -1,42 +1,52 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
-    <meta name="theme-color" content="#F8F4EC" />
+  <meta name="theme-color" content="#F8F4EC" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
   <link rel="apple-touch-icon" href="icon.png" />
-  <link rel="manifest" href="manifest.webmanifest" /><title>POOKSHIN - Profile Edit</title>
-  <link rel="stylesheet" href="home.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>POOKSHIN - 프로필 수정</title>
   <style>
-    .modal-page { min-height: 100vh; background: rgba(0,0,0,.18); display: flex; align-items: flex-end; }
-    .sheet { width: 100%; background: #fff; border-radius: 28px 28px 0 0; padding: 28px 24px 36px; box-sizing: border-box; }
-    h1 { margin: 0 0 20px; font-size: clamp(calc(26px * 0.8), calc(26 * 100vw / 430), 26px); font-weight: 800; }
-    label { display: block; margin: 16px 0 8px; font-size: clamp(calc(14px * 0.8), calc(14 * 100vw / 430), 14px); font-weight: 800; color: #9B9B9B; }
-    input { width: 100%; height: 52px; border: 1px solid #eee; border-radius: 12px; padding: 0 14px; box-sizing: border-box; font: inherit; }
-    .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: max(24px, env(safe-area-inset-top)); }
-    .btn { height: 54px; border-radius: 12px; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 800; }
-    .cancel { background: #F2F2F2; color: #9B9B9B; }
-    .save { background: #FF9F46; color: #fff; }
+    .page { min-height: 100vh; background: #F8F4EC; padding-top: max(72px, env(safe-area-inset-top)); padding-bottom: 120px; padding-left: 24px; padding-right: 24px; box-sizing: border-box; }
+    h1 { font-size: clamp(calc(26px * 0.8), calc(26 * 100vw / 430), 26px); font-weight: 800; margin: 0; }
+    .card { background: #fff; border-radius: 24px; padding: 24px; line-height: 1.7; color: #555; }
+    .btn { margin-top: max(24px, env(safe-area-inset-top)); height: 54px; border-radius: 12px; background: #FF9F46; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 800; }
   </style>
+  <link rel="stylesheet" crossorigin href="home.css">
 </head>
 <body>
   <div id="app">
-    <main class="modal-page">
-      <section class="sheet">
-       <h1>프로필 수정</h1>
-       <label>닉네임</label>
-       <input value="와앙이1234" />
-       <label>이메일</label>
-        <input value="sien99999@gmail.com" />
-        <div class="actions">
-       <a href="my.html" class="btn cancel">취소</a>
-       <a href="my.html" class="btn save">저장</a>
+    <main class="page">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+        <h1>프로필 수정</h1>
+        <a href="setting.html" style="text-decoration:none; color:#000;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      <section class="card" style="padding: 30px 24px;">
+        <div style="text-align: center; margin-bottom: 30px;">
+          <div style="width: 100px; height: 100px; background: #FFA74A; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 6C13.93 6 15.5 7.57 15.5 9.5C15.5 11.43 13.93 13 12 13C10.07 13 8.5 11.43 8.5 9.5C8.5 7.57 10.07 6 12 6ZM12 20C9.97 20 7.57 18.91 5.86 16.88C7.54 15.18 9.68 14.1 12 14.1C14.32 14.1 16.46 15.18 18.14 16.88C16.43 18.91 14.03 20 12 20Z" />
+            </svg>
+          </div>
+          <span style="color: #FB7459; font-weight: bold; font-size: 14px;">사진 변경</span>
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label style="font-size: 12px; font-weight: bold; color: #8B8B8B; margin-bottom: 8px; display: block;">닉네임</label>
+          <input type="text" value="와앙이1234" style="width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #E0E0E0; font-size: 16px; box-sizing: border-box; font-family: 'Interop', sans-serif;" />
+        </div>
+        <div style="margin-bottom: 20px;">
+          <label style="font-size: 12px; font-weight: bold; color: #8B8B8B; margin-bottom: 8px; display: block;">이메일</label>
+          <input type="email" value="sien99999@gmail.com" disabled style="width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #E0E0E0; font-size: 16px; box-sizing: border-box; background: #F9F9F9; color: #999; font-family: 'Interop', sans-serif;" />
         </div>
       </section>
+      <a href="setting.html" class="btn">저장하기</a>
     </main>
   </div>
 </body>

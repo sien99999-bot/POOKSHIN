@@ -1,24 +1,45 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
-    <meta name="theme-color" content="#F8F4EC" />
+  <meta name="theme-color" content="#F8F4EC" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
   <link rel="apple-touch-icon" href="icon.png" />
-  <link rel="manifest" href="manifest.webmanifest" /><title>POOKSHIN - Privacy</title>
-  <link rel="stylesheet" href="home.css" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <title>POOKSHIN - 개인정보 처리방침</title>
   <style>
     .page { min-height: 100vh; background: #F8F4EC; padding-top: max(72px, env(safe-area-inset-top)); padding-bottom: 120px; padding-left: 24px; padding-right: 24px; box-sizing: border-box; }
-    h1 { font-size: clamp(calc(26px * 0.8), calc(26 * 100vw / 430), 26px); font-weight: 800; margin: 0 0 20px; }
+    h1 { font-size: clamp(calc(26px * 0.8), calc(26 * 100vw / 430), 26px); font-weight: 800; margin: 0; }
     .card { background: #fff; border-radius: 24px; padding: 24px; line-height: 1.7; color: #555; }
     .btn { margin-top: max(24px, env(safe-area-inset-top)); height: 54px; border-radius: 12px; background: #FF9F46; color: #fff; display: flex; align-items: center; justify-content: center; text-decoration: none; font-weight: 800; }
   </style>
+  <link rel="stylesheet" crossorigin href="home.css">
 </head>
 <body>
-  <div id="app"><main class="page"><h1>개인정보 처리방침</h1><section class="card">POOKSHIN은 취향 추천을 위해 필요한 최소한의 정보만 사용합니다.</section><a href="setting.html" class="btn">확인</a></main></div>
+  <div id="app">
+    <main class="page">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+        <h1>개인정보 처리방침</h1>
+        <a href="setting.html" style="text-decoration:none; color:#000;">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      <section class="card" style="font-size: 14px; line-height: 1.8;">
+        <strong>1. 수집하는 개인정보 항목</strong><br>
+        회사는 회원가입 및 서비스 제공을 위해 아래와 같은 정보를 수집합니다.<br>
+        - 필수항목: 소셜 로그인 식별값, 닉네임, 생년월일, 빵/식감 취향 데이터<br>
+        - 선택항목: 위치 정보(주변 베이커리 추천용)<br><br>
+        <strong>2. 개인정보의 이용 목적</strong><br>
+        - 개인 맞춤형 빵 및 베이커리 큐레이션 서비스 제공<br>
+        - '갓 구운 빵' 알림 및 POKI(포키) 동선 안내<br><br>
+        <strong>3. 개인정보 보관 기간</strong><br>
+        회원 탈퇴 시 즉시 파기됨을 원칙으로 합니다.
+      </section>
+    </main>
+  </div>
 </body>
 </html>

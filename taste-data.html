@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -6,7 +6,6 @@
     <meta name="theme-color" content="#F8F4EC" />
     <title>POOKSHIN - 내 취향 데이터</title>
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-    <link rel="stylesheet" href="home.css" />
     <link rel="stylesheet" href="minIcon-round.css" />
     <style>
       :root {
@@ -84,7 +83,7 @@
       }
       .hero-mascot {
         position: absolute;
-        left: 40px;
+        left: 25px;
         top: -10px;
         width: 150px;
         height: 190px;
@@ -129,7 +128,7 @@
       .hero-status-wrap {
         position: absolute;
         left: 215px;
-        top: 128px;
+        top: 118px;
         width: 146px;
         height: 29px;
         z-index: 4;
@@ -158,7 +157,7 @@
       .hero-tags {
         position: absolute;
         left: 190px;
-        top: 162px;
+        top: 148px;
         display: flex;
         gap: 5px;
         z-index: 4;
@@ -179,8 +178,9 @@
       .section-title {
         font-size: clamp(calc(20px * 0.8), calc(20 * 100vw / 430), 20px);
         font-weight: 700;
-        margin: 40px 16px 20px;
-        color: var(--black);
+        margin: 64px 16px 24px;
+        color: #000;
+        letter-spacing: -0.4px;
       }
 
       /* DNA Summary */
@@ -284,16 +284,17 @@
       .banner-left {
         background-color: var(--bg-yellow-soft);
         border-radius: 0 20px 20px 0;
-        padding: 14px 20px 23px 26px;
+        padding: 13px 24px 13px 22px;
         margin: 16px 0 0 0;
-        display: flex;
+        display: inline-flex;
         align-items: center;
-        gap: 3px;
+        gap: 4px;
         font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
         font-weight: 500;
         color: var(--black);
         letter-spacing: -0.32px;
         max-width: 379px;
+        width: fit-content;
       }
       .banner-left-icon-wrapper {
         width: 48px;
@@ -401,11 +402,10 @@
         letter-spacing: -0.32px;
       }
       .trend-graph {
-        margin: 16px 32px 0 41px;
+        margin: 40px 32px 0 41px;
         background: white;
         border-radius: 20px;
-        padding: 24px 29px 0 0;
-        overflow: hidden;
+        padding: 24px 16px 0 9px;
       }
       .x-axis {
         display: flex;
@@ -430,34 +430,43 @@
       /* Comment */
       .comment-section {
         position: relative;
-        margin-top: max(40px, env(safe-area-inset-top));
-        height: 250px;
+        margin-top: max(64px, env(safe-area-inset-top));
         display: flex;
       }
       .comment-card {
         background: white;
         border-radius: 0 20px 20px 0;
-        padding: 28px 20px;
-        width: 270px;
-        height: 100%;
+        padding: 22px 17px 33px 16px;
+        width: 258px;
         box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
       }
       .comment-card h3 {
+        font-family: 'Interop', sans-serif;
+        font-weight: 700;
         font-size: clamp(calc(20px * 0.8), calc(20 * 100vw / 430), 20px);
-        margin: 0 0 16px;
+        color: #000;
+        margin: 0;
         text-align: center;
+        line-height: 22px;
       }
       .comment-card p {
+        font-family: 'Interop', sans-serif;
+        font-weight: 400;
         font-size: clamp(calc(15px * 0.8), calc(15 * 100vw / 430), 15px);
-        line-height: 1.6;
+        color: #000;
+        line-height: 22px;
         margin: 0;
       }
       .comment-mascot {
         position: absolute;
-        right: -10px;
-        bottom: 0;
-        width: 172px;
-        height: 172px;
+        right: -45px;
+        bottom: 5px;
+        width: 260px;
+        height: auto;
         object-fit: contain;
       }
 
@@ -465,7 +474,7 @@
       .bottom-yellow-section {
         background-color: var(--bg-yellow-soft);
         width: 100%;
-        margin-top: 32px;
+        margin-top: 80px;
         padding-top: 32px;
         padding-bottom: 50px;
         border-radius: 20px 20px 0 0;
@@ -506,6 +515,7 @@
         color: var(--black);
       }
     </style>
+    <link rel="stylesheet" crossorigin href="home.css">
   </head>
   <body>
     <div id="app">
@@ -525,7 +535,7 @@
           <img src="images/mascot-mypage.png" alt="와앙이" />
         </div>
         <div class="hero-badge">
-          <img src="images/mypage-name-bg.svg" alt="" />
+          <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20139%2090'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group%209039'%3e%3cpath%20id='Rectangle%203468629'%20d='M0%2023.5813C0%2011.232%2011.0813%201.8336%2023.265%203.84961L113.897%2018.8464C128.379%2021.2426%20139%2033.7655%20139%2048.4439V90H0V23.5813Z'%20fill='var(--fill-0,%20%23FFA74A)'/%3e%3c/g%3e%3c/svg%3e" alt="" />
         </div>
         <div class="hero-name">와앙이1234</div>
         <div class="hero-status-wrap">
@@ -560,7 +570,7 @@
       <div class="section-title">취향 밸런스</div>
       <div class="radar-container">
         <div class="radar-wrapper">
-          <img src="images/radar-chart.svg" alt="취향 밸런스 차트" class="radar-bg" />
+          <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20230%20230'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group%209048'%3e%3cpath%20id='Polygon%201'%20d='M214.093%2057.7881V172.211L115%20229.423L15.9072%20172.211V57.7881L115%200.576172L214.093%2057.7881Z'%20fill='var(--fill-0,%20%23F2F2F2)'%20stroke='var(--stroke-0,%20%239B9B9B)'/%3e%3cpath%20id='Polygon%202'%20d='M188.979%2072.2881V157.711L115%20200.423L41.0215%20157.711V72.2881L115%2029.5762L188.979%2072.2881Z'%20fill='var(--fill-0,%20%23F2F2F2)'%20stroke='var(--stroke-0,%20%239B9B9B)'/%3e%3cpath%20id='Polygon%203'%20d='M163.863%2086.7881V143.211L115%20171.423L66.1367%20143.211V86.7881L115%2058.5762L163.863%2086.7881Z'%20fill='var(--fill-0,%20%23F2F2F2)'%20stroke='var(--stroke-0,%20%239B9B9B)'/%3e%3cpath%20id='Vector%20180'%20d='M51.5%2079L112.5%200L205.5%2072L196.5%20164L112.5%20177.5L66%20143L51.5%2079Z'%20fill='var(--fill-0,%20%23FFA74A)'%20fill-opacity='0.7'/%3e%3c/g%3e%3c/svg%3e" alt="취향 밸런스 차트" class="radar-bg" />
           <div class="radar-labels">
             <span style="top: 0px; left: 138px;">바삭</span>
             <span style="top: 83px; left: 267px;">버터</span>
@@ -576,7 +586,7 @@
         겉바속촉을 좋아하는 너! 쫄깃담백한건 조금 싫어할지도?
       </div>
 
-      <div class="section-title" style="margin-top: 32px;">내 취향 트렌드</div>
+      <div class="section-title">내 취향 트렌드</div>
       <div class="trend-header">
         <div class="donut-wrap animate-donut-on-scroll">
           <svg viewBox="0 0 160 160">
@@ -600,7 +610,7 @@
           <span>1주전</span>
         </div>
         <div class="graph-img-wrap">
-          <img src="images/trend-graph.svg" alt="트렌드 그래프" />
+          <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%20328%20127'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group%209053'%3e%3cpath%20id='Vector%20178'%20d='M42.7312%2048.6816C8.11352%2047.6775%202.70451%2079.8081%200%2087.8408V127H324V4C322.377%206.00816%20288.814%2030.6015%20274.778%2034.1224C254.765%2039.1429%20225%2034.1224%20180.12%2034.1224C138.362%2034.1224%20128%2071%20101.5%2071C77.0303%2071%2077.3489%2049.6857%2042.7312%2048.6816Z'%20fill='url(%23paint0_linear_1199_1246)'/%3e%3ccircle%20id='Ellipse%20416'%20cx='323'%20cy='5'%20r='5'%20fill='var(--fill-0,%20%23FA534C)'/%3e%3cpath%20id='Intersect'%20d='M325.056%205.25687C324.824%205.54394%20324.458%205.87128%20324.135%206.15043C323.765%206.4696%20323.286%206.86238%20322.718%207.31351C321.58%208.21779%20320.041%209.39159%20318.209%2010.7452C314.543%2013.4537%20309.667%2016.9079%20304.401%2020.4092C299.139%2023.9086%20293.466%2027.4697%20288.21%2030.3838C282.997%2033.2739%20278.044%2035.6145%20274.265%2036.5625C263.941%2039.1523%20251.221%2039.1305%20235.693%2038.5039C220.08%2037.8739%20201.506%2036.6221%20179.12%2036.6221C158.948%2036.6221%20146.372%2045.4765%20135.364%2054.6006C129.903%2059.127%20124.66%2063.8753%20119.178%2067.418C113.624%2071.0065%20107.632%2073.5%20100.5%2073.5C87.5081%2073.5%2080.9617%2067.7228%2073.7246%2062.3203C70.112%2059.6236%2066.3025%2056.9859%2061.3184%2054.9434C56.3428%2052.9044%2050.112%2051.4255%2041.6729%2051.1807C25.1487%2050.7015%2015.3596%2058.2264%209.2832%2066.8536C3.90979%2074.4827%201.47786%2082.8887%200%2087.7256V75.5664C1.49932%2072.0224%203.44713%2068.1935%206.0127%2064.5508C12.7213%2055.026%2023.6959%2046.6579%2041.7891%2047.1827C50.6586%2047.4399%2057.3704%2049.0024%2062.8359%2051.2422C68.2925%2053.4784%2072.4237%2056.3571%2076.1172%2059.1143C83.4927%2064.62%2089.0223%2069.5%20100.5%2069.5C106.618%2069.5%20111.859%2067.3837%20117.007%2064.0577C122.225%2060.6859%20127.15%2056.2143%20132.812%2051.5215C144.049%2042.2069%20157.534%2032.6221%20179.12%2032.6221C201.614%2032.6221%20220.363%2033.8818%20235.854%2034.5069C251.432%2035.1354%20263.602%2035.1132%20273.291%2032.6827C276.53%2031.8702%20281.098%2029.7537%20286.271%2026.8858C291.4%2024.0419%20296.976%2020.5432%20302.187%2017.0782C307.394%2013.6151%20312.216%2010.1996%20315.832%207.52836C317.641%206.19217%20319.139%205.04774%20320.229%204.18168C320.775%203.74787%20321.209%203.39174%20321.522%203.12113C321.883%202.81064%20321.974%202.70706%20321.944%202.7432L325.056%205.25687Z'%20fill='url(%23paint1_linear_1199_1246)'/%3e%3c/g%3e%3cdefs%3e%3clinearGradient%20id='paint0_linear_1199_1246'%20x1='162'%20y1='4'%20x2='162'%20y2='127'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20offset='0.153846'%20stop-color='%23FA534C'%20stop-opacity='0.7'/%3e%3cstop%20offset='1'%20stop-color='white'%20stop-opacity='0.3'/%3e%3c/linearGradient%3e%3clinearGradient%20id='paint1_linear_1199_1246'%20x1='0'%20y1='45.231'%20x2='325.056'%20y2='45.231'%20gradientUnits='userSpaceOnUse'%3e%3cstop%20offset='0.350962'%20stop-color='%23FFCFCF'/%3e%3cstop%20offset='1'%20stop-color='%23FA534C'/%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e" alt="트렌드 그래프" />
         </div>
       </div>
 
@@ -615,8 +625,12 @@
         <div class="comment-card">
           <h3>와앙이의 코멘트</h3>
           <p>
-            넌 겉바속촉 정통파야! 바삭 82%는 첫 한입 소리까지 중요하게 여긴다는 뜻이야. 버터 73%는 풍미 진한 유럽식 빵을 좋아한다는 신호!<br/>
-            <strong style="color: #FFA74A;">에피 바게트나 덴마크 페이스트리</strong>를 다음에 추천해줄게!
+            넌 겉바속촉 정통파야! 바삭 82%는<br/>
+            첫 한입 소리까지 중요하게 여긴다는<br/>
+            뜻이야. 버터 73%는 풍미 진한 유럽식<br/>
+            빵을 좋아한다는 신호!<br/>
+            <strong style="font-weight: 600; color: #FFA74A;">에피 바게트나 덴마크 페이스트리</strong>를<br/>
+            다음에 추천해줄게!
           </p>
         </div>
         <img src="images/mascot-excited.png" alt="와앙이" class="comment-mascot" />
