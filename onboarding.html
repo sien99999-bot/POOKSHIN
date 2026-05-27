@@ -475,9 +475,12 @@
   function applyScale() {
     var wrapper = document.getElementById('viewport-wrapper');
     var app = document.getElementById('app');
+    var vw = window.innerWidth;
     var vh = window.innerHeight;
     var safeTop = parseInt(getComputedStyle(wrapper).paddingTop) || 0;
-    var scale = Math.min(1, (vh - safeTop) / 932);
+    // 버튼 하단 = bottom:100px → 디자인 y:832. 그 아래 100px은 빈 padding이므로
+    // 높이 기준은 832로 계산해 화면 너비를 채우도록 함
+    var scale = Math.min(1, vw / 430, (vh - safeTop) / 832);
     app.style.transform = 'scale(' + scale + ')';
   }
   applyScale();
