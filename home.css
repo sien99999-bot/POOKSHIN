@@ -46,7 +46,7 @@ body {
 #app {
   background-color: var(--bg-warm);
   width: 100%;
-  max-width: 430px;
+  max-width: 100%; max-width: 480px;
   min-height: 100dvh;
   font-family: var(--font-main);
   -webkit-font-smoothing: antialiased;
@@ -365,19 +365,21 @@ body {
     align-items: flex-start !important;
     width: 100% !important;
     height: 100% !important;
-    position: fixed !important;
-    overflow: hidden !important;
+    position: relative !important; /* fixed 대신 relative로 변경하여 스크롤 허용 */
+    overflow-x: hidden !important;
+    overflow-y: auto !important; /* 세로 스크롤 허용 */
   }
   body.home-body #app {
     width: 100% !important;
     max-width: 100% !important;
-    height: 100dvh !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important; /* height 대신 min-height 사용 */
     box-shadow: none !important;
     padding-bottom: 0 !important;
-    overflow-y: hidden !important;
+    overflow-y: visible !important; /* 컨텐츠가 길면 스크롤되도록 visible 처리 */
   }
   .bottom-content-area {
-    padding-top: 35px !important;
+    padding-top: 55px !important; /* 내부 텍스트와 버튼만 아래로 내려줌 */
     padding-bottom: 90px !important;
     justify-content: flex-start !important;
   }
@@ -387,10 +389,42 @@ body {
   }
   body.home-body .menu-bar {
     box-sizing: border-box;
-    bottom: 25px !important;
+    bottom: max(12px, env(safe-area-inset-bottom)) !important;
     width: calc(100% - 32px) !important;
     position: fixed !important;
     left: 50% !important;
     transform: translate(-50%) !important;
   }
+}
+
+/* 새 알림 배지 및 애니메이션 */
+.has-notification {
+  position: relative;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.has-notification::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 6px;
+  height: 6px;
+  background-color: #FB7459;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+@keyframes ring-bell {
+  0%, 30%, 100% { transform: rotate(0deg); }
+  5%, 15%, 25% { transform: rotate(-15deg); }
+  10%, 20% { transform: rotate(15deg); }
+}
+
+.has-notification > * {
+  animation: ring-bell 3s infinite ease-in-out;
+  transform-origin: top center;
+  display: inline-block;
 }

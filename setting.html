@@ -1,8 +1,8 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <meta name="viewport" content="width=430, user-scalable=no" />
     <meta name="theme-color" content="#FFFFFF" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -36,29 +36,29 @@
         }
         #app {
           width: 100% !important;
-          max-width: 430px !important;
+          max-width: 100%; max-width: 480px !important;
           box-shadow: none !important;
           background-color: #ffffff !important;
         }
       }
 
       .setting-header {
-        padding-top: calc(env(safe-area-inset-top) + 10px); padding-bottom: 10px; padding-left: 16px; padding-right: 16px; position: relative; display: flex; align-items: flex-end; justify-content: space-between; box-sizing: border-box;
+        margin-top: 27px; height: 24px; padding-left: 16px; padding-right: 16px; position: relative; display: flex; align-items: center; justify-content: space-between; box-sizing: border-box;
       }
       .btn-back {
         width: 32px;
         height: 32px;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         text-decoration: none;
       }
       .header-title {
         position: absolute;
         left: 50%;
-        bottom: 24px;
-        transform: translateX(-50%);
-        font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 16px;
         font-weight: 700;
         color: #000;
         letter-spacing: -0.32px;
@@ -67,11 +67,14 @@
         text-decoration: none;
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
+        width: 32px;
+        height: 32px;
       }
 
       .user-summary-card {
-        margin: 10px 16px 0;
+        margin: 28px 16px 0;
+        box-sizing: border-box;
         background: #f8f4ec;
         border-radius: 10px;
         padding: 10px 9px 23px 47px;
@@ -92,7 +95,7 @@
         margin-right: 28px;
       }
       .user-thumb i {
-        font-size: clamp(calc(48px * 0.8), calc(48 * 100vw / 430), 48px);
+        font-size: 48px;
         color: white;
       }
 
@@ -100,14 +103,14 @@
         flex: 1;
       }
       .user-text h3 {
-        font-size: clamp(calc(20px * 0.8), calc(20 * 100vw / 430), 20px);
+        font-size: 20px;
         font-weight: 600;
         color: #000;
         margin: 0 0 4px;
         letter-spacing: -0.4px;
       }
       .user-text p {
-        font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
+        font-size: 16px;
         font-weight: 500;
         color: #9b9b9b;
         margin: 0;
@@ -116,7 +119,7 @@
 
       .btn-edit {
         position: absolute;
-        top: max(10px, env(safe-area-inset-top));
+        top: 12px;
         right: 9px;
         background: transparent;
         padding: 2px 8px;
@@ -127,18 +130,18 @@
         text-decoration: none;
       }
       .btn-edit span {
-        font-size: clamp(calc(13px * 0.8), calc(13 * 100vw / 430), 13px);
+        font-size: 13px;
         font-weight: 500;
         color: #8b8b8b;
         letter-spacing: -0.26px;
       }
       .btn-edit i {
-        font-size: clamp(calc(15.36px * 0.8), calc(15.36 * 100vw / 430), 15.36px);
+        font-size: 15.36px;
         color: #9b9b9b;
       }
 
       .setting-list {
-        padding: 40px 0 100px;
+        padding: 41px 0 130px;
       }
       .setting-item {
         display: flex;
@@ -149,7 +152,7 @@
         margin-bottom: 16px;
         text-decoration: none;
         color: #000;
-        font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
+        font-size: 16px;
         font-weight: 500;
         letter-spacing: -0.32px;
       }
@@ -162,7 +165,7 @@
         height: 1px;
         background: #eaeaea;
         width: 351px;
-        margin: 24px auto;
+        margin: 18px auto 26px;
       }
 
       .toggle-switch {
@@ -189,11 +192,11 @@
         justify-content: space-between;
         align-items: center;
         padding: 0 64px 0 67px;
-        margin-top: 80px;
+        margin-top: 36px;
       }
       .footer-actions a {
         color: #9b9b9b;
-        font-size: clamp(calc(16px * 0.8), calc(16 * 100vw / 430), 16px);
+        font-size: 16px;
         font-weight: 500;
         text-decoration: none;
         letter-spacing: -0.32px;
@@ -219,11 +222,11 @@
           </svg>
         </a>
         <span class="header-title">설정</span>
-        <a href="notification.html" class="header-bell"
+        <a href="notification.html" class="header-bell has-notification"
           ><i
             class="mi"
             style="
-              font-size: clamp(calc(24px * 0.8), calc(24 * 100vw / 430), 24px);
+              font-size: 24px;
               color: #000;
               font-feature-settings: &quot;ss09&quot;;
             "
@@ -242,7 +245,7 @@
           <p>sien99999@gmail.com</p>
         </div>
         <a href="profile-edit.html" class="btn-edit">
-          <i class="mi" style="font-size: clamp(calc(15.36px * 0.8), calc(15.36 * 100vw / 430), 15.36px);">&#xE0B4;</i>
+          <i class="mi" style="font-size: 15.36px;">&#xE0B4;</i>
           <span>수정하기</span>
         </a>
       </div>

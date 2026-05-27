@@ -34,7 +34,7 @@
     system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo",
     "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", sans-serif;
-  --app-max-width: 100%; max-width: 430px; /* iPhone 14 Pro 기준 */
+  --app-max-width: 480px; /* PC에서는 최대 480px, 모바일에서는 100% */
 }
 
 * {
@@ -53,6 +53,7 @@ body {
 
 /* 모바일 래퍼 컨테이너 */
 #app {
+  width: 100%;
   max-width: var(--app-max-width);
   min-height: 100vh;
   margin: 0 auto;
@@ -112,7 +113,7 @@ img {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%; max-width: 430px;
+  width: 100%; max-width: 100%; max-width: 480px;
   height: 100vh;
   background: rgba(0, 0, 0, 0.4);
   display: none;
@@ -180,9 +181,64 @@ img {
   }
   #app {
     width: 100% !important;
-    max-width: 430px !important;
+    max-width: 100%; max-width: 480px !important;
+    min-height: 100vh !important;
     min-height: 100dvh !important;
     height: auto !important;
     box-shadow: none !important;
   }
+}
+
+/* 알림 종 흔들림 모션 */
+@keyframes shake-bell {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(-15deg); }
+  40% { transform: rotate(15deg); }
+  60% { transform: rotate(-10deg); }
+  80% { transform: rotate(10deg); }
+  100% { transform: rotate(0deg); }
+}
+
+a[href="notification.html"] > *, 
+a.header-bell > * {
+  transform-origin: top center;
+  display: inline-block;
+}
+
+a[href="notification.html"]:active > *,
+a.header-bell:active > * {
+  animation: shake-bell 0.4s ease-in-out;
+}
+
+/* 새 알림 배지 및 애니메이션 */
+.has-notification {
+  position: relative;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.has-notification::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 6px;
+  height: 6px;
+  background-color: #FB7459;
+  border-radius: 50%;
+  z-index: 10;
+}
+
+/* 알림이 있을 때 주기적으로 흔들리는 애니메이션 (3초 간격) */
+@keyframes ring-bell {
+  0%, 30%, 100% { transform: rotate(0deg); }
+  5%, 15%, 25% { transform: rotate(-15deg); }
+  10%, 20% { transform: rotate(15deg); }
+}
+
+.has-notification > * {
+  animation: ring-bell 3s infinite ease-in-out;
+  transform-origin: top center;
+  display: inline-block;
 }

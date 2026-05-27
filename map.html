@@ -1,8 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="viewport" content="width=430, user-scalable=no" />
   <meta name="theme-color" content="#F8F4EC" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -29,7 +29,7 @@
     }
 
     #app {
-      width: 430px;
+      width: 100%; max-width: 480px;
       height: 932px;
       background-color: #F8F4EC;
       position: relative;
@@ -50,7 +50,7 @@
       }
       #app {
         width: 100% !important;
-        max-width: 430px !important;
+        max-width: 100%; max-width: 480px !important;
         height: 100dvh !important;
         box-shadow: none !important;
         overflow: hidden !important;
@@ -104,9 +104,10 @@
       width: 100%;
       height: 100%; /* 전체 높이 유지 — 바텀시트가 left:0/width:100%로 위를 덮어서 띠 없음 */
       background-image: url('images/map.png');
-      background-color: #F5F7F8;
-      background-size: cover;
-      background-position: center;
+      background-color: #F8F4EC; /* 빈 공간이 보일 경우 대비해 베이지색 유지 */
+      background-size: cover; /* 지도가 바닥까지 완전히 덮히도록 화면을 꽉 채움 */
+      background-position: top center; /* 지도를 상단에 고정 */
+      background-repeat: no-repeat;
       z-index: 0;
     }
 
@@ -173,10 +174,10 @@
     .bakery-list-container {
       position: absolute;
       top: 360px;
-      left: 0;
-      width: 100%;
+      left: 16px; /* 양쪽 사이드 여백 추가 */
+      width: calc(100% - 32px); /* 여백을 뺀 너비 설정 */
       bottom: 0;           /* 고정 높이 대신 bottom:0 으로 화면 바닥까지 채움 */
-      background: #ffffff;
+      background: #F8F4EC;
       border-radius: 40px 40px 0 0;
       z-index: 900;
       padding: 14px 17px 0;
@@ -305,7 +306,7 @@
         <span class="min-icon" style="font-size:24px; color:white;">&#xEFA0;</span>
         <span>성수동 2가</span>
       </div>
-      <a href="notification.html" style="text-decoration:none; color:inherit; display:flex;">
+      <a href="notification.html" class="has-notification" style="text-decoration:none; color:inherit; display:flex;">
         <span class="min-icon" style="font-size:24px; color:#000;">&#xEF40;</span>
       </a>
     </div>

@@ -14,7 +14,7 @@
 }
 
 #app.detail-page {
-  width: 100%; max-width: 430px;
+  width: 100%; max-width: 100%; max-width: 480px;
   height: 3268px; /* Total height from design.md */
   background-color: var(--white);
   position: relative;
@@ -46,7 +46,7 @@
 .green-band-bg {
   position: absolute;
   top: 458px;
-  width: 100%; max-width: 430px;
+  width: 100%; max-width: 100%; max-width: 480px;
   height: 256px;
   background-color: var(--accent-green);
   z-index: 1;
