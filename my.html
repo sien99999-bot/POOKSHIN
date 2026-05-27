@@ -16,14 +16,19 @@
       as="style"
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
-    />
+    />
     <link rel="stylesheet" href="minIcon-round.css" />
     <style>
+      html, body {
+        overflow-x: hidden;
+        max-width: 100%;
+      }
       #app {
         background-color: #f8f4ec;
         height: auto !important;
         min-height: 100dvh;
-        overflow: visible !important; /* override home.css overflow:hidden — allow body scroll */
+        overflow-x: hidden;
+        overflow-y: visible;
         padding-bottom: 130px; /* clear fixed menu bar */
       }
       @media (max-width: 480px) {
