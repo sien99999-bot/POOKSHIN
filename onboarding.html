@@ -151,7 +151,7 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-    .chip-unsel { background: #F2F2F2; border-color: #9B9B9B; color: #9B9B9B; }
+    .chip-unsel { background: #EDE0CF; border-color: #B8956A; color: #8B6534; }
     .chip-red   { background: #FFEDEB; border-color: #FB7459; color: #FB7459; }
     .chip-yellow{ background: #FFFAE5; border-color: #FFDA46; color: #FFDA46; }
 
@@ -380,9 +380,9 @@
     ">선호하는 빵의 취향을 선택해 주세요.</p>
 
     <!-- 칩 Row 1: top:297 -->
-    <div class="chip chip-yellow" style="left: 49px; top: 297px;" onclick="toggleChip(this,'yellow')">#겉바속촉</div>
-    <div class="chip chip-unsel"  style="left: 171px;top: 297px;" onclick="toggleChip(this,'yellow')">#버터폭발</div>
-    <div class="chip chip-unsel"  style="left: 292px;top: 297px;" onclick="toggleChip(this,'yellow')">#고소풍미</div>
+    <div class="chip chip-yellow" style="left: 67px; top: 297px;" onclick="toggleChip(this,'yellow')">#겉바속촉</div>
+    <div class="chip chip-unsel"  style="left: 175px;top: 297px;" onclick="toggleChip(this,'yellow')">#버터폭발</div>
+    <div class="chip chip-unsel"  style="left: 283px;top: 297px;" onclick="toggleChip(this,'yellow')">#고소풍미</div>
     <!-- 칩 Row 2: top:343 -->
     <div class="chip chip-unsel"  style="left: 121px;top: 343px;" onclick="toggleChip(this,'yellow')">#은은단맛</div>
     <div class="chip chip-yellow" style="left: 229px;top: 343px;" onclick="toggleChip(this,'yellow')">#디저트형</div>
@@ -475,10 +475,9 @@
   function applyScale() {
     var wrapper = document.getElementById('viewport-wrapper');
     var app = document.getElementById('app');
-    var vw = window.innerWidth;
     var vh = window.innerHeight;
     var safeTop = parseInt(getComputedStyle(wrapper).paddingTop) || 0;
-    var scale = Math.min(1, vw / 430, (vh - safeTop) / 932);
+    var scale = Math.min(1, (vh - safeTop) / 932);
     app.style.transform = 'scale(' + scale + ')';
   }
   applyScale();
