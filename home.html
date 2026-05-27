@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#F8F4EC" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="POOKSHIN" />
   <link rel="apple-touch-icon" href="icon.png" />
   <link rel="manifest" href="manifest.webmanifest" />
@@ -17,8 +17,8 @@
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
-    <link rel="stylesheet" href="home.css" />
-    <link rel="stylesheet" href="navbar.css" />
+    <link rel="stylesheet" crossorigin href="home.css">
+    <link rel="stylesheet" crossorigin href="navbar.css">
   </head>
   <body class="home-body">
     <div id="app">
@@ -37,7 +37,7 @@
       <div class="headline-section">
         <h1 class="headline-title">
           <span class="highlight-text">바삭한 한입,</span>
-          <img src="images/bread-icon.svg" class="bread-mascot-icon" alt="" />
+          <img src="data:image/svg+xml,%3csvg%20preserveAspectRatio='none'%20width='100%25'%20height='100%25'%20overflow='visible'%20style='display:%20block;'%20viewBox='0%200%2025.0002%2024.546'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cg%20id='Group'%3e%3cpath%20id='Vector'%20opacity='0.25'%20d='M16.1435%202.49252C15.8792%202.36774%2015.6321%202.25764%2015.3678%202.14998C10.423%200.124077%205.32642%201.02692%204.13485%203.52505C3.67486%204.48906%203.81433%205.65616%204.42601%206.86975L0.244532%2015.6487C-0.342686%2016.8818%200.16379%2018.3474%201.37737%2018.9248L6.26597%2021.2541L12.6838%2024.3126C13.8949%2024.89%2015.3556%2024.3591%2015.9428%2023.1283L20.1243%2014.3494C21.4529%2014.0607%2022.4463%2013.4344%2022.9063%2012.4679C24.1614%209.83764%2021.3281%204.96373%2016.1435%202.49252Z'%20fill='var(--fill-0,%20%23543117)'/%3e%3cg%20id='Group_2'%3e%3cpath%20id='Vector_2'%20d='M8.06424%2020.2193L3.17565%2017.89C1.96207%2017.3125%201.45559%2015.8445%202.04281%2014.6138L6.22429%205.83487C5.61016%204.62129%205.47314%203.45419%205.93313%202.49018C7.12469%20-0.00794885%2012.2213%20-0.913244%2017.1661%201.11511L8.06424%2020.2193Z'%20fill='var(--fill-0,%20%23CC9658)'/%3e%3cg%20id='Group_3'%3e%3cpath%20id='Vector_3'%20d='M8.06443%2020.2191L14.4822%2023.2775C15.6934%2023.8549%2017.1541%2023.324%2017.7413%2022.0933L21.9228%2013.3144C23.2514%2013.0256%2024.2447%2012.3993%2024.7047%2011.4328C25.9599%208.80012%2023.1241%203.92621%2017.9419%201.455C17.6777%201.33021%2017.4306%201.22011%2017.1663%201.11245L8.06443%2020.2191Z'%20fill='var(--fill-0,%20%23C98C4F)'/%3e%3cpath%20id='Vector_4'%20d='M21.7882%2010.2684C22.7522%208.24739%2020.2541%205.04949%2016.2121%203.12146C12.1701%201.19588%208.11092%201.27172%207.14935%203.29273C6.79702%204.0341%206.90957%204.93205%207.39157%205.86915L3.21743%2014.6285C2.76723%2015.5754%203.1685%2016.7058%204.11294%2017.156L12.931%2021.3595C13.8754%2021.8097%2015.0083%2021.4084%2015.4585%2020.4615L19.6326%2011.7022C20.6652%2011.4869%2021.4359%2011.0098%2021.7882%2010.2684Z'%20fill='var(--fill-0,%20%23E7B97B)'/%3e%3c/g%3e%3cpath%20id='Vector_5'%20d='M8.52188%2019.2578L4.11285%2017.156C3.16596%2016.7058%202.76469%2015.573%203.21734%2014.6286L7.39148%205.86923C6.90947%204.93212%206.79448%204.03417%207.14925%203.29281C8.11082%201.2718%2012.17%201.19595%2016.212%203.12153L8.52188%2019.2578Z'%20fill='var(--fill-0,%20%23F6CD95)'/%3e%3c/g%3e%3c/g%3e%3c/svg%3e" class="bread-mascot-icon" alt="" />
           <br />
           와앙이가 취향대로 딱 골랐어요 :)
         </h1>
@@ -48,7 +48,7 @@
         <!-- Hills Background -->
         <div class="hills-background"></div>
         <div class="main-hero-card">
-          <img src="images/main-croissant.png" alt="Croissant" />
+          <img src="images/hero-croissant.png" alt="Croissant" />
         </div>
       </div>
 
@@ -67,13 +67,13 @@
                 >
                   <span class="min-icon" style="font-size: clamp(calc(18px * 0.8), calc(18 * 100vw / 430), 18px); color: inherit; font-weight: 500; font-feature-settings: 'ss09' 0; font-variation-settings: 'rond' 3, 'edpt' 1;">&#xEF60;</span>
                   30분
-                  <img src="images/arrow-4-right.svg" alt="" style="width: 13px; height: 13px; filter: invert(61%) sepia(82%) saturate(4041%) hue-rotate(325deg) brightness(101%) contrast(97%);" />
+                  <img src="data:image/svg+xml,%3csvg%20width='13'%20height='13'%20viewBox='0%200%2013%2013'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M4.87498%202.16671L9.20831%206.50004L4.87498%2010.8334'%20stroke='%238B8B8B'%20stroke-width='1.125'%20stroke-linecap='round'/%3e%3c/svg%3e" alt="" style="width: 13px; height: 13px; filter: invert(61%) sepia(82%) saturate(4041%) hue-rotate(325deg) brightness(101%) contrast(97%);" />
                 </a>
               </div>
             </div>
             <a href="detail.html" class="link-details-box">
               상세보기
-              <img src="images/arrow-4-right.svg" alt="" style="width: 13px; height: 13px;" />
+              <img src="data:image/svg+xml,%3csvg%20width='13'%20height='13'%20viewBox='0%200%2013%2013'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M4.87498%202.16671L9.20831%206.50004L4.87498%2010.8334'%20stroke='%238B8B8B'%20stroke-width='1.125'%20stroke-linecap='round'/%3e%3c/svg%3e" alt="" style="width: 13px; height: 13px;" />
             </a>
           </div>
 
@@ -105,7 +105,7 @@
               <a href="review.html" class="btn-review-outline">
                 리뷰보기
                 <img
-                  src="images/arrow-4-right.svg"
+                  src="data:image/svg+xml,%3csvg%20width='13'%20height='13'%20viewBox='0%200%2013%2013'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M4.87498%202.16671L9.20831%206.50004L4.87498%2010.8334'%20stroke='%238B8B8B'%20stroke-width='1.125'%20stroke-linecap='round'/%3e%3c/svg%3e"
                   alt=""
                   style="width: 13px; height: 13px"
                 />
